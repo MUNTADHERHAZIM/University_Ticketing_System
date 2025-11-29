@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}نظام تتبع الطلبات الجامعي{% endblock %}</title>
+    <!-- Bootstrap 5 RTL -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4c7eea;
+            --danger-color: #d55454;
+            --warning-color: #d9a853;
+            --success-color: #5ecba7;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1050;
+        }
+
+        .dropdown-menu {
+            z-index: 1051 !important;
+        }
+
+        .main-container {
+            padding: 2rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--card-color, #667eea) 0%, var(--card-color-dark, #764ba2) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .badge-priority-critical {
+            background: #dc2626;
+        }
+
+        .badge-priority-urgent {
+            background: #f59e0b;
+        }
+
+        .badge-priority-normal {
+            background: #10b981;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .urgent-alert {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">
+                <i class="bi bi-mortarboard-fill text-primary"></i> نظام ادارة الاقسام -جامعة الكنوز
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}"><i
+                                class="bi bi-house-door"></i> الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'ticket_list' %}"><i
+                                class="bi bi-list-task"></i> الطلبات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'create_ticket' %}"><i
+                                class="bi bi-plus-circle"></i> طلب جديد</a></li>
+                    {% load permissions %}
+                    {% if user|can_view_reports %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'reports_dashboard' %}"><i
+                                class="bi bi-graph-up"></i> التقارير</a></li>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                    <li class="nav-item"><a class="nav-link" href="/admin/"><i class="bi bi-gear"></i> الإدارة</a></li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav">
+                    {% if user|can_export %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'export_report' %}" title="تصدير التقرير"><i
+                                class="bi bi-download"></i></a></li>
+                    {% endif %}
+                    <!-- Notifications Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link position-relative dropdown-toggle" href="#" id="notificationsDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell-fill"></i>
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                id="notificationCount" style="display:none;">0</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            style="width:350px; max-height:500px; overflow-y:auto;">
+                            <li class="dropdown-header d-flex justify-content-between align-items-center">
+                                <span><i class="bi bi-bell"></i> الإشعارات</span>
+                                <a href="{% url 'notifications_list' %}" class="btn btn-sm btn-link">عرض الكل</a>
+                            </li>
+                            <li id="notificationsContainer"></li>
+                            <li id="notificationsLoading" class="text-center p-3" style="display:none;">
+                                <div class="spinner-border spinner-border-sm" role="status"><span
+                                        class="visually-hidden">جاري التحميل...</span></div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- User Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> {{ user.get_full_name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><span class="dropdown-item-text"><strong>{{ user.department }}</strong></span></li>
+                            <li><span class="dropdown-item-text text-muted">{{ user.get_role_display }}</span></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form action="{% url 'logout' %}" method="post" class="d-inline w-100">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i>
+                                        تسجيل الخروج</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container main-container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function renderNotificationsList(notifications) {
+            const container = document.getElementById('notificationsContainer');
+            container.innerHTML = '';
+            if (notifications.length === 0) {
+                container.innerHTML = '<li class="dropdown-item text-muted">لا توجد إشعارات</li>';
+                return;
+            }
+            notifications.forEach(n => {
+                const li = document.createElement('li');
+                li.className = 'dropdown-item d-flex justify-content-between align-items-start';
+                li.innerHTML = `
+                    <div>
+                        <strong>${n.title}</strong><br>
+                        <small class="text-muted">${n.message}</small>
+                    </div>
+                    <div class="text-end">
+                        <small class="text-muted">${n.created_at}</small>
+                        ${n.ticket_id ? `<a href="/tickets/${n.ticket_id}/" class="btn btn-sm btn-outline-primary mt-1"><i class="bi bi-eye"></i></a>` : ''}
+                    </div>`;
+                container.appendChild(li);
+            });
+        }
+        function updateNotifications() {
+            const badge = document.getElementById('notificationCount');
+            const loading = document.getElementById('notificationsLoading');
+            loading.style.display = 'block';
+            fetch('/notifications/api/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.count > 0) { badge.textContent = data.count; badge.style.display = 'inline'; }
+                    else { badge.style.display = 'none'; }
+                    renderNotificationsList(data.notifications);
+                })
+                .catch(err => console.log('Notification error:', err))
+                .finally(() => { loading.style.display = 'none'; });
+        }
+        if (document.getElementById('notificationsDropdown')) {
+            updateNotifications();
+            setInterval(updateNotifications, 30000);
+        }
+    </script>
+    {% block extra_js %}{% endblock %}
+    <footer class="text-center text-muted py-3">
+        © 2025 المطور MUNTADHER HAZIM. جميع الحقوق محفوظة.
+    </footer>
+</body>
+
+</html>

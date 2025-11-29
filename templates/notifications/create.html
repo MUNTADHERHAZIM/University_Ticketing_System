@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}إضافة إشعار{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="mb-4"><i class="bi bi-bell-fill"></i> إضافة إشعار جديد</h2>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="mb-3">
+                {{ form.title.label_tag }}
+                {{ form.title }}
+                {{ form.title.errors }}
+            </div>
+            <div class="mb-3">
+                {{ form.message.label_tag }}
+                {{ form.message }}
+                {{ form.message.errors }}
+            </div>
+            <div class="mb-3">
+                {{ form.notification_type.label_tag }}
+                {{ form.notification_type }}
+                {{ form.notification_type.errors }}
+            </div>
+            <div class="mb-3">
+                {{ form.ticket.label_tag }}
+                {{ form.ticket }}
+                {{ form.ticket.errors }}
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-check2-circle"></i> حفظ الإشعار</button>
+            <a href="{% url 'notifications_list' %}" class="btn btn-outline-secondary ms-2"><i
+                    class="bi bi-x-circle"></i> إلغاء</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Optional: you could add client‑side validation here.
+</script>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}إنشاء طلب جديد{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-plus-circle-fill"></i>
+                    إنشاء طلب جديد
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        {{ form.title.label_tag }}
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                        <div class="text-danger">{{ form.title.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.description.label_tag }}
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                        <div class="text-danger">{{ form.description.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.priority.label_tag }}
+                        {{ form.priority }}
+                        {% if form.priority.errors %}
+                        <div class="text-danger">{{ form.priority.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.departments.label_tag }}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    {% for dept in form.departments %}
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-check">
+                                            {{ dept }}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <small class="form-text text-muted">{{ form.departments.help_text }}</small>
+                        {% if form.departments.errors %}
+                        <div class="text-danger">{{ form.departments.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.assigned_to_users.label_tag }}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    {% for user in form.assigned_to_users %}
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-check">
+                                            {{ user }}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <small class="form-text text-muted">{{ form.assigned_to_users.help_text }}</small>
+                        {% if form.assigned_to_users.errors %}
+                        <div class="text-danger">{{ form.assigned_to_users.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.attachment.label_tag }}
+                        {{ form.attachment }}
+                        {% if form.attachment.errors %}
+                        <div class="text-danger">{{ form.attachment.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-send-fill"></i>
+                            إنشاء الطلب
+                        </button>
+                        <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i>
+                            إلغاء
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

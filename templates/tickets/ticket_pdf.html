@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ ticket.title }} - PDF</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            direction: rtl;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .ticket-id {
+            background-color: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 25px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-right: 4px solid #667eea;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 16px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .status-new {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-pending_ack {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-in_progress {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .status-resolved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-closed {
+            background-color: #d6d8db;
+            color: #383d41;
+        }
+
+        .status-violated {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .priority-normal {
+            color: #28a745;
+        }
+
+        .priority-urgent {
+            color: #ffc107;
+        }
+
+        .priority-critical {
+            color: #dc3545;
+        }
+
+        .description-box {
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+
+        .action-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .action-item {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        .action-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .action-type {
+            background-color: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .action-date {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .action-user {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .action-notes {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #e9ecef;
+            color: #555;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #dee2e6;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .overdue-warning {
+            background-color: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>تقرير الطلب</h1>
+        <p>قسم الحاسبة الإلكترونية - جامعة</p>
+        <p><span class="ticket-id">رقم الطلب: #{{ ticket.id }}</span></p>
+        <p>تاريخ الطباعة: {{ current_date|date:"Y-m-d H:i" }}</p>
+    </div>
+
+    {% if ticket.is_overdue %}
+    <div class="overdue-warning">
+        ⚠️ تحذير: هذا الطلب متأخر بمقدار {{ ticket.hours_delayed|floatformat:1 }} ساعة!
+    </div>
+    {% endif %}
+
+    <div class="section">
+        <div class="section-title">معلومات عامة</div>
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">العنوان:</span>
+                <span class="info-value">{{ ticket.title }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">الحالة:</span>
+                <span class="status-badge status-{{ ticket.status }}">
+                    {{ ticket.get_status_display }}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">الأولوية:</span>
+                <span class="info-value priority-{{ ticket.priority }}">
+                    {{ ticket.get_priority_display }}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">مستوى التصعيد:</span>
+                <span class="info-value">{{ ticket.get_escalation_level_display }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">تفاصيل الطلب</div>
+        <div class="description-box">{{ ticket.description }}</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">معلومات الأطراف</div>
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">منشئ الطلب:</span>
+                <span class="info-value">{{ ticket.created_by.get_full_name }}</span>
+            </div>
+            {% if ticket.assigned_to %}
+            <div class="info-item">
+                <span class="info-label">المعين له:</span>
+                <span class="info-value">{{ ticket.assigned_to.get_full_name }}</span>
+            </div>
+            {% endif %}
+            {% if ticket.department %}
+            <div class="info-item">
+                <span class="info-label">القسم:</span>
+                <span class="info-value">{{ ticket.department.name }}</span>
+            </div>
+            {% endif %}
+            {% if ticket.departments.exists %}
+            <div class="info-item">
+                <span class="info-label">الأقسام:</span>
+                <span class="info-value">
+                    {% for dept in ticket.departments.all %}
+                    {{ dept.name }}{% if not forloop.last %}، {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">التواريخ والمهل</div>
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">تاريخ الإنشاء:</span>
+                <span class="info-value">{{ ticket.created_at|date:"Y-m-d H:i" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">الموعد النهائي (SLA):</span>
+                <span class="info-value">{{ ticket.sla_deadline|date:"Y-m-d H:i" }}</span>
+            </div>
+            {% if ticket.acknowledged_at %}
+            <div class="info-item">
+                <span class="info-label">تاريخ التأكيد:</span>
+                <span class="info-value">{{ ticket.acknowledged_at|date:"Y-m-d H:i" }}</span>
+            </div>
+            {% endif %}
+            {% if ticket.resolved_at %}
+            <div class="info-item">
+                <span class="info-label">تاريخ الحل:</span>
+                <span class="info-value">{{ ticket.resolved_at|date:"Y-m-d H:i" }}</span>
+            </div>
+            {% endif %}
+            {% if ticket.closed_at %}
+            <div class="info-item">
+                <span class="info-label">تاريخ الإغلاق:</span>
+                <span class="info-value">{{ ticket.closed_at|date:"Y-m-d H:i" }}</span>
+            </div>
+            {% endif %}
+            <div class="info-item">
+                <span class="info-label">آخر تحديث:</span>
+                <span class="info-value">{{ ticket.updated_at|date:"Y-m-d H:i" }}</span>
+            </div>
+        </div>
+    </div>
+
+    {% if ticket.close_notes %}
+    <div class="section">
+        <div class="section-title">ملاحظات الإغلاق</div>
+        <div class="description-box">{{ ticket.close_notes }}</div>
+    </div>
+    {% endif %}
+
+    <div class="section">
+        <div class="section-title">سجل الإجراءات</div>
+        {% if actions %}
+        <ul class="action-list">
+            {% for action in actions %}
+            <li class="action-item">
+                <div class="action-header">
+                    <span class="action-type">{{ action.get_action_type_display }}</span>
+                    <span class="action-date">{{ action.created_at|date:"Y-m-d H:i" }}</span>
+                </div>
+                <div class="action-user">
+                    المستخدم: {{ action.user.get_full_name|default:"النظام" }}
+                </div>
+                {% if action.notes %}
+                <div class="action-notes">{{ action.notes }}</div>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p style="text-align: center; color: #666;">لا توجد إجراءات مسجلة</p>
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        <p>نظام إدارة الطلبات - قسم الحاسبة الإلكترونية</p>
+        <p>تم إنشاء هذا التقرير آلياً في {{ current_date|date:"Y-m-d H:i" }}</p>
+    </div>
+</body>
+
+</html>

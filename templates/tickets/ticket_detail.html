@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ ticket.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 col-md-12">
+        <div class="card">
+            <div
+                class="card-header {% if ticket.is_overdue %}bg-danger text-white{% else %}bg-primary text-white{% endif %}">
+                <h4 class="mb-0">
+                    {% if ticket.is_overdue %}
+                    <i class="bi bi-exclamation-triangle-fill urgent-alert"></i>
+                    {% else %}
+                    <i class="bi bi-file-earmark-text"></i>
+                    {% endif %}
+                    {{ ticket.title }}
+                </h4>
+            </div>
+
+            <div class="card-body">
+                <!-- معلومات الطلب -->
+                <div class="row mb-3">
+                    <div class="col-md-6 col-sm-6 mb-2">
+                        <strong>الأولوية:</strong>
+                        <span
+                            class="badge {% if ticket.priority == 'critical' %}bg-danger{% elif ticket.priority == 'urgent' %}bg-warning{% else %}bg-info{% endif %}">
+                            {{ ticket.get_priority_display }}
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-sm-6 mb-2">
+                        <strong>الحالة:</strong>
+                        <span
+                            class="badge {% if ticket.status == 'violated' %}bg-danger{% else %}bg-secondary{% endif %}">
+                            {{ ticket.get_status_display }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 col-sm-6 mb-2">
+                        <strong>تاريخ الإنشاء:</strong> {{ ticket.created_at|date:"Y-m-d H:i" }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 mb-2">
+                        <strong>الموعد النهائي:</strong>
+                        <span class="{% if ticket.is_overdue %}text-danger fw-bold{% endif %}">
+                            {{ ticket.sla_deadline|date:"Y-m-d H:i" }}
+                        </span>
+                    </div>
+                </div>
+
+                {% if ticket.is_overdue %}
+                <div class="alert alert-danger urgent-alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <strong>تحذير:</strong> هذا الطلب متأخر بمقدار {{ ticket.hours_delayed|floatformat:1 }} ساعة!
+                </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <strong>الوصف:</strong>
+                    <p class="mt-2">{{ ticket.description|linebreaks }}</p>
+                </div>
+
+                {% if ticket.attachment %}
+                <div class="mb-3">
+                    <strong>المرفق:</strong>
+                    <a href="{{ ticket.attachment.url }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-download"></i> تحميل المرفق
+                    </a>
+                </div>
+                {% endif %}
+
+                {% if ticket.close_notes %}
+                <div class="card bg-light mt-3">
+                    <div class="card-body">
+                        <h6 class="text-success"><i class="bi bi-check-circle-fill"></i> ملاحظات الإغلاق:</h6>
+                        <p>{{ ticket.close_notes|linebreaks }}</p>
+                        {% if ticket.close_attachments %}
+                        <p>
+                            <a href="{{ ticket.close_attachments.url }}" target="_blank"
+                                class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-download"></i> تحميل المرفق
+                            </a>
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="mt-4 d-flex flex-wrap gap-2">
+                    {% if ticket.assigned_to == user and ticket.status not in 'closed,resolved' %}
+                    <a href="{% url 'close_ticket' ticket.pk %}" class="btn btn-success">
+                        <i class="bi bi-check-circle"></i> إغلاق الطلب
+                    </a>
+                    {% endif %}
+
+                    <!-- زر تصدير PDF -->
+                    <a href="{% url 'export_ticket_pdf' ticket.pk %}" class="btn btn-danger" target="_blank">
+                        <i class="bi bi-file-pdf"></i> تصدير PDF
+                    </a>
+
+                    <a href="{% url 'ticket_list' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-right"></i> العودة للقائمة
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action History -->
+        <div class="card mt-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-clock-history"></i>
+                    سجل الإجراءات
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if actions %}
+                <div class="list-group">
+                    {% for action in actions %}
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between flex-wrap">
+                            <h6 class="mb-1">
+                                <span class="badge bg-primary">{{ action.get_action_type_display }}</span>
+                            </h6>
+                            <small>{{ action.created_at|date:"Y-m-d H:i" }}</small>
+                        </div>
+                        <p class="mb-1">
+                            <strong>{{ action.user|default:"النظام" }}</strong>
+                        </p>
+                        {% if action.notes %}
+                        <small>{{ action.notes }}</small>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-muted">لا توجد إجراءات مسجلة</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4 col-md-12 mt-lg-0 mt-4">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h6 class="mb-0">معلومات إضافية</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>منشئ الطلب:</strong><br>{{ ticket.created_by.get_full_name }}</p>
+
+                {% if ticket.assigned_to %}
+                <p><strong>المعين له:</strong><br>{{ ticket.assigned_to.get_full_name }}</p>
+                {% endif %}
+
+                {% if ticket.assigned_to_users.exists %}
+                <p><strong>المعينون (متعدد):</strong><br>
+                    {% for user in ticket.assigned_to_users.all %}
+                    {{ user.get_full_name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                {% endif %}
+
+                {% if ticket.department %}
+                <p><strong>القسم:</strong><br>{{ ticket.department.name }}</p>
+                {% endif %}
+
+                {% if ticket.departments.exists %}
+                <p><strong>الأقسام (متعدد):</strong><br>
+                    {% for dept in ticket.departments.all %}
+                    {{ dept.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                {% endif %}
+
+                <p><strong>مستوى التصعيد:</strong><br>
+                    <span
+                        class="badge {% if ticket.escalation_level == 'president' %}bg-danger{% elif ticket.escalation_level == 'dean' %}bg-warning{% else %}bg-info{% endif %}">
+                        {{ ticket.get_escalation_level_display }}
+                    </span>
+                </p>
+
+                {% if ticket.acknowledged_at %}
+                <p><strong>تاريخ التأكيد:</strong><br>{{ ticket.acknowledged_at|date:"Y-m-d H:i" }}</p>
+                {% endif %}
+
+                {% if ticket.resolved_at %}
+                <p><strong>تاريخ الحل:</strong><br>{{ ticket.resolved_at|date:"Y-m-d H:i" }}</p>
+                {% endif %}
+                {% if ticket.closed_at %}
+                <p><strong>تاريخ الإغلاق:</strong><br>{{ ticket.closed_at|date:"Y-m-d H:i" }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if ticket.is_overdue %}
+        <div class="card mt-3 border-danger">
+            <div class="card-body bg-danger bg-opacity-10">
+                <h6 class="text-danger">
+                    <i class="bi bi-exclamation-octagon-fill"></i>
+                    حالة طارئة
+                </h6>
+                <p class="mb-0">هذا الطلب تجاوز المهلة المحددة ويحتاج لإجراء فوري!</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    /* تحسينات للتصميم المتجاوب */
+    @media (max-width: 768px) {
+        .card-header h4 {
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            font-size: 0.875rem;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .gap-2 {
+            gap: 0.5rem !important;
+        }
+
+        .d-flex.flex-wrap button,
+        .d-flex.flex-wrap a {
+            flex: 1 1 auto;
+            min-width: 120px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .col-sm-6 {
+            margin-bottom: 0.5rem;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}تأكيد استلام الطلبات - مطلوب{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">
+                    <i class="bi bi-exclamation-triangle-fill urgent-alert"></i>
+                    تأكيد استلام الطلبات - إجباري
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-danger" role="alert">
+                    <h5 class="alert-heading">
+                        <i class="bi bi-lock-fill"></i>
+                        تنبيه: لا يمكنك الوصول إلى النظام قبل تأكيد استلام الطلبات!
+                    </h5>
+                    <hr>
+                    <p class="mb-0">
+                        لديك <strong>{{ unacknowledged_tickets.count }}</strong> طلب/طلبات بانتظار التأكيد.
+                        يجب عليك تأكيد استلامها للمتابعة.
+                    </p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="table-responsive mt-4">
+                        <table class="table table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th width="50">
+                                        <input type="checkbox" id="selectAll" class="form-check-input">
+                                    </th>
+                                    <th>العنوان</th>
+                                    <th>القسم</th>
+                                    <th>الأولوية</th>
+                                    <th>تاريخ الإنشاء</th>
+                                    <th>الموعد النهائي</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for ticket in unacknowledged_tickets %}
+                                <tr {% if ticket.is_overdue %}class="table-danger" {% endif %}>
+                                    <td>
+                                        <input type="checkbox" name="ticket_ids" value="{{ ticket.id }}"
+                                            class="form-check-input ticket-checkbox" required>
+                                    </td>
+                                    <td>
+                                        <strong>{{ ticket.title }}</strong>
+                                        {% if ticket.is_overdue %}
+                                        <span class="badge bg-danger ms-2">متأخر!</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ ticket.department.name }}</td>
+                                    <td>
+                                        <span class="badge badge-priority-{{ ticket.priority }}">
+                                            {{ ticket.get_priority_display }}
+                                        </span>
+                                    </td>
+                                    <td>{{ ticket.created_at|date:"Y-m-d H:i" }}</td>
+                                    <td>
+                                        {% if ticket.is_overdue %}
+                                        <span class="text-danger fw-bold urgent-alert">
+                                            <i class="bi bi-exclamation-triangle-fill"></i>
+                                            تجاوز المهلة بـ {{ ticket.hours_delayed|floatformat:1 }} ساعة
+                                        </span>
+                                        {% else %}
+                                        <span class="text-success">
+                                            {{ ticket.sla_deadline|date:"Y-m-d H:i" }}
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-warning btn-lg">
+                            <i class="bi bi-check-circle-fill"></i>
+                            تأكيد استلام جميع الطلبات المحددة
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4 border-info">
+            <div class="card-body bg-light">
+                <h6 class="text-info">
+                    <i class="bi bi-info-circle-fill"></i>
+                    ملاحظة مهمة:
+                </h6>
+                <ul class="mb-0">
+                    <li>بمجرد تأكيدك لاستلام الطلب، سيتم تسجيل الوقت والتاريخ.</li>
+                    <li>سيتغير وضع الطلب إلى "قيد المعالجة".</li>
+                    <li>أي تأخير في الحل سيتم رصده وتسجيله في نظام التقارير.</li>
+                    <li>يجب عليك تحديد جميع الطلبات للمتابعة.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Select All functionality
+    document.getElementById('selectAll').addEventListener('change', function () {
+        const checkboxes = document.querySelectorAll('.ticket-checkbox');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+</script>
+{% endblock %}

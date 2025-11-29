@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}تسجيل الدخول{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-lg">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <i class="bi bi-mortarboard-fill text-primary" style="font-size: 4rem;"></i>
+                    <h3 class="mt-3">نظام الاقسام في جامعة الكنوز</h3>
+                    <p class="text-muted">الرجاء تسجيل الدخول للمتابعة</p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">اسم المستخدم</label>
+                        <input type="text" name="username" class="form-control form-control-lg" id="id_username"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_password" class="form-label">كلمة المرور</label>
+                        <input type="password" name="password" class="form-control form-control-lg" id="id_password"
+                            required>
+                    </div>
+
+                    <input type="hidden" name="next" value="{{ next }}">
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            تسجيل الدخول
+                        </button>
+                    </div>
+                </form>
+
+                {% if form.errors %}
+                <div class="alert alert-danger mt-3">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    اسم المستخدم أو كلمة المرور غير صحيحة
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

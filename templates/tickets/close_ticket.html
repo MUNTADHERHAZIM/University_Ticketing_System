@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}إغلاق الطلب{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">
+                    <i class="bi bi-lock-fill"></i>
+                    إغلاق الطلب - معلومات إلزامية مطلوبة
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <h6><i class="bi bi-info-circle-fill"></i> تنبيه:</h6>
+                    <p class="mb-0">لا يمكنك إغلاق الطلب دون تعبئة المعلومات التالية. هذه المعلومات ضرورية للتوثيق
+                        والتقييم.</p>
+                </div>
+
+                <div class="card mb-3 bg-light">
+                    <div class="card-body">
+                        <h6>معلومات الطلب:</h6>
+                        <p class="mb-1"><strong>العنوان:</strong> {{ ticket.title }}</p>
+                        <p class="mb-0"><strong>القسم:</strong> {{ ticket.department.name }}</p>
+                    </div>
+                </div>
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.close_notes.id_for_label }}" class="form-label">
+                            <strong class="text-danger">* {{ form.close_notes.label }}</strong>
+                        </label>
+                        {{ form.close_notes }}
+                        <div class="form-text">{{ form.close_notes.help_text }}</div>
+                        {% if form.close_notes.errors %}
+                        <div class="text-danger">{{ form.close_notes.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.execution_time.id_for_label }}" class="form-label">
+                            <strong class="text-danger">* {{ form.execution_time.label }}</strong>
+                        </label>
+                        {{ form.execution_time }}
+                        <div class="form-text">{{ form.execution_time.help_text }}</div>
+                        {% if form.execution_time.errors %}
+                        <div class="text-danger">{{ form.execution_time.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.close_attachments.id_for_label }}" class="form-label">
+                            {{ form.close_attachments.label }}
+                        </label>
+                        {{ form.close_attachments }}
+                        <div class="form-text">{{ form.close_attachments.help_text }}</div>
+                        {% if form.close_attachments.errors %}
+                        <div class="text-danger">{{ form.close_attachments.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <h6><i class="bi bi-exclamation-triangle-fill"></i> تأكيد الإغلاق:</h6>
+                        <ul class="mb-0">
+                            <li>بإغلاقك لهذا الطلب، أنت تؤكد أن المشكلة قد تم حلها بالكامل.</li>
+                            <li>ستُسجل الملاحظات والوقت في سجلات النظام.</li>
+                            <li>سيتم إرسال إشعار للإدارة وصاحب الطلب.</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="bi bi-check-circle-fill"></i>
+                            تأكيد الإغلاق
+                        </button>
+                        <a href="{% url 'ticket_detail' ticket.pk %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i>
+                            إلغاء
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+
+{% block title %}لوحة التحكم - نظام تتبع الطلبات{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2 class="text-white fw-bold">
+            <i class="bi bi-speedometer2"></i>
+            مرحباً، {{ user.get_full_name }}
+        </h2>
+        <p class="text-white-50">{{ user.department.name }} - {{ user.get_role_display }}</p>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row g-4 mb-4">
+    {% if user.role == 'president' or user.role == 'admin' %}
+    <!-- President/Admin View -->
+    <div class="col-md-3">
+        <div class="stat-card" style="--card-color: #10b981; --card-color-dark: #059669;">
+            <h5><i class="bi bi-files"></i> إجمالي الطلبات</h5>
+            <h3>{{ total_tickets }}</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="--card-color: #f59e0b; --card-color-dark: #d97706;">
+            <h5><i class="bi bi-hourglass-split"></i> طلبات معلقة</h5>
+            <h3>{{ pending_tickets }}</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="--card-color: #dc2626; --card-color-dark: #b91c1c;">
+            <h5><i class="bi bi-exclamation-triangle"></i> طلبات مخالفة</h5>
+            <h3 class="urgent-alert">{{ violated_tickets }}</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="--card-color: #6366f1; --card-color-dark: #4f46e5;">
+            <h5><i class="bi bi-check-circle"></i> تم الحل اليوم</h5>
+            <h3>{{ resolved_today }}</h3>
+        </div>
+    </div>
+    {% elif user.role == 'dean' or user.role == 'head' %}
+    <!-- Dean/Head View -->
+    <div class="col-md-4">
+        <div class="stat-card" style="--card-color: #10b981; --card-color-dark: #059669;">
+            <h5><i class="bi bi-building"></i> طلبات القسم</h5>
+            <h3>{{ my_dept_tickets }}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card" style="--card-color: #f59e0b; --card-color-dark: #d97706;">
+            <h5><i class="bi bi-clock-history"></i> معلقة</h5>
+            <h3>{{ my_dept_pending }}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card" style="--card-color: #dc2626; --card-color-dark: #b91c1c;">
+            <h5><i class="bi bi-x-circle"></i> مخالفة</h5>
+            <h3 class="urgent-alert">{{ my_dept_violated }}</h3>
+        </div>
+    </div>
+    {% else %}
+    <!-- Employee View -->
+    <div class="col-md-4">
+        <div class="stat-card" style="--card-color: #10b981; --card-color-dark: #059669;">
+            <h5><i class="bi bi-person-check"></i> طلباتي</h5>
+            <h3>{{ my_tickets }}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card" style="--card-color: #f59e0b; --card-color-dark: #d97706;">
+            <h5><i class="bi bi-hourglass"></i> قيد المعالجة</h5>
+            <h3>{{ my_pending }}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card" style="--card-color: #dc2626; --card-color-dark: #b91c1c;">
+            <h5><i class="bi bi-alarm"></i> متأخرة</h5>
+            <h3 class="urgent-alert">{{ my_overdue }}</h3>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Critical Tickets / Recent Tickets -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    {% if user.role == 'president' or user.role == 'admin' %}
+                    الطلبات الحرجة
+                    {% else %}
+                    آخر التحديثات
+                    {% endif %}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>العنوان</th>
+                                <th>القسم</th>
+                                <th>الأولوية</th>
+                                <th>الحالة</th>
+                                <th>الموعد النهائي</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if user.role == 'president' or user.role == 'admin' %}
+                            {% for ticket in critical_tickets %}
+                            <tr>
+                                <td><strong>{{ ticket.title }}</strong></td>
+                                <td>{{ ticket.department.name }}</td>
+                                <td>
+                                    <span class="badge badge-priority-{{ ticket.priority }}">
+                                        {{ ticket.get_priority_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ ticket.get_status_display }}</span>
+                                </td>
+                                <td>
+                                    <span class="text-danger">
+                                        <i class="bi bi-clock"></i> {{ ticket.sla_deadline|date:"Y-m-d H:i" }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{% url 'ticket_detail' ticket.pk %}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i> عرض
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">لا توجد طلبات حرجة</td>
+                            </tr>
+                            {% endfor %}
+                            {% elif user.role == 'dean' or user.role == 'head' %}
+                            {% for ticket in recent_tickets %}
+                            <tr>
+                                <td><strong>{{ ticket.title }}</strong></td>
+                                <td>{{ ticket.assigned_to|default:"غير معين" }}</td>
+                                <td>
+                                    <span class="badge badge-priority-{{ ticket.priority }}">
+                                        {{ ticket.get_priority_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ ticket.get_status_display }}</span>
+                                </td>
+                                <td>{{ ticket.created_at|date:"Y-m-d H:i" }}</td>
+                                <td>
+                                    <a href="{% url 'ticket_detail' ticket.pk %}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i> عرض
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">لا توجد طلبات</td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            {% for ticket in assigned_to_me %}
+                            <tr>
+                                <td><strong>{{ ticket.title }}</strong></td>
+                                <td>{{ ticket.department.name }}</td>
+                                <td>
+                                    <span class="badge badge-priority-{{ ticket.priority }}">
+                                        {{ ticket.get_priority_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ ticket.get_status_display }}</span>
+                                </td>
+                                <td>
+                                    {% if ticket.is_overdue %}
+                                    <span class="text-danger fw-bold urgent-alert">
+                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                        متأخر {{ ticket.hours_delayed|floatformat:1 }} ساعة
+                                    </span>
+                                    {% else %}
+                                    <span class="text-success">
+                                        <i class="bi bi-clock"></i> {{ ticket.sla_deadline|date:"Y-m-d H:i" }}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'ticket_detail' ticket.pk %}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i> عرض
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">لا توجد طلبات معينة لك</td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if user.role == 'president' or user.role == 'admin' %}
+<!-- Worst Performing Departments -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-emoji-frown"></i>
+                    الأقسام الأكثر تأخيراً
+                </h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for dept in worst_departments %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{{ dept.name }}</span>
+                        <span class="badge bg-danger rounded-pill">
+                            {{ dept.violated_count }} طلب مخالف
+                        </span>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item text-center text-muted">
+                        ممتاز! لا توجد انتهاكات
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

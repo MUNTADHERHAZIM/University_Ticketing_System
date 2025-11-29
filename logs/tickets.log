@@ -1,0 +1,168 @@
+[INFO] 2025-11-22 16:50:38,249 views 14188 8500 - Dashboard cache miss for user 6
+[INFO] 2025-11-22 16:50:38,263 views 14188 8500 - Dashboard cached for user 6
+[INFO] 2025-11-22 16:53:56,436 views 14188 8500 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 16:53:56,444 views 14188 8500 - Dashboard cached for user 16
+[INFO] 2025-11-22 17:06:22,314 views 10332 17108 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 17:06:22,319 views 10332 17108 - Dashboard cached for user 16
+[INFO] 2025-11-22 17:08:11,408 signals 10332 23844 - Notification sent to رئيس3 الحاسبة الإلكترونية (رئيس قسم) for new ticket #6
+[INFO] 2025-11-22 17:13:31,980 views 8816 8236 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 17:13:32,038 views 8816 8236 - Dashboard cached for user 1
+[INFO] 2025-11-22 17:14:11,921 signals 8816 3808 - Notification sent to موظف30 الموارد البشرية (موظف) for new ticket #7
+[INFO] 2025-11-22 17:14:22,114 views 8816 3808 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 17:14:22,165 views 8816 3808 - Dashboard cached for user 1
+[INFO] 2025-11-22 17:17:10,336 views 8816 3808 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 17:17:10,384 views 8816 3808 - Dashboard cached for user 1
+[INFO] 2025-11-22 17:22:00,494 views 8816 8152 - Dashboard cache miss for user 3
+[INFO] 2025-11-22 17:22:00,501 views 8816 8152 - Dashboard cached for user 3
+[INFO] 2025-11-22 17:22:37,930 views 8816 22592 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 17:22:37,944 views 8816 22592 - Dashboard cached for user 16
+[INFO] 2025-11-22 17:23:06,275 views 8816 22592 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 17:23:06,283 views 8816 22592 - Dashboard cached for user 16
+[INFO] 2025-11-22 17:24:59,918 views 8816 22592 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 17:24:59,956 views 8816 22592 - Dashboard cached for user 1
+[INFO] 2025-11-22 17:25:30,344 views 8816 22592 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 17:25:30,380 views 8816 22592 - Dashboard cached for user 1
+[INFO] 2025-11-22 17:31:59,021 views 16260 4028 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 17:31:59,057 views 16260 4028 - Dashboard cached for user 1
+[INFO] 2025-11-22 17:32:54,715 views 2288 9500 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 17:32:54,751 views 2288 9500 - Dashboard cached for user 1
+[INFO] 2025-11-22 17:37:52,358 views 21204 20540 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 17:37:52,410 views 21204 20540 - Dashboard cached for user 1
+[INFO] 2025-11-22 17:40:02,785 views 4456 10496 - Dashboard cache miss for user 3
+[INFO] 2025-11-22 17:40:02,793 views 4456 10496 - Dashboard cached for user 3
+[INFO] 2025-11-22 17:40:23,739 views 4456 10496 - Dashboard cache miss for user 3
+[INFO] 2025-11-22 17:40:23,749 views 4456 10496 - Dashboard cached for user 3
+[INFO] 2025-11-22 17:42:22,102 views 8236 16772 - Dashboard cache miss for user 3
+[INFO] 2025-11-22 17:42:22,122 views 8236 16772 - Dashboard cached for user 3
+[INFO] 2025-11-22 17:42:25,793 views 8236 16772 - Dashboard cache miss for user 3
+[INFO] 2025-11-22 17:42:25,798 views 8236 16772 - Dashboard cached for user 3
+[INFO] 2025-11-22 17:45:12,837 views 19064 8932 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 17:45:12,844 views 19064 8932 - Dashboard cached for user 16
+[INFO] 2025-11-22 17:45:32,157 views 19064 8932 - Dashboard cache miss for user 3
+[INFO] 2025-11-22 17:45:32,165 views 19064 8932 - Dashboard cached for user 3
+[INFO] 2025-11-22 17:49:17,251 views 19064 8932 - Dashboard cache miss for user 3
+[INFO] 2025-11-22 17:49:17,258 views 19064 8932 - Dashboard cached for user 3
+[INFO] 2025-11-22 17:55:53,240 views 19064 8932 - User 3 marked all notifications as read
+[INFO] 2025-11-22 17:58:29,983 views 19064 13728 - User 16 marked all notifications as read
+[INFO] 2025-11-22 18:10:09,266 views 8476 15692 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 18:10:09,305 views 8476 15692 - Dashboard cached for user 1
+[INFO] 2025-11-22 18:10:15,266 views 8476 15692 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 18:10:15,463 views 8476 15692 - Dashboard cached for user 1
+[INFO] 2025-11-22 18:10:28,495 views 8476 15692 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 18:10:28,525 views 8476 15692 - Dashboard cached for user 1
+[INFO] 2025-11-22 18:12:52,344 views 8476 6424 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 18:12:52,385 views 8476 6424 - Dashboard cached for user 1
+[INFO] 2025-11-22 18:13:01,896 views 8476 6424 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 18:13:01,910 views 8476 6424 - Dashboard cached for user 16
+[INFO] 2025-11-22 18:21:17,252 views 4268 12244 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 18:21:17,436 views 4268 12244 - Dashboard cached for user 16
+[INFO] 2025-11-22 18:21:19,419 views 4268 12244 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 18:21:19,430 views 4268 12244 - Dashboard cached for user 16
+[INFO] 2025-11-22 18:21:20,644 views 4268 12244 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 18:21:20,658 views 4268 12244 - Dashboard cached for user 16
+[INFO] 2025-11-22 18:21:39,392 views 4268 12244 - Dashboard cache miss for user 3
+[INFO] 2025-11-22 18:21:39,413 views 4268 12244 - Dashboard cached for user 3
+[INFO] 2025-11-22 18:21:45,030 views 4268 12244 - Dashboard cache miss for user 3
+[INFO] 2025-11-22 18:21:45,066 views 4268 12244 - Dashboard cached for user 3
+[INFO] 2025-11-22 18:25:28,743 views 4268 12244 - Dashboard cache miss for user 3
+[INFO] 2025-11-22 18:25:28,755 views 4268 12244 - Dashboard cached for user 3
+[INFO] 2025-11-22 18:32:11,668 views 17080 4268 - Dashboard cache miss for user 2
+[INFO] 2025-11-22 18:32:11,680 views 17080 4268 - Dashboard cached for user 2
+[INFO] 2025-11-22 18:40:06,925 views 1976 9060 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 18:40:06,944 views 1976 9060 - Dashboard cached for user 16
+[INFO] 2025-11-22 18:40:08,551 views 1976 9060 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 18:40:08,564 views 1976 9060 - Dashboard cached for user 16
+[INFO] 2025-11-22 18:41:00,700 views 1976 8300 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 18:41:00,709 views 1976 8300 - Dashboard cached for user 16
+[INFO] 2025-11-22 19:17:44,329 views 1976 12716 - Dashboard cache miss for user 16
+[INFO] 2025-11-22 19:17:44,351 views 1976 12716 - Dashboard cached for user 16
+[INFO] 2025-11-22 19:20:57,606 views 14600 18652 - Dashboard cache miss for user 5
+[INFO] 2025-11-22 19:20:57,654 views 14600 18652 - Dashboard cached for user 5
+[INFO] 2025-11-22 19:21:00,023 views 14600 18652 - Dashboard cache miss for user 5
+[INFO] 2025-11-22 19:21:00,038 views 14600 18652 - Dashboard cached for user 5
+[INFO] 2025-11-22 19:21:59,936 views 14600 18652 - Dashboard cache miss for user 5
+[INFO] 2025-11-22 19:21:59,950 views 14600 18652 - Dashboard cached for user 5
+[INFO] 2025-11-22 19:24:33,732 views 14600 18652 - Dashboard cache miss for user 5
+[INFO] 2025-11-22 19:24:33,732 views 14600 18652 - Dashboard cached for user 5
+[INFO] 2025-11-22 19:34:18,778 views 14600 22296 - Dashboard cache miss for user 5
+[INFO] 2025-11-22 19:34:18,788 views 14600 22296 - Dashboard cached for user 5
+[INFO] 2025-11-22 19:40:55,617 views 14600 22296 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 19:40:55,657 views 14600 22296 - Dashboard cached for user 1
+[INFO] 2025-11-22 19:41:01,446 views 14600 22296 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 19:41:01,495 views 14600 22296 - Dashboard cached for user 1
+[INFO] 2025-11-22 19:41:11,362 views 14600 22296 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 19:41:11,389 views 14600 22296 - Dashboard cached for user 1
+[INFO] 2025-11-22 19:41:46,324 views 14600 22296 - Dashboard cache miss for user 1
+[INFO] 2025-11-22 19:41:46,360 views 14600 22296 - Dashboard cached for user 1
+[INFO] 2025-11-23 09:06:43,096 views 22728 21556 - Dashboard cache miss for user 3
+[INFO] 2025-11-23 09:06:43,123 views 22728 21556 - Dashboard cached for user 3
+[INFO] 2025-11-23 09:07:09,646 views 22728 21556 - Dashboard cache miss for user 3
+[INFO] 2025-11-23 09:07:09,684 views 22728 21556 - Dashboard cached for user 3
+[INFO] 2025-11-23 09:07:34,339 views 22728 21556 - Dashboard cache miss for user 3
+[INFO] 2025-11-23 09:07:34,363 views 22728 21556 - Dashboard cached for user 3
+[INFO] 2025-11-23 09:07:46,312 views 22728 21556 - Dashboard cache miss for user 3
+[INFO] 2025-11-23 09:07:46,375 views 22728 21556 - Dashboard cached for user 3
+[INFO] 2025-11-23 09:07:53,163 views 22728 21556 - Dashboard cache miss for user 3
+[INFO] 2025-11-23 09:07:53,181 views 22728 21556 - Dashboard cached for user 3
+[INFO] 2025-11-23 09:07:55,771 views 22728 21556 - Dashboard cache miss for user 3
+[INFO] 2025-11-23 09:07:55,790 views 22728 21556 - Dashboard cached for user 3
+[INFO] 2025-11-23 09:09:27,198 signals 22728 21556 - Notification sent to موظف20 الحاسبة الإلكترونية (موظف) for new ticket #8
+[INFO] 2025-11-23 09:10:17,497 views 22728 17056 - Dashboard cache miss for user 1
+[INFO] 2025-11-23 09:10:17,571 views 22728 17056 - Dashboard cached for user 1
+[INFO] 2025-11-23 09:13:01,405 views 22728 11960 - Dashboard cache miss for user 16
+[INFO] 2025-11-23 09:13:01,420 views 22728 11960 - Dashboard cached for user 16
+[INFO] 2025-11-23 09:13:54,184 views 22728 2952 - Dashboard cache miss for user 12
+[INFO] 2025-11-23 09:13:54,260 views 22728 2952 - Dashboard cached for user 12
+[INFO] 2025-11-23 09:14:00,344 views 22728 2952 - Dashboard cache miss for user 12
+[INFO] 2025-11-23 09:14:00,367 views 22728 2952 - Dashboard cached for user 12
+[INFO] 2025-11-23 09:14:07,196 views 22728 2952 - Dashboard cache miss for user 12
+[INFO] 2025-11-23 09:14:07,218 views 22728 2952 - Dashboard cached for user 12
+[INFO] 2025-11-23 09:34:29,801 views 14540 5060 - Dashboard cache miss for user 1
+[INFO] 2025-11-23 09:34:29,826 views 14540 5060 - Dashboard cached for user 1
+[INFO] 2025-11-23 09:45:06,931 views 18508 24032 - Dashboard cache miss for user 1
+[INFO] 2025-11-23 09:45:06,958 views 18508 24032 - Dashboard cached for user 1
+[INFO] 2025-11-23 09:47:21,306 views 18508 25160 - Dashboard cache miss for user 1
+[INFO] 2025-11-23 09:47:21,405 views 18508 25160 - Dashboard cached for user 1
+[INFO] 2025-11-23 09:47:44,690 views 18508 25160 - Dashboard cache miss for user 1
+[INFO] 2025-11-23 09:47:44,735 views 18508 25160 - Dashboard cached for user 1
+[INFO] 2025-11-23 09:48:29,940 views 18508 24032 - Dashboard cache miss for user 1
+[INFO] 2025-11-23 09:48:29,972 views 18508 24032 - Dashboard cached for user 1
+[INFO] 2025-11-23 09:48:40,151 views 18508 24032 - Dashboard cache miss for user 1
+[INFO] 2025-11-23 09:48:40,198 views 18508 24032 - Dashboard cached for user 1
+[INFO] 2025-11-23 09:57:08,856 views 18508 24032 - Dashboard cache miss for user 1
+[INFO] 2025-11-23 09:57:08,886 views 18508 24032 - Dashboard cached for user 1
+[INFO] 2025-11-25 18:12:26,552 utils 19364 24368 - Email sent for ticket 9 - action: created
+[INFO] 2025-11-25 18:12:26,554 signals 19364 24368 - New ticket created: 9
+[INFO] 2025-11-25 18:12:26,649 utils 19364 24368 - Email sent for ticket 9 - action: created
+[INFO] 2025-11-25 18:12:26,652 signals 19364 24368 - Ticket action created: created for ticket 9
+[INFO] 2025-11-25 18:13:40,331 views 19364 24368 - Dashboard cache miss for user 12
+[INFO] 2025-11-25 18:13:40,341 views 19364 24368 - Dashboard cached for user 12
+[INFO] 2025-11-25 18:15:15,177 views 19364 24368 - Dashboard cache miss for user 5
+[INFO] 2025-11-25 18:15:15,188 views 19364 24368 - Dashboard cached for user 5
+[INFO] 2025-11-25 18:16:13,618 utils 19364 24368 - Email sent for ticket 10 - action: created
+[INFO] 2025-11-25 18:16:13,620 signals 19364 24368 - New ticket created: 10
+[INFO] 2025-11-25 18:16:13,708 utils 19364 24368 - Email sent for ticket 10 - action: created
+[INFO] 2025-11-25 18:16:13,709 signals 19364 24368 - Ticket action created: created for ticket 10
+[INFO] 2025-11-25 18:16:51,232 views 19364 24368 - Dashboard cache miss for user 6
+[INFO] 2025-11-25 18:16:51,245 views 19364 24368 - Dashboard cached for user 6
+[INFO] 2025-11-25 18:17:49,992 utils 19364 24368 - Email sent for ticket 8 - action: acknowledged
+[INFO] 2025-11-25 18:17:49,999 signals 19364 24368 - Ticket action created: acknowledged for ticket 8
+[INFO] 2025-11-25 18:17:50,041 views 19364 24368 - Dashboard cache miss for user 10
+[INFO] 2025-11-25 18:17:50,091 views 19364 24368 - Dashboard cached for user 10
+[INFO] 2025-11-25 18:22:38,129 views 336 14940 - Dashboard cache miss for user 10
+[INFO] 2025-11-25 18:22:38,149 views 336 14940 - Dashboard cached for user 10
+[INFO] 2025-11-25 18:22:53,733 views 336 14940 - PDF exported for ticket 8 by user 10
+[INFO] 2025-11-25 19:56:32,026 views 11352 5740 - Dashboard cache miss for user 6
+[INFO] 2025-11-25 19:56:32,035 views 11352 5740 - Dashboard cached for user 6
+[INFO] 2025-11-25 19:56:37,807 views 11352 5740 - PDF exported for ticket 3 by user 6
+[INFO] 2025-11-25 20:00:29,727 views 3640 6980 - Dashboard cache miss for user 1
+[INFO] 2025-11-25 20:00:29,819 views 3640 6980 - Dashboard cached for user 1
+[INFO] 2025-11-25 20:00:36,273 views 3640 6980 - PDF exported for ticket 7 by user 1
+[INFO] 2025-11-25 20:03:54,437 views 9068 4352 - Dashboard cache miss for user 1
+[INFO] 2025-11-25 20:03:54,501 views 9068 4352 - Dashboard cached for user 1
+[INFO] 2025-11-25 20:04:03,272 views 9068 4352 - PDF exported for ticket 10 by user 1
+[INFO] 2025-11-25 20:08:23,095 views 3692 27432 - PDF exported successfully for ticket 3
+[INFO] 2025-11-25 20:11:19,561 views 14224 5316 - PDF exported successfully for ticket 4
+[INFO] 2025-11-25 20:14:07,082 views 21124 7472 - Dashboard cache miss for user 5
+[INFO] 2025-11-25 20:14:07,120 views 21124 7472 - Dashboard cached for user 5
+[INFO] 2025-11-25 20:14:12,339 views 21124 7472 - PDF exported successfully for ticket 8

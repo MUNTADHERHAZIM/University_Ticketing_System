@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block title %}التقارير والإحصائيات{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2 class="text-white fw-bold">
+            <i class="bi bi-bar-chart-fill"></i>
+            لوحة التقارير والإحصائيات
+        </h2>
+        <p class="text-white-50">تحليل الأداء والكشف عن الأقسام والموظفين الأقل استجابة</p>
+    </div>
+</div>
+
+<!-- Overall Statistics -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card" style="--card-color: #10b981; --card-color-dark: #059669;">
+            <h5><i class="bi bi-files"></i> إجمالي الطلبات</h5>
+            <h3>{{ total_tickets }}</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="--card-color: #f59e0b; --card-color-dark: #d97706;">
+            <h5><i class="bi bi-hourglass-split"></i> معلقة</h5>
+            <h3>{{ pending }}</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="--card-color: #dc2626; --card-color-dark: #b91c1c;">
+            <h5><i class="bi bi-x-circle"></i> مخالفة</h5>
+            <h3 class="urgent-alert">{{ violated }}</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="--card-color: #6366f1; --card-color-dark: #4f46e5;">
+            <h5><i class="bi bi-check-all"></i> محلولة</h5>
+            <h3>{{ resolved }}</h3>
+        </div>
+    </div>
+</div>
+
+<!-- Violation Rate -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card 
+            {% if violation_rate > 20 %} border-danger
+            {% elif violation_rate > 10 %} border-warning
+            {% else %} border-success
+            {% endif %}
+        ">
+            <div class="card-body text-center">
+                <h5>معدل الانتهاكات</h5>
+                <h2 class="
+                    {% if violation_rate > 20 %} text-danger
+                    {% elif violation_rate > 10 %} text-warning
+                    {% else %} text-success
+                    {% endif %}
+                ">
+                    {{ violation_rate|floatformat:1 }}%
+                </h2>
+
+                <div class="progress" style="height: 30px;">
+                    <div class="progress-bar 
+                        {% if violation_rate > 20 %} bg-danger
+                        {% elif violation_rate > 10 %} bg-warning
+                        {% else %} bg-success
+                        {% endif %}
+                    "
+                    role="progressbar"
+                    style="width: {{ violation_rate }}%;"
+                    aria-valuenow="{{ violation_rate }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100">
+                        {{ violation_rate|floatformat:1 }}%
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Shame Dashboard - Worst Departments -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-emoji-frown-fill"></i>
+                    لوحة الفضح: الأقسام الأكثر تأخيراً
+                </h4>
+            </div>
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>اسم القسم</th>
+                                <th>إجمالي الطلبات</th>
+                                <th>طلبات معلقة</th>
+                                <th>طلبات مخالفة</th>
+                                <th>نسبة الانتهاك</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dept in departments_stats %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><strong>{{ dept.name }}</strong></td>
+                                <td>{{ dept.total_tickets }}</td>
+                                <td><span class="badge bg-warning">{{ dept.pending_tickets }}</span></td>
+                                <td><span class="badge bg-danger urgent-alert">{{ dept.violated_tickets }}</span></td>
+
+                                <td>
+                                    {% widthratio dept.violated_tickets dept.total_tickets 100 as violation_pct %}
+                                    <div class="progress" style="height: 25px;">
+                                        <div class="progress-bar 
+                                            {% if violation_pct > 20 %} bg-danger
+                                            {% elif violation_pct > 10 %} bg-warning
+                                            {% else %} bg-info
+                                            {% endif %}
+                                        "
+                                        role="progressbar"
+                                        style="width: {{ violation_pct }}%;"
+                                        aria-valuenow="{{ violation_pct }}"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100">
+                                            {{ violation_pct }}%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center text-success">
+                                    <i class="bi bi-emoji-smile-fill"></i>
+                                    ممتاز! لا توجد انتهاكات
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Worst Employees -->
+<div class="row">
+    <div class="col-12">
+        <div class="card border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">
+                    <i class="bi bi-person-x-fill"></i>
+                    الموظفون الأقل استجابة
+                </h4>
+            </div>
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>الاسم</th>
+                                <th>القسم</th>
+                                <th>الطلبات المعينة</th>
+                                <th>الطلبات المخالفة</th>
+                                <th>معدل الانتهاك</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for emp in employees_stats %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><strong>{{ emp.get_full_name }}</strong></td>
+                                <td>{{ emp.department }}</td>
+                                <td>{{ emp.total_assigned }}</td>
+                                <td><span class="badge bg-danger urgent-alert">{{ emp.violated_count }}</span></td>
+
+                                <td>
+                                    {% widthratio emp.violated_count emp.total_assigned 100 as emp_violation_pct %}
+                                    <div class="progress" style="height: 25px;">
+                                        <div class="progress-bar bg-danger"
+                                            role="progressbar"
+                                            style="width: {{ emp_violation_pct }}%;"
+                                            aria-valuenow="{{ emp_violation_pct }}"
+                                            aria-valuemin="0"
+                                            aria-valuemax="100">
+                                            {{ emp_violation_pct }}%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center text-success">
+                                    <i class="bi bi-emoji-smile-fill"></i>
+                                    عمل رائع! جميع الموظفين ملتزمون
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
