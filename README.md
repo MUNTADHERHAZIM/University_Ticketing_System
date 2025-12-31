@@ -296,11 +296,6 @@ university-ticketing/
 
 **MUNTADHER HAZIM**
 
-- 📧 Email: [your-email@example.com](mailto:your-email@example.com)
-- 🔗 GitHub: [@your-username](https://github.com/your-username)
-- 💼 LinkedIn: [Your Name](https://linkedin.com/in/your-profile)
-
----
 
 ## 🙏 شكر خاص
 
