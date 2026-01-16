@@ -1313,3 +1313,22 @@
 [INFO] 2025-12-31 16:06:36,483 basehttp 17404 4020 - "GET /accounts/login/?next=/notifications/api/ HTTP/1.1" 200 52898
 [INFO] 2025-12-31 16:06:38,313 basehttp 17404 4020 - "GET /accounts/login/?next=/ HTTP/1.1" 200 52880
 [INFO] 2025-12-31 16:06:38,448 basehttp 17404 4020 - "GET /accounts/login/?next=/notifications/api/ HTTP/1.1" 200 52898
+[INFO] 2026-01-16 11:59:57,307 autoreload 21736 26196 - Watching for file changes with StatReloader
+[INFO] 2026-01-16 11:59:59,467 basehttp 21736 20496 - "GET / HTTP/1.1" 302 0
+[INFO] 2026-01-16 11:59:59,521 basehttp 21736 20496 - "GET / HTTP/1.1" 302 0
+[INFO] 2026-01-16 11:59:59,591 basehttp 21736 20496 - "GET /accounts/login/?next=/ HTTP/1.1" 200 52880
+[INFO] 2026-01-16 11:59:59,599 basehttp 21736 20752 - "GET /accounts/login/?next=/ HTTP/1.1" 200 52880
+[INFO] 2026-01-16 12:00:00,024 basehttp 21736 20752 - "GET /notifications/api/ HTTP/1.1" 302 0
+[INFO] 2026-01-16 12:00:00,039 basehttp 21736 20752 - "GET /notifications/api/ HTTP/1.1" 302 0
+[INFO] 2026-01-16 12:00:00,176 basehttp 21736 20752 - "GET /accounts/login/?next=/notifications/api/ HTTP/1.1" 200 52898
+[INFO] 2026-01-16 12:00:00,219 basehttp 21736 20752 - "GET /accounts/login/?next=/notifications/api/ HTTP/1.1" 200 52898
+[INFO] 2026-01-16 12:00:04,088 basehttp 21736 20752 - "GET / HTTP/1.1" 302 0
+[INFO] 2026-01-16 12:00:04,113 basehttp 21736 20752 - "GET /accounts/login/?next=/ HTTP/1.1" 200 52880
+[INFO] 2026-01-16 12:00:04,284 basehttp 21736 20752 - "GET /notifications/api/ HTTP/1.1" 302 0
+[INFO] 2026-01-16 12:00:04,344 basehttp 21736 20752 - "GET /accounts/login/?next=/notifications/api/ HTTP/1.1" 200 52898
+[INFO] 2026-01-16 12:00:05,834 basehttp 21736 20752 - "GET /about/ HTTP/1.1" 302 0
+[INFO] 2026-01-16 12:00:05,861 basehttp 21736 20752 - "GET /accounts/login/?next=/about/ HTTP/1.1" 200 52886
+[INFO] 2026-01-16 12:00:05,974 basehttp 21736 20752 - "GET /notifications/api/ HTTP/1.1" 302 0
+[INFO] 2026-01-16 12:00:06,142 basehttp 21736 20752 - "GET /accounts/login/?next=/notifications/api/ HTTP/1.1" 200 52898
+[INFO] 2026-01-16 12:00:15,097 basehttp 21736 20752 - "GET /notifications/api/ HTTP/1.1" 302 0
+[INFO] 2026-01-16 12:00:15,114 basehttp 21736 20752 - "GET /accounts/login/?next=/notifications/api/ HTTP/1.1" 200 52898
