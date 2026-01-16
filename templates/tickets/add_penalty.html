@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}إضافة نقاط جزائية يدوياً{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="bi bi-exclamation-triangle-fill"></i> إضافة نقاط جزائية يدوياً</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">الهدف</label>
+                        {{ form.target_type }}
+                        {% if form.target_type.errors %}
+                        <div class="text-danger small">{{ form.target_type.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3" id="userField">
+                        <label class="form-label fw-bold">الموظف</label>
+                        {{ form.user }}
+                        {% if form.user.errors %}
+                        <div class="text-danger small">{{ form.user.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3" id="departmentField" style="display: none;">
+                        <label class="form-label fw-bold">القسم</label>
+                        {{ form.department }}
+                        {% if form.department.errors %}
+                        <div class="text-danger small">{{ form.department.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">عدد النقاط</label>
+                        {{ form.points }}
+                        <div class="form-text">العدد 10 يمثل مخالفة متوسطة، 20 مخالفة جسيمة.</div>
+                        {% if form.points.errors %}
+                        <div class="text-danger small">{{ form.points.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">السبب</label>
+                        {{ form.reason }}
+                        {% if form.reason.errors %}
+                        <div class="text-danger small">{{ form.reason.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-danger fw-bold">
+                            <i class="bi bi-save"></i> تسجيل المخالفة
+                        </button>
+                        <a href="{% url 'reports_dashboard' %}" class="btn btn-secondary">إلغاء</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const targetTypeSelect = document.getElementById('targetTypeSelect');
+        const userField = document.getElementById('userField');
+        const departmentField = document.getElementById('departmentField');
+
+        function toggleFields() {
+            if (targetTypeSelect.value === 'user') {
+                userField.style.display = 'block';
+                departmentField.style.display = 'none';
+            } else {
+                userField.style.display = 'none';
+                departmentField.style.display = 'block';
+            }
+        }
+
+        targetTypeSelect.addEventListener('change', toggleFields);
+        toggleFields(); // Run on init
+    });
+</script>
+{% endblock %}

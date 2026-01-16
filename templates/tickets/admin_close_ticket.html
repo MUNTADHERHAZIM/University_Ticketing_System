@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}إغلاق إداري - {{ ticket.title }}{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2 class="text-white fw-bold">
+            <i class="bi bi-shield-lock"></i>
+            إغلاق إداري للطلب
+        </h2>
+    </div>
+    <div class="col-auto">
+        <a href="{% url 'ticket_detail' ticket.pk %}" class="btn btn-outline-light">
+            <i class="bi bi-arrow-right"></i>
+            العودة للطلب
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    إغلاق الطلب بصلاحية إدارية
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="bi bi-info-circle"></i>
+                    <strong>تنبيه:</strong> هذا الإجراء سيُغلق الطلب بشكل نهائي بصلاحية إدارية. سيتم تسجيل هذا الإجراء
+                    في سجل الطلب.
+                </div>
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">ملاحظات الإغلاق <span class="text-danger">*</span></label>
+                        <textarea name="close_notes" class="form-control" rows="5" required
+                            placeholder="اكتب سبب الإغلاق وأي ملاحظات مهمة...">{{ form.close_notes.value|default:"" }}</textarea>
+                        <small class="text-muted">يرجى توضيح سبب الإغلاق الإداري بشكل واضح</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">مرفقات (اختياري)</label>
+                        <input type="file" name="close_attachments" class="form-control">
+                        <small class="text-muted">يمكنك إرفاق ملفات داعمة</small>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-lock"></i>
+                            إغلاق الطلب
+                        </button>
+                        <a href="{% url 'ticket_detail' ticket.pk %}" class="btn btn-secondary">إلغاء</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">معلومات الطلب</h6>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-5">رقم الطلب:</dt>
+                    <dd class="col-7">#{{ ticket.id }}</dd>
+
+                    <dt class="col-5">العنوان:</dt>
+                    <dd class="col-7">{{ ticket.title }}</dd>
+
+                    <dt class="col-5">الحالة الحالية:</dt>
+                    <dd class="col-7">
+                        <span class="badge bg-{{ ticket.status|default:'secondary' }}">{{ ticket.get_status_display
+                            }}</span>
+                    </dd>
+
+                    <dt class="col-5">الأولوية:</dt>
+                    <dd class="col-7">{{ ticket.get_priority_display }}</dd>
+
+                    <dt class="col-5">المنشئ:</dt>
+                    <dd class="col-7">{{ ticket.created_by.get_full_name }}</dd>
+
+                    <dt class="col-5">تاريخ الإنشاء:</dt>
+                    <dd class="col-7">{{ ticket.created_at|date:"Y-m-d H:i" }}</dd>
+
+                    {% if ticket.assigned_to %}
+                    <dt class="col-5">المعين له:</dt>
+                    <dd class="col-7">{{ ticket.assigned_to.get_full_name }}</dd>
+                    {% endif %}
+                </dl>
+            </div>
+        </div>
+
+        {% if ticket.is_overdue %}
+        <div class="card mt-3 border-danger">
+            <div class="card-body text-danger">
+                <i class="bi bi-exclamation-triangle"></i>
+                <strong>الطلب متأخر</strong>
+                <br>
+                <small>تأخير {{ ticket.hours_delayed|floatformat:1 }} ساعة</small>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

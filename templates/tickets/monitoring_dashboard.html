@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}لوحة المراقبة المباشرة{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2 class="fw-bold">
+            <i class="bi bi-radar text-danger"></i>
+            المراقبة المباشرة
+            <span class="badge bg-danger fs-6 blink">Live</span>
+        </h2>
+        <div class="text-muted" id="last-updated">آخر تحديث: الآن</div>
+    </div>
+</div>
+
+<!-- KPIs -->
+<div class="row mb-4">
+
+    <div class="col-md-3">
+        <div class="card stat-card bg-gradient-danger text-white h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-exclamation-octagon fs-1 mb-2"></i>
+                <h3 id="overdue-count">{{ overdue_tickets.count }}</h3>
+                <p class="mb-0">طلبات متأخرة</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card stat-card bg-gradient-warning text-white h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-lightning-charge fs-1 mb-2"></i>
+                <h3 id="critical-count">{{ critical_tickets.count }}</h3>
+                <p class="mb-0">طلبات حرجة</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card stat-card bg-gradient-info text-white h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-check-circle fs-1 mb-2"></i>
+                <h3 id="compliance-rate">{{ compliance_rate }}%</h3>
+                <p class="mb-0">نسبة الالتزام</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card stat-card bg-gradient-success text-white h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-check2-all fs-1 mb-2"></i>
+                <h3 id="resolved-today">{{ resolved_today }}</h3>
+                <p class="mb-0">تم حلها اليوم</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <!-- Overdue Tickets -->
+    <div class="col-lg-8 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text-danger">
+                    <i class="bi bi-clock-history"></i> الطلبات المتأخرة
+                </h5>
+                <a href="{% url 'ticket_list' %}?status=violated" class="btn btn-sm btn-outline-danger">عرض الكل</a>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>العنوان</th>
+                                <th>القسم</th>
+                                <th>المعين</th>
+                                <th>التأخير</th>
+                                <th>إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for ticket in overdue_tickets|slice:":5" %}
+                            <tr>
+                                <td>{{ ticket.id }}</td>
+
+                                <td>
+                                    <a href="{% url 'ticket_detail' ticket.pk %}" class="fw-bold text-dark">
+                                        {{ ticket.title|truncatechars:30 }}
+                                    </a><br>
+
+                                    {% if ticket.priority == 'critical' %}
+                                        <span class="badge bg-danger">حرج</span>
+                                    {% elif ticket.priority == 'urgent' %}
+                                        <span class="badge bg-warning">عاجل</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">عادي</span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if ticket.departments.count %}
+                                        {% for d in ticket.departments.all %}
+                                            <span class="badge bg-secondary">{{ d.name }}</span>
+                                        {% endfor %}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if ticket.assigned_to %}
+                                        {{ ticket.assigned_to.get_full_name|default:ticket.assigned_to.username }}
+                                    {% else %}
+                                        غير معين
+                                    {% endif %}
+                                </td>
+
+                                <td class="text-danger fw-bold" dir="ltr">
+                                    {{ ticket.sla_deadline|timesince }}
+                                </td>
+
+                                <td>
+                                    <a href="{% url 'ticket_detail' ticket.pk %}"
+                                       class="btn btn-sm btn-primary">
+                                       <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">
+                                    <i class="bi bi-check-circle-fill text-success fs-1 d-block mb-2"></i>
+                                    ممتاز! لا توجد طلبات متأخرة حالياً
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Worst Departments -->
+    <div class="col-lg-4 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-graph-down-arrow text-danger"></i>
+                    الأقسام الأكثر تأخيراً
+                </h5>
+            </div>
+
+            <div class="card-body">
+                <canvas id="worstDeptChart"></canvas>
+            </div>
+
+            <ul class="list-group list-group-flush">
+                {% for dept in worst_departments %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ dept.name }}
+                    <span class="badge bg-danger rounded-pill">{{ dept.violated_count }} مخالفة</span>
+                </li>
+                {% empty %}
+                <li class="list-group-item text-center text-muted">لا توجد بيانات</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .bg-gradient-danger { background: linear-gradient(45deg, #ff3547, #ff6b6b); }
+    .bg-gradient-warning { background: linear-gradient(45deg, #ffc107, #ffca2c); }
+    .bg-gradient-info { background: linear-gradient(45deg, #33b5e5, #0099cc); }
+    .bg-gradient-success { background: linear-gradient(45deg, #00c851, #007e33); }
+    .blink { animation: blinker 1.5s linear infinite; }
+    @keyframes blinker { 50% { opacity: 0; } }
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Auto Refresh KPIs
+    setInterval(function () {
+        fetch('{% url "monitoring_api" %}')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('overdue-count').innerText = data.overdue_count;
+                document.getElementById('critical-count').innerText = data.critical_count;
+                document.getElementById('last-updated').innerText =
+                    'آخر تحديث: ' + new Date().toLocaleTimeString();
+            });
+    }, 30000);
+
+    // Worst Departments Chart
+    const ctx = document.getElementById('worstDeptChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [{% for dept in worst_departments %}'{{ dept.name }}',{% endfor %}],
+            datasets: [{
+                data: [{% for dept in worst_departments %}{{ dept.violated_count }},{% endfor %}],
+                backgroundColor: ['#ff3547', '#ffbb33', '#00C851', '#33b5e5', '#2BBBAD']
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    });
+</script>
+{% endblock %}

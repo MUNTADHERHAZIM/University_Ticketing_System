@@ -15,6 +15,15 @@ django-ratelimit==4.1.0
 # PDF Generation
 weasyprint==62.3
 reportlab==4.0.7
+arabic-reshaper==3.0.0
+python-bidi==0.4.2
+
+# Excel & Word Export
+openpyxl==3.1.2
+python-docx==0.8.11
+
+# QR Code Generation
+qrcode==7.4.2
 
 # Email
 django-templated-email==3.0.1

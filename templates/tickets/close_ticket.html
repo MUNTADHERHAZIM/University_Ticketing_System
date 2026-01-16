@@ -23,7 +23,17 @@
                     <div class="card-body">
                         <h6>معلومات الطلب:</h6>
                         <p class="mb-1"><strong>العنوان:</strong> {{ ticket.title }}</p>
-                        <p class="mb-0"><strong>القسم:</strong> {{ ticket.department.name }}</p>
+                        <p class="mb-0"><strong>القسم:</strong>
+                            {% if ticket.department %}
+                            {{ ticket.department.name }}
+                            {% elif ticket.departments.exists %}
+                            {% for dept in ticket.departments.all %}
+                            {{ dept.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
 

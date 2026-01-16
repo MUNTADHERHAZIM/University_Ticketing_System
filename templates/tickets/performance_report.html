@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}تقرير الأداء الشامل{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold"><i class="bi bi-speedometer2 text-primary"></i> تقرير الأداء الشامل</h2>
+    <div class="d-flex gap-2">
+        <form method="get" class="d-flex gap-2">
+            <select name="period" class="form-select" onchange="this.form.submit()">
+                <option value="30" {% if period_days == 30 %} selected{% endif %}>آخر 30 يوم</option>
+                <option value="60" {% if period_days == 60 %} selected{% endif %}>آخر 60 يوم</option>
+                <option value="90" {% if period_days == 90 %} selected{% endif %}>آخر 90 يوم</option>
+            </select>
+        </form>
+        <a href="{% url 'export_performance_excel' %}?period={{ period_days }}" class="btn btn-success">
+            <i class="bi bi-file-earmark-excel"></i> تصدير Excel
+        </a>
+    </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center py-3">
+            <h5 class="text-muted">إجمالي الطلبات</h5>
+            <h2 class="fw-bold text-primary">{{ total_tickets }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center py-3">
+            <h5 class="text-muted">تم الحل</h5>
+            <h2 class="fw-bold text-success">{{ resolved_tickets }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center py-3">
+            <h5 class="text-muted">مخالفات</h5>
+            <h2 class="fw-bold text-danger">{{ violated_tickets }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center py-3">
+            <h5 class="text-muted">نسبة الإنجاز</h5>
+            <h2 class="fw-bold text-info">{{ resolution_rate }}%</h2>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Departments Performance -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="bi bi-building"></i> أداء الأقسام</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>القسم</th>
+                                <th>الإجمالي</th>
+                                <th>محلولة</th>
+                                <th>مخالفة</th>
+                                <th>نقاط</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dept in departments_performance %}
+                            <tr>
+                                <td>{{ dept.name }}</td>
+                                <td>{{ dept.total }}</td>
+                                <td class="text-success">{{ dept.resolved }}</td>
+                                <td class="text-danger">{{ dept.violated }}</td>
+                                <td class="fw-bold">{{ dept.penalty_points|default:0 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Employees -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="bi bi-trophy text-warning"></i> الموظفين المتميزين</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    {% for emp in best_employees %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-person-circle text-primary"></i>
+                            <strong>{{ emp.get_full_name }}</strong>
+                            <small class="text-muted d-block">{{ emp.department.name }}</small>
+                        </div>
+                        <span class="badge bg-success rounded-pill">{{ emp.resolved }} طلب محلول</span>
+                    </div>
+                    {% empty %}
+                    <div class="text-center p-4 text-muted">لا توجد بيانات كافية</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

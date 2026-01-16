@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-43k2#d%2$)*%s)*+%w0v5apipj@ezs=pbg9(tp69)9qs_*sic9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
     # Custom middleware - يجب أن يكون بعد AuthenticationMiddleware
+    'accounts.middleware.LoginTrackingMiddleware',  # تتبع دخول المستخدمين
     'tickets.middleware.ForceAcknowledgmentMiddleware',
 ]
 
@@ -72,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'notifications.context_processors.global_mails',
             ],
         },
     },
@@ -157,16 +159,53 @@ EMAIL_HOST_USER = ''  # Set in production
 EMAIL_HOST_PASSWORD = ''  # Set in production
 DEFAULT_FROM_EMAIL = 'noreply@university.edu'  # Default sender email
 
-# SLA Deadlines (in hours)
+# SLA Deadlines (in hours) - المهل الزمنية بالساعات
+# حرج = يوم واحد، عاجل = يومين، عادي = 3 أيام
 SLA_DEADLINES = {
-    'normal': 24,      # 24 hours for normal priority
-    'urgent': 4,       # 4 hours for urgent priority
-    'critical': 2,     # 2 hours for critical priority
+    'normal': 72,      # 3 أيام (72 ساعة) للأولوية العادية
+    'urgent': 48,      # يومين (48 ساعة) للأولوية العاجلة
+    'critical': 24,    # يوم واحد (24 ساعة) للأولوية الحرجة
 }
 
 # Escalation Settings
 ESCALATION_LEVELS = ['employee', 'head', 'dean', 'president']
 AUTO_REASSIGN_AFTER_HOURS = 48  # Auto-reassign ticket after 48 hours
+
+# Celery Beat Schedule - نظام صارم للمتابعة
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    # فحص انتهاكات SLA كل 5 دقائق
+    'check-sla-violations': {
+        'task': 'tickets.tasks.check_sla_violations',
+        'schedule': crontab(minute='*/5'),
+    },
+    # إرسال تحذيرات المهلة كل 15 دقيقة
+    'send-deadline-warnings': {
+        'task': 'tickets.tasks.send_deadline_warnings',
+        'schedule': crontab(minute='*/15'),
+    },
+    # حساب النقاط الجزائية يومياً في منتصف الليل
+    'calculate-daily-penalties': {
+        'task': 'tickets.tasks.calculate_daily_penalties',
+        'schedule': crontab(hour=23, minute=59),
+    },
+    # إعادة تعيين الطلبات المتأخرة كل ساعة
+    'auto-reassign-tickets': {
+        'task': 'tickets.tasks.auto_reassign_tickets',
+        'schedule': crontab(minute=0),
+    },
+    # إرسال التقرير اليومي في الساعة 8 صباحاً
+    'send-daily-report': {
+        'task': 'tickets.tasks.send_daily_report',
+        'schedule': crontab(hour=8, minute=0),
+    },
+    # حساب مقاييس الأداء كل 6 ساعات
+    'generate-performance-metrics': {
+        'task': 'tickets.tasks.generate_performance_metrics',
+        'schedule': crontab(minute=0, hour='*/6'),
+    },
+}
 
 # Auth Settings
 LOGIN_URL = '/accounts/login/'

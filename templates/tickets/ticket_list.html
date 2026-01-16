@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 
 {% block title %}قائمة الطلبات{% endblock %}
 
@@ -20,77 +20,166 @@
 
 <div class="card">
     <div class="card-body">
-        <!-- Filters -->
-        <form method="get" class="row g-3 mb-4">
-            <div class="col-md-4">
+        <form method="get" class="row g-2 g-md-3 mb-4">
+            
+            <!-- البحث -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <input type="text" name="search" class="form-control" placeholder="بحث بالعنوان أو الوصف"
+                    value="{{ search_query }}">
+            </div>
+
+            <!-- الحالة -->
+            <div class="col-12 col-sm-6 col-lg-3">
                 <select name="status" class="form-select">
                     <option value="">كل الحالات</option>
-                    <option value="new">جديد</option>
-                    <option value="pending_ack">بانتظار التأكيد</option>
-                    <option value="in_progress">قيد المعالجة</option>
-                    <option value="resolved">تم الحل</option>
-                    <option value="closed">مغلق</option>
-                    <option value="violated">مخالف</option>
+
+                    <option value="new" {% if request.GET.status == 'new' %}selected{% endif %}>جديد</option>
+                    <option value="pending_ack" {% if request.GET.status == 'pending_ack' %}selected{% endif %}>بانتظار التأكيد</option>
+                    <option value="in_progress" {% if request.GET.status == 'in_progress' %}selected{% endif %}>قيد المعالجة</option>
+                    <option value="resolved" {% if request.GET.status == 'resolved' %}selected{% endif %}>تم الحل</option>
+                    <option value="closed" {% if request.GET.status == 'closed' %}selected{% endif %}>مغلق</option>
+                    <option value="violated" {% if request.GET.status == 'violated' %}selected{% endif %}>مخالف</option>
                 </select>
             </div>
-            <div class="col-md-4">
+
+            <!-- الأولوية -->
+            <div class="col-12 col-sm-6 col-lg-3">
                 <select name="priority" class="form-select">
                     <option value="">كل الأولويات</option>
-                    <option value="critical">حرج</option>
-                    <option value="urgent">عاجل</option>
-                    <option value="normal">عادي</option>
+
+                    <option value="critical" {% if request.GET.priority == 'critical' %}selected{% endif %}>حرج</option>
+                    <option value="urgent" {% if request.GET.priority == 'urgent' %}selected{% endif %}>عاجل</option>
+                    <option value="normal" {% if request.GET.priority == 'normal' %}selected{% endif %}>عادي</option>
                 </select>
             </div>
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-primary w-100">
+
+            <!-- الأقسام -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <select name="department" class="form-select">
+                    <option value="">كل الأقسام</option>
+                    {% for dept in departments %}
+                        <option value="{{ dept.id }}" 
+                            {% if request.GET.department == dept.id|stringformat:"s" %}selected{% endif %}>
+                            {{ dept.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- أزرار التصفية -->
+            <div class="col-12 d-flex flex-column flex-sm-row gap-2">
+                <button type="submit" class="btn btn-primary">
                     <i class="bi bi-filter"></i> تصفية
                 </button>
+                <a href="{% url 'ticket_list' %}" class="btn btn-light border">مسح</a>
             </div>
         </form>
 
-        <!-- Table -->
+        <!-- جدول الطلبات -->
         <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="table-dark">
+            <table class="table table-hover table-striped align-middle">
+                <thead class="table-light">
                     <tr>
                         <th>العنوان</th>
-                        <th>القسم</th>
-                        <th>المعين له</th>
+                        <th class="d-none d-md-table-cell">القسم</th>
+                        <th class="d-none d-lg-table-cell">المعين له</th>
                         <th>الأولوية</th>
                         <th>الحالة</th>
-                        <th>التاريخ</th>
+                        <th class="d-none d-sm-table-cell">التاريخ</th>
                         <th>الإجراءات</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     {% for ticket in page_obj %}
-                    <tr {% if ticket.is_overdue %}class="table-danger" {% endif %}>
+                    <tr {% if ticket.is_overdue %}class="table-danger"{% endif %}>
+                        
+                        <!-- العنوان -->
                         <td>
-                            <strong>{{ ticket.title }}</strong>
-                            {% if ticket.is_overdue %}
-                            <span class="badge bg-danger ms-2 urgent-alert">متأخر!</span>
+                            <a href="{% url 'ticket_detail' ticket.pk %}" class="text-decoration-none fw-semibold">
+                                {{ ticket.title }}
+                            </a>
+
+                            <!-- معلومات الهاتف -->
+                            <div class="d-md-none small text-muted mt-1">
+                                <div>
+                                    <strong>القسم:</strong>
+                                    {% if ticket.departments.count %}
+                                        {% for dept in ticket.departments.all %}
+                                            {{ dept.name }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    {% else %}-{% endif %}
+                                </div>
+
+                                <div class="d-lg-none">
+                                    <strong>المعين:</strong>
+                                    {% if ticket.assigned_to %}
+                                        {{ ticket.assigned_to.get_full_name|default:ticket.assigned_to.username }}
+                                    {% elif ticket.assigned_to_users.count %}
+                                        {{ ticket.assigned_to_users.count }} مستخدم
+                                    {% else %}-{% endif %}
+                                </div>
+
+                                <div class="d-sm-none">
+                                    <strong>التاريخ:</strong>
+                                    {{ ticket.created_at|date:"Y-m-d H:i" }}
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- القسم -->
+                        <td class="d-none d-md-table-cell">
+                            {% if ticket.departments.count %}
+                                {% for dept in ticket.departments.all %}
+                                    {{ dept.name }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            {% else %}-{% endif %}
+                        </td>
+
+                        <!-- المعيّن له -->
+                        <td class="d-none d-lg-table-cell">
+                            {% if ticket.assigned_to %}
+                                {{ ticket.assigned_to.get_full_name|default:ticket.assigned_to.username }}
+                            {% elif ticket.assigned_to_users.count %}
+                                {{ ticket.assigned_to_users.count }} مستخدم
+                            {% else %}-{% endif %}
+                        </td>
+
+                        <!-- الأولوية -->
+                        <td>
+                            {% if ticket.priority == 'critical' %}
+                                <span class="badge bg-danger">{{ ticket.get_priority_display }}</span>
+                            {% elif ticket.priority == 'urgent' %}
+                                <span class="badge bg-warning text-dark">{{ ticket.get_priority_display }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ ticket.get_priority_display }}</span>
                             {% endif %}
                         </td>
-                        <td>{{ ticket.department.name }}</td>
-                        <td>{{ ticket.assigned_to|default:"غير معين" }}</td>
+
+                        <!-- الحالة -->
                         <td>
-                            <span class="badge badge-priority-{{ ticket.priority }}">
-                                {{ ticket.get_priority_display }}
-                            </span>
+                            {% if ticket.status == 'violated' %}
+                                <span class="badge bg-danger">{{ ticket.get_status_display }}</span>
+                            {% elif ticket.status == 'in_progress' %}
+                                <span class="badge bg-info">{{ ticket.get_status_display }}</span>
+                            {% elif ticket.status == 'resolved' %}
+                                <span class="badge bg-success">{{ ticket.get_status_display }}</span>
+                            {% elif ticket.status == 'closed' %}
+                                <span class="badge bg-secondary">{{ ticket.get_status_display }}</span>
+                            {% else %}
+                                <span class="badge bg-primary">{{ ticket.get_status_display }}</span>
+                            {% endif %}
                         </td>
-                        <td>
-                            <span
-                                class="badge {% if ticket.status == 'violated' %}bg-danger{% else %}bg-secondary{% endif %}">
-                                {{ ticket.get_status_display }}
-                            </span>
-                        </td>
-                        <td>{{ ticket.created_at|date:"Y-m-d" }}</td>
+
+                        <td class="d-none d-sm-table-cell">{{ ticket.created_at|date:"Y-m-d H:i" }}</td>
+
                         <td>
                             <a href="{% url 'ticket_detail' ticket.pk %}" class="btn btn-sm btn-primary">
                                 <i class="bi bi-eye"></i>
                             </a>
                         </td>
                     </tr>
+
                     {% empty %}
                     <tr>
                         <td colspan="7" class="text-center text-muted">لا توجد طلبات</td>
@@ -103,45 +192,44 @@
         <!-- Pagination -->
         {% if page_obj.has_other_pages %}
         <nav aria-label="Page navigation" class="mt-4">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center flex-wrap">
+                
+                <!-- Previous -->
                 {% if page_obj.has_previous %}
                 <li class="page-item">
                     <a class="page-link"
-                        href="?page={{ page_obj.previous_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
-                        aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+                        href="?page={{ page_obj.previous_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                        &laquo;
                     </a>
                 </li>
                 {% else %}
-                <li class="page-item disabled">
-                    <span class="page-link">&laquo;</span>
-                </li>
+                <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
                 {% endif %}
 
+                <!-- Page numbers -->
                 {% for i in page_obj.paginator.page_range %}
-                {% if page_obj.number == i %}
-                <li class="page-item active"><span class="page-link">{{ i }}</span></li>
-                {% else %}
-                <li class="page-item">
-                    <a class="page-link"
-                        href="?page={{ i }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">{{
-                        i }}</a>
-                </li>
-                {% endif %}
+                    {% if page_obj.number == i %}
+                        <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link"
+                                href="?page={{ i }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                                {{ i }}
+                            </a>
+                        </li>
+                    {% endif %}
                 {% endfor %}
 
+                <!-- Next -->
                 {% if page_obj.has_next %}
                 <li class="page-item">
                     <a class="page-link"
-                        href="?page={{ page_obj.next_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
-                        aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
+                        href="?page={{ page_obj.next_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">
+                        &raquo;
                     </a>
                 </li>
                 {% else %}
-                <li class="page-item disabled">
-                    <span class="page-link">&raquo;</span>
-                </li>
+                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
                 {% endif %}
             </ul>
         </nav>
@@ -149,3 +237,8 @@
     </div>
 </div>
 {% endblock %}
+
+
+
+
+    

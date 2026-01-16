@@ -1,6 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils import timezone
+from django.db.models import Q
 from tickets.models import Ticket
 
 
@@ -31,12 +32,17 @@ class ForceAcknowledgmentMiddleware:
         if any(request.path.startswith(url) for url in self.exempt_urls):
             return self.get_response(request)
         
-        # التحقق من وجود طلبات غير مؤكدة
+        # التحقق من وجود طلبات غير مؤكدة (يشمل التعيين المباشر والمتعدد والقسم)
+        ack_filter = Q(assigned_to=request.user) | Q(assigned_to_users=request.user)
+        if getattr(request.user, 'department', None):
+            ack_filter |= Q(departments=request.user.department)
+        
         unacknowledged_tickets = Ticket.objects.filter(
-            assigned_to=request.user,
-            status='pending_ack',
-            acknowledged_at__isnull=True
-        ).exists()
+            ack_filter,
+            status='pending_ack'
+        ).exclude(
+            acknowledgments__user=request.user
+        ).distinct().exists()
         
         if unacknowledged_tickets:
             # إعادة التوجيه الإجباري لصفحة التأكيد

@@ -1,0 +1,191 @@
+<!-- Navbar المحسن والمنظم -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <!-- Logo/Brand -->
+        <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">
+            <i class="bi bi-mortarboard-fill"></i> نظام إدارة جامعة الكنوز
+        </a>
+
+        <!-- Mobile Toggle Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Content -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Right Side Navigation (سيظهر على اليسار في RTL) -->
+            <ul class="navbar-nav me-auto">
+                <!-- الصفحة الرئيسية -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        <i class="bi bi-house-door-fill"></i> الرئيسية
+                    </a>
+                </li>
+
+                <!-- الطلبات (Dropdown) -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="ticketsDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-ticket-perforated"></i> الطلبات
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="ticketsDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'ticket_list' %}">
+                                <i class="bi bi-list-ul"></i> جميع الطلبات
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'create_ticket' %}">
+                                <i class="bi bi-plus-circle-fill"></i> طلب جديد
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-success" href="{% url 'completed_tickets' %}">
+                                <i class="bi bi-check2-all"></i> الطلبات المكتملة
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- التقارير (للمخولين فقط) -->
+                {% if user|can_view_reports %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-graph-up"></i> التقارير
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="reportsDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'reports_dashboard' %}">
+                                <i class="bi bi-grid-fill"></i> لوحة التقارير
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'performance_report' %}">
+                                <i class="bi bi-speedometer2"></i> تقرير الأداء
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="{% url 'violations_report' %}">
+                                <i class="bi bi-fire"></i> سجل المخالفات
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'penalty_points_report' %}">
+                                <i class="bi bi-exclamation-triangle"></i> النقاط الجزائية
+                            </a>
+                        </li>
+
+                        {% if user.is_upper_management %}
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-info" href="{% url 'monitoring_dashboard' %}">
+                                <i class="bi bi-activity"></i> المراقبة الحية
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'export_performance_excel' %}">
+                                <i class="bi bi-file-earmark-excel"></i> تصدير Excel
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+
+                <!-- عن النظام -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_system' %}">
+                        <i class="bi bi-info-circle"></i> عن النظام
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Left Side Items (سيظهر على اليمين في RTL) -->
+            <ul class="navbar-nav ms-auto align-items-center">
+                <!-- Theme Toggle -->
+                <li class="nav-item me-2">
+                    <button id="themeToggle" class="btn btn-sm btn-outline-secondary" type="button"
+                        title="تبديل الوضع الليلي/الفاتح">
+                        <i class="bi bi-brightness-high"></i>
+                    </button>
+                </li>
+
+                <!-- Notifications -->
+                <li class="nav-item dropdown me-2">
+                    <a class="nav-link position-relative" href="#" id="notificationsDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false" title="الإشعارات">
+                        <i class="bi bi-bell-fill"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            id="notificationCount" style="display:none;">0</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" style="width:350px; max-height:500px; overflow-y:auto;">
+                        <li class="dropdown-header d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-bell"></i> الإشعارات</span>
+                            <a href="{% url 'notifications_list' %}" class="btn btn-sm btn-link">عرض الكل</a>
+                        </li>
+                        <li id="notificationsContainer"></li>
+                        <li id="notificationsLoading" class="text-center p-3" style="display:none;">
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">جاري التحميل...</span>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- User Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i>
+                        <span class="d-none d-md-inline">{{ user.get_full_name|default:user.username }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <span class="dropdown-item-text">
+                                <strong>{{ user.department|default:"لا يوجد قسم" }}</strong>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="dropdown-item-text text-muted">
+                                {{ user.get_role_display }}
+                            </span>
+                        </li>
+
+                        {% if user.is_superuser %}
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/admin/">
+                                <i class="bi bi-gear-fill"></i> لوحة الإدارة
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form action="{% url 'logout' %}" method="post" class="d-inline w-100">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="bi bi-box-arrow-right"></i> تسجيل الخروج
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

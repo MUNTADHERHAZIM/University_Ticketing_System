@@ -1,108 +1,239 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}إنشاء طلب جديد{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">
-                    <i class="bi bi-plus-circle-fill"></i>
-                    إنشاء طلب جديد
-                </h4>
+    <div class="col-lg-10">
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-header bg-gradient-primary text-white py-3">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-plus-circle-fill fs-3 me-3"></i>
+                    <div>
+                        <h4 class="mb-0 fw-bold">إنشاء طلب جديد</h4>
+                        <small class="text-white-50">يرجى ملء النموذج أدناه لإنشاء تذكرة جديدة</small>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <form method="post" enctype="multipart/form-data">
+            <div class="card-body p-4 bg-light">
+                <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                     {% csrf_token %}
 
-                    <div class="mb-3">
-                        {{ form.title.label_tag }}
-                        {{ form.title }}
-                        {% if form.title.errors %}
-                        <div class="text-danger">{{ form.title.errors }}</div>
-                        {% endif %}
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {% for error in form.non_field_errors %}
+                        {{ error }}
+                        {% endfor %}
                     </div>
+                    {% endif %}
 
-                    <div class="mb-3">
-                        {{ form.description.label_tag }}
-                        {{ form.description }}
-                        {% if form.description.errors %}
-                        <div class="text-danger">{{ form.description.errors }}</div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form.priority.label_tag }}
-                        {{ form.priority }}
-                        {% if form.priority.errors %}
-                        <div class="text-danger">{{ form.priority.errors }}</div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form.departments.label_tag }}
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    {% for dept in form.departments %}
-                                    <div class="col-md-6 mb-2">
-                                        <div class="form-check">
-                                            {{ dept }}
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="{{ form.title.id_for_label }}" class="form-label fw-bold">العنوان</label>
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                            <div class="text-danger small mt-2">{{ form.title.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-3">
+                            <label for="{{ form.priority.id_for_label }}" class="form-label fw-bold">الأولوية</label>
+                            {{ form.priority }}
+                            {% if form.priority.errors %}
+                            <div class="text-danger small mt-2">{{ form.priority.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-3">
+                            <label for="{{ form.escalation_level.id_for_label }}" class="form-label fw-bold">مستوى
+                                التصعيد الابتدائي</label>
+                            {{ form.escalation_level }}
+                        </div>
+                        <div class="col-12">
+                            <label for="{{ form.description.id_for_label }}" class="form-label fw-bold">الوصف</label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                            <div class="text-danger small mt-2">{{ form.description.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ form.attachment.id_for_label }}" class="form-label fw-bold">
+                                <i class="bi bi-paperclip me-2"></i> {{ form.attachment.label }}
+                            </label>
+                            {{ form.attachment }}
+                            <div class="form-text text-muted">الملفات المسموحة: PDF, Word, Images</div>
+                            {% if form.attachment.errors %}
+                            <div class="text-danger small mt-1">{{ form.attachment.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-info mb-0" id="slaHint">
+                                <i class="bi bi-clock-history me-2"></i>
+                                <strong>المهلة:</strong> سيتم تحديد الموعد النهائي تلقائياً حسب الأولوية
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="card border-0 bg-light">
+                                <div class="card-body py-2">
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <span class="badge bg-danger d-block mb-1">حرج</span>
+                                            <small class="text-muted">يوم واحد</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <span class="badge bg-warning text-dark d-block mb-1">عاجل</span>
+                                            <small class="text-muted">يومين</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <span class="badge bg-info d-block mb-1">عادي</span>
+                                            <small class="text-muted">3 أيام</small>
                                         </div>
                                     </div>
-                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
-                        <small class="form-text text-muted">{{ form.departments.help_text }}</small>
-                        {% if form.departments.errors %}
-                        <div class="text-danger">{{ form.departments.errors }}</div>
-                        {% endif %}
                     </div>
 
-                    <div class="mb-3">
-                        {{ form.assigned_to_users.label_tag }}
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    {% for user in form.assigned_to_users %}
-                                    <div class="col-md-6 mb-2">
-                                        <div class="form-check">
-                                            {{ user }}
-                                        </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div
+                                    class="card-header fw-bold text-primary d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-building me-2"></i> الأقسام المعنية</span>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="selectAllDepts">
+                                        <label class="form-check-label small" for="selectAllDepts">تحديد الكل</label>
                                     </div>
-                                    {% endfor %}
+                                </div>
+                                <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                                    <div class="department-list">
+                                        {% for checkbox in form.departments %}
+                                        <div class="form-check mb-2">
+                                            {{ checkbox.tag }}
+                                            <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                                {{ checkbox.choice_label }}
+                                            </label>
+                                        </div>
+                                        {% empty %}
+                                        <div class="text-muted small">لا توجد أقسام</div>
+                                        {% endfor %}
+                                    </div>
+                                    {% if form.departments.errors %}
+                                    <div class="text-danger small mt-2">{{ form.departments.errors.0 }}</div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
-                        <small class="form-text text-muted">{{ form.assigned_to_users.help_text }}</small>
-                        {% if form.assigned_to_users.errors %}
-                        <div class="text-danger">{{ form.assigned_to_users.errors }}</div>
-                        {% endif %}
+
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div
+                                    class="card-header fw-bold text-primary d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-people me-2"></i> الموظفون المعنيون</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="text" id="assigneeSearch" class="form-control form-control-sm"
+                                            placeholder="بحث بالاسم" style="width: 150px;">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="selectAllUsers">
+                                            <label class="form-check-label small" for="selectAllUsers">الكل</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                                    <div class="user-list">
+                                        {% for checkbox in form.assigned_to_users %}
+                                        <div class="form-check mb-2">
+                                            {{ checkbox.tag }}
+                                            <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                                {{ checkbox.choice_label }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% if form.assigned_to_users.errors %}
+                                    <div class="text-danger small mt-2">{{ form.assigned_to_users.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        {{ form.attachment.label_tag }}
-                        {{ form.attachment }}
-                        {% if form.attachment.errors %}
-                        <div class="text-danger">{{ form.attachment.errors }}</div>
-                        {% endif %}
-                    </div>
-
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="bi bi-send-fill"></i>
-                            إنشاء الطلب
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{% url 'ticket_list' %}" class="btn btn-light px-4 border">إلغاء</a>
+                        <button type="submit" class="btn btn-primary px-5 fw-bold">
+                            <i class="bi bi-send-fill me-2"></i> إنشاء الطلب
                         </button>
-                        <a href="{% url 'dashboard' %}" class="btn btn-secondary">
-                            <i class="bi bi-x-circle"></i>
-                            إلغاء
-                        </a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    }
+
+    .form-check-input:checked {
+        background-color: #4e73df;
+        border-color: #4e73df;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select All Departments
+        const selectAllDepts = document.getElementById('selectAllDepts');
+        const deptCheckboxes = document.querySelectorAll('.department-list input[type="checkbox"]');
+
+        if (selectAllDepts) {
+            selectAllDepts.addEventListener('change', function () {
+                deptCheckboxes.forEach(cb => cb.checked = this.checked);
+            });
+        }
+
+        // Select All Users
+        const selectAllUsers = document.getElementById('selectAllUsers');
+        const userCheckboxes = document.querySelectorAll('.user-list input[type="checkbox"]');
+
+        if (selectAllUsers) {
+            selectAllUsers.addEventListener('change', function () {
+                userCheckboxes.forEach(cb => cb.checked = this.checked);
+            });
+        }
+
+        // Search Assignees
+        const assigneeSearch = document.getElementById('assigneeSearch');
+        if (assigneeSearch) {
+            assigneeSearch.addEventListener('input', function () {
+                const q = this.value.trim().toLowerCase();
+                document.querySelectorAll('.user-list .form-check').forEach(item => {
+                    const label = item.querySelector('label');
+                    const text = (label && label.textContent || '').toLowerCase();
+                    item.style.display = text.includes(q) ? '' : 'none';
+                });
+            });
+        }
+
+        // SLA hint updater - تحديث معلومات المهلة حسب الأولوية
+        const prioritySelect = document.getElementById('{{ form.priority.id_for_label }}') || document.querySelector('select[name="priority"]');
+        const slaHint = document.getElementById('slaHint');
+        const slaMap = {
+            critical: { days: 1, label: 'يوم واحد' },
+            urgent: { days: 2, label: 'يومين' },
+            normal: { days: 3, label: '3 أيام' }
+        };
+
+        function updateSLA() {
+            const val = (prioritySelect && prioritySelect.value) || 'normal';
+            const sla = slaMap[val] || slaMap.normal;
+            slaHint.innerHTML = `<i class="bi bi-clock-history me-2"></i><strong>المهلة:</strong> ${sla.label} من تاريخ الإنشاء`;
+        }
+
+        if (prioritySelect) {
+            updateSLA();
+            prioritySelect.addEventListener('change', updateSLA);
+        }
+    });
+</script>
 {% endblock %}

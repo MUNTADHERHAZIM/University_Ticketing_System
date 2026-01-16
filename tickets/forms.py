@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 from .models import Ticket
 from accounts.models import Department, CustomUser
 
@@ -18,15 +19,24 @@ class CreateTicketForm(forms.ModelForm):
     )
     
     assigned_to_users = forms.ModelMultipleChoiceField(
-        queryset=CustomUser.objects.filter(role__in=['employee', 'head', 'dean']),
+        queryset=CustomUser.objects.filter(role__in=['employee', 'head', 'dean'], is_active=True),
         widget=forms.CheckboxSelectMultiple(attrs={
             'class': 'form-check-input'
         }),
-        label='المعينون لهم',
+        label='الموظفون المعنيون',
         help_text='اختر موظفاً واحداً أو أكثر',
-        required=True
+        required=False
     )
     
+    escalation_level = forms.ChoiceField(
+        choices=Ticket.ESCALATION_CHOICES,
+        required=False,
+        label='مستوى التصعيد الابتدائي',
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    
+    
+
     attachment = forms.FileField(
         required=False,
         label='مرفق',
@@ -38,7 +48,7 @@ class CreateTicketForm(forms.ModelForm):
     
     class Meta:
         model = Ticket
-        fields = ['title', 'description', 'priority', 'departments', 'assigned_to_users', 'attachment']
+        fields = ['title', 'description', 'priority', 'departments', 'assigned_to_users', 'escalation_level', 'attachment']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -61,6 +71,8 @@ class CreateTicketForm(forms.ModelForm):
             'description': 'الوصف',
             'priority': 'الأولوية',
         }
+
+
 
 
 class CloseTicketForm(forms.Form):
@@ -132,4 +144,87 @@ class CommentForm(forms.Form):
             'required': 'يرجى كتابة تعليق',
             'min_length': 'التعليق قصير جداً'
         }
+    )
+
+
+class AddPenaltyForm(forms.Form):
+    """
+    نموذج إضافة نقاط جزائية يدوياً
+    """
+    target_type = forms.ChoiceField(
+        choices=[('user', 'موظف'), ('department', 'قسم')],
+        label='الهدف',
+        widget=forms.Select(attrs={'class': 'form-select', 'id': 'targetTypeSelect'})
+    )
+    
+    user = forms.ModelChoiceField(
+        queryset=CustomUser.objects.filter(role__in=['employee', 'head'], is_active=True),
+        label='الموظف',
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    
+    department = forms.ModelChoiceField(
+        queryset=Department.objects.all(),
+        label='القسم',
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    
+    points = forms.IntegerField(
+        label='عدد النقاط',
+        min_value=1,
+        max_value=100,
+        initial=10,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    
+    reason = forms.CharField(
+        label='سبب المخالفة',
+        widget=forms.Textarea(attrs={
+            'class': 'form-control', 
+            'rows': 3, 
+            'placeholder': 'سبب تسجيل هذه النقاط...'
+        }),
+        required=True
+    )
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        target_type = cleaned_data.get('target_type')
+        user = cleaned_data.get('user')
+        department = cleaned_data.get('department')
+        
+        if target_type == 'user' and not user:
+            raise forms.ValidationError("يرجى اختيار الموظف")
+        if target_type == 'department' and not department:
+            raise forms.ValidationError("يرجى اختيار القسم")
+            
+    def clean(self):
+        cleaned_data = super().clean()
+        target_type = cleaned_data.get('target_type')
+        user = cleaned_data.get('user')
+        department = cleaned_data.get('department')
+        
+        if target_type == 'user' and not user:
+            raise forms.ValidationError("يرجى اختيار الموظف")
+        if target_type == 'department' and not department:
+            raise forms.ValidationError("يرجى اختيار القسم")
+            
+        return cleaned_data
+
+
+class ReturnTicketForm(forms.Form):
+    """
+    نموذج إرجاع/رفض التذكرة
+    """
+    reason = forms.CharField(
+        label='سبب الإرجاع',
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 4,
+            'placeholder': 'يرجى توضيح سبب عدم استلام/إرجاع هذا الطلب (مثلاً: ليس من اختصاص القسم، بيانات ناقصة، مكرر...)',
+            'required': True
+        }),
+        help_text='سيتم إرسال هذا السبب إلى منشئ الطلب.'
     )

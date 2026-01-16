@@ -1,5 +1,24 @@
+
 from django.contrib import admin
-from .models import Notification
+from .models import GlobalMail, GlobalMailAttachment, Notification
+class GlobalMailAttachmentInline(admin.TabularInline):
+    model = GlobalMailAttachment
+    extra = 1
+    fields = ('file', 'uploaded_at')
+    readonly_fields = ('uploaded_at',)
+
+
+@admin.register(GlobalMail)
+class GlobalMailAdmin(admin.ModelAdmin):
+    list_display = ('title', 'mail_type', 'created_at', 'created_by', 'external_link')
+    search_fields = ('title', 'message')
+    list_filter = ('created_at', 'mail_type')
+    inlines = [GlobalMailAttachmentInline]
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'message', 'mail_type', 'external_link', 'created_by')
+        }),
+    )
 
 
 @admin.register(Notification)

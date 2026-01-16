@@ -1,187 +1,1647 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+{% load permissions %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}نظام ادارة جامعة الكنوز{% endblock %}</title>
+<!-- Bootstrap 5 RTL -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+    :root {
+        --primary-color: #4c7eea;
+        --danger-color: #d55454;
+        --warning-color: #d9a853;
+        --success-color: #5ecba7;
+        --bg-grad-start: #667eea;
+        --bg-grad-end: #764ba2;
+        --card-bg: #ffffff;
+        --text-color: #000000;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}نظام تتبع الطلبات الجامعي{% endblock %}</title>
-    <!-- Bootstrap 5 RTL -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <style>
-        :root {
-            --primary-color: #4c7eea;
-            --danger-color: #d55454;
-            --warning-color: #d9a853;
-            --success-color: #5ecba7;
+    [data-theme="dark"] {
+        --primary-color: #4c7eea;
+        --danger-color: #ef4444;
+        --warning-color: #f59e0b;
+        --success-color: #22c55e;
+        --bg-grad-start: #0f172a;
+        --bg-grad-end: #1f2937;
+        --card-bg: #111827;
+        --text-color: #f9fafb;
+    }
+
+    [data-theme="dark"] .table {
+        color: var(--text-color);
+        --bs-table-color: var(--text-color);
+        --bs-table-hover-color: var(--text-color);
+        border-color: #374151;
+    }
+
+    [data-theme="dark"] .form-control,
+    [data-theme="dark"] .form-select {
+        background-color: #1f2937;
+        border-color: #374151;
+        color: #f9fafb;
+    }
+
+    [data-theme="dark"] .form-control:focus,
+    [data-theme="dark"] .form-select:focus {
+        background-color: #374151;
+        color: #ffffff;
+    }
+
+    /* تحسينات إضافية للـ Dark Mode */
+    [data-theme="dark"] body {
+        color: #f9fafb;
+    }
+
+    [data-theme="dark"] .navbar {
+        background: rgba(17, 24, 39, 0.98) !important;
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="dark"] .navbar-brand {
+        background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    [data-theme="dark"] .navbar-brand i {
+        background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    [data-theme="dark"] .navbar-light .navbar-nav .nav-link {
+        color: #d1d5db !important;
+    }
+
+    [data-theme="dark"] .nav-link:hover {
+        color: #60a5fa !important;
+        background: rgba(96, 165, 250, 0.1);
+    }
+
+    [data-theme="dark"] .nav-link.active {
+        color: #60a5fa !important;
+        background: rgba(96, 165, 250, 0.15);
+    }
+
+    [data-theme="dark"] .nav-link::before {
+        background: linear-gradient(90deg, #60a5fa, #a78bfa);
+    }
+
+    [data-theme="dark"] .nav-link.text-success {
+        color: #86efac !important;
+    }
+
+    [data-theme="dark"] .nav-link.text-success:hover {
+        background: rgba(134, 239, 172, 0.1);
+    }
+
+    [data-theme="dark"] .nav-link.text-danger {
+        color: #fca5a5 !important;
+    }
+
+    [data-theme="dark"] .nav-link.text-danger:hover {
+        background: rgba(252, 165, 165, 0.1);
+    }
+
+    [data-theme="dark"] .dropdown-menu {
+        background: rgba(31, 41, 55, 0.98);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    [data-theme="dark"] .dropdown-item {
+        color: #d1d5db;
+    }
+
+    [data-theme="dark"] .dropdown-item:hover,
+    [data-theme="dark"] .dropdown-item:focus {
+        background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(167, 139, 250, 0.15));
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .dropdown-item.text-primary {
+        color: #93c5fd !important;
+    }
+
+    [data-theme="dark"] .dropdown-item.text-danger {
+        color: #fca5a5 !important;
+    }
+
+    [data-theme="dark"] .dropdown-item.text-success {
+        color: #86efac !important;
+    }
+
+    [data-theme="dark"] .dropdown-header {
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .dropdown-item-text {
+        color: #d1d5db;
+    }
+
+    [data-theme="dark"] .dropdown-divider {
+        border-top-color: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="dark"] #themeToggle {
+        border-color: rgba(96, 165, 250, 0.3);
+        background: rgba(96, 165, 250, 0.1);
+    }
+
+    [data-theme="dark"] #themeToggle:hover {
+        background: rgba(96, 165, 250, 0.2);
+        border-color: rgba(96, 165, 250, 0.5);
+    }
+
+    [data-theme="dark"] #themeToggle i {
+        color: #60a5fa;
+    }
+
+    [data-theme="dark"] #userDropdown {
+        background: rgba(96, 165, 250, 0.15);
+        color: #f3f4f6 !important;
+    }
+
+    [data-theme="dark"] #userDropdown:hover {
+        background: rgba(96, 165, 250, 0.25);
+    }
+
+    [data-theme="dark"] .navbar-toggler {
+        background: rgba(96, 165, 250, 0.15);
+        border-color: rgba(96, 165, 250, 0.3);
+    }
+
+    [data-theme="dark"] .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(96, 165, 250, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    [data-theme="dark"] .navbar.scrolled {
+        background: rgba(17, 24, 39, 0.95) !important;
+        box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="dark"] .card {
+        border: 1px solid #374151;
+        background-color: var(--card-bg);
+    }
+
+    [data-theme="dark"] .alert {
+        background-color: #1f2937;
+        border-color: #374151;
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .alert-primary {
+        background-color: rgba(76, 126, 234, 0.1);
+        border-color: #4c7eea;
+        color: #93c5fd;
+    }
+
+    [data-theme="dark"] .alert-success {
+        background-color: rgba(34, 197, 94, 0.1);
+        border-color: #22c55e;
+        color: #86efac;
+    }
+
+    [data-theme="dark"] .alert-danger {
+        background-color: rgba(239, 68, 68, 0.1);
+        border-color: #ef4444;
+        color: #fca5a5;
+    }
+
+    [data-theme="dark"] .alert-warning {
+        background-color: rgba(245, 158, 11, 0.1);
+        border-color: #f59e0b;
+        color: #fcd34d;
+    }
+
+    [data-theme="dark"] .btn-outline-secondary {
+        color: #d1d5db;
+        border-color: #4b5563;
+    }
+
+    [data-theme="dark"] .btn-outline-secondary:hover {
+        background-color: #4b5563;
+        border-color: #4b5563;
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .btn-secondary {
+        background-color: #4b5563;
+        border-color: #4b5563;
+    }
+
+    [data-theme="dark"] .btn-secondary:hover {
+        background-color: #6b7280;
+        border-color: #6b7280;
+    }
+
+    [data-theme="dark"] .list-group-item {
+        background-color: #1f2937;
+        border-color: #374151;
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .list-group-item.active {
+        background-color: #4c7eea;
+        border-color: #4c7eea;
+    }
+
+    [data-theme="dark"] .text-muted {
+        color: #9ca3af !important;
+    }
+
+    [data-theme="dark"] .bg-light {
+        background-color: #1f2937 !important;
+    }
+
+    [data-theme="dark"] .badge {
+        background-color: #374151 !important;
+        color: #f3f4f6 !important;
+    }
+
+    [data-theme="dark"] .badge-primary {
+        background-color: #4c7eea !important;
+    }
+
+    [data-theme="dark"] .badge-success {
+        background-color: #22c55e !important;
+    }
+
+    [data-theme="dark"] .badge-danger {
+        background-color: #ef4444 !important;
+    }
+
+    [data-theme="dark"] .badge-warning {
+        background-color: #f59e0b !important;
+    }
+
+    [data-theme="dark"] .nav-link.active {
+        color: #4c7eea !important;
+    }
+
+    [data-theme="dark"] .table-striped>tbody>tr:nth-of-type(odd) {
+        background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    [data-theme="dark"] .table-hover tbody tr:hover {
+        background-color: rgba(76, 126, 234, 0.1);
+    }
+
+    [data-theme="dark"] .table thead {
+        border-color: #4b5563;
+    }
+
+    [data-theme="dark"] .table thead th {
+        color: #d1d5db;
+        background-color: #1f2937;
+    }
+
+    [data-theme="dark"] .modal-content {
+        background-color: var(--card-bg);
+        border: 1px solid #374151;
+    }
+
+    [data-theme="dark"] .modal-header {
+        border-color: #374151;
+    }
+
+    [data-theme="dark"] .modal-footer {
+        border-color: #374151;
+    }
+
+    [data-theme="dark"] .btn-close {
+        filter: brightness(0.8);
+    }
+
+    [data-theme="dark"] .pagination .page-link {
+        background-color: #1f2937;
+        border-color: #374151;
+        color: #d1d5db;
+    }
+
+    [data-theme="dark"] .pagination .page-link:hover {
+        background-color: #4b5563;
+        border-color: #4b5563;
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .pagination .page-item.active .page-link {
+        background-color: #4c7eea;
+        border-color: #4c7eea;
+    }
+
+    /* تحسين الروابط والنصوص في Dark Mode */
+    [data-theme="dark"] a {
+        color: #60a5fa;
+    }
+
+    [data-theme="dark"] a:hover {
+        color: #93c5fd;
+    }
+
+    [data-theme="dark"] .btn-primary {
+        background-color: #4c7eea;
+        border-color: #4c7eea;
+    }
+
+    [data-theme="dark"] .btn-primary:hover {
+        background-color: #5a8aff;
+        border-color: #5a8aff;
+    }
+
+    [data-theme="dark"] .btn-danger {
+        background-color: #ef4444;
+    }
+
+    [data-theme="dark"] .btn-danger:hover {
+        background-color: #f87171;
+    }
+
+    [data-theme="dark"] .btn-success {
+        background-color: #22c55e;
+    }
+
+    [data-theme="dark"] .btn-success:hover {
+        background-color: #4ade80;
+    }
+
+    [data-theme="dark"] .btn-warning {
+        background-color: #f59e0b;
+        color: #000;
+    }
+
+    [data-theme="dark"] .btn-warning:hover {
+        background-color: #fbbf24;
+        color: #000;
+    }
+
+    [data-theme="dark"] h1,
+    [data-theme="dark"] h2,
+    [data-theme="dark"] h3,
+    [data-theme="dark"] h4,
+    [data-theme="dark"] h5,
+    [data-theme="dark"] h6 {
+        color: #f9fafb;
+    }
+
+    [data-theme="dark"] .card-title {
+        color: #f9fafb;
+    }
+
+    [data-theme="dark"] .card-text {
+        color: #d1d5db;
+    }
+
+    [data-theme="dark"] .small {
+        color: #9ca3af;
+    }
+
+    /* تحسينات الـ Badge والـ Stat Card في Dark Mode */
+    [data-theme="dark"] .badge-priority-critical {
+        background: #dc2626;
+        color: #fecaca;
+    }
+
+    [data-theme="dark"] .badge-priority-urgent {
+        background: #f59e0b;
+        color: #fed7aa;
+    }
+
+    [data-theme="dark"] .badge-priority-normal {
+        background: #10b981;
+        color: #a7f3d0;
+    }
+
+    [data-theme="dark"] .stat-card {
+        background: linear-gradient(135deg, #4c7eea 0%, #7c3aed 100%);
+    }
+
+    [data-theme="dark"] .stat-card h3 {
+        color: #ffffff;
+    }
+
+    [data-theme="dark"] .stat-card p {
+        color: #e5e7eb;
+    }
+
+    /* تحسينات البريد العام في Dark Mode */
+    [data-theme="dark"] .alert[style*="background"] {
+        background: #1f2937 !important;
+        border-left: 6px solid #4c7eea;
+        color: #f9fafb;
+    }
+
+    [data-theme="dark"] .alert strong {
+        color: #ffffff;
+    }
+
+    [data-theme="dark"] .alert span:not(.text-muted) {
+        color: #e5e7eb;
+    }
+
+    [data-theme="dark"] .alert .text-muted {
+        color: #9ca3af !important;
+    }
+
+    [data-theme="dark"] .alert .text-danger {
+        color: #f87171 !important;
+    }
+
+    [data-theme="dark"] .alert .text-primary {
+        color: #93c5fd !important;
+    }
+
+    [data-theme="dark"] .alert .text-success {
+        color: #86efac !important;
+    }
+
+    [data-theme="dark"] .alert .text-secondary {
+        color: #d1d5db !important;
+    }
+
+    [data-theme="dark"] .alert .btn-outline-info {
+        color: #60a5fa;
+        border-color: #60a5fa;
+    }
+
+    [data-theme="dark"] .alert .btn-outline-info:hover {
+        background-color: #60a5fa;
+        color: #111827;
+    }
+
+    [data-theme="dark"] .alert .btn-outline-primary {
+        color: #60a5fa;
+        border-color: #60a5fa;
+    }
+
+    [data-theme="dark"] .alert .btn-outline-primary:hover {
+        background-color: #60a5fa;
+        color: #111827;
+    }
+
+    /* ====== COMPREHENSIVE DARK MODE FIXES ====== */
+
+    /* Background utilities */
+    [data-theme="dark"] .bg-light {
+        background-color: #1f2937 !important;
+    }
+
+    [data-theme="dark"] .bg-white {
+        background-color: #111827 !important;
+    }
+
+    [data-theme="dark"] .bg-body {
+        background-color: #111827 !important;
+    }
+
+    /* Table fixes */
+    [data-theme="dark"] .table-light {
+        background-color: #374151 !important;
+        color: #f3f4f6 !important;
+    }
+
+    [data-theme="dark"] .table-light th,
+    [data-theme="dark"] .table-light td {
+        color: #f3f4f6 !important;
+        background-color: #374151 !important;
+    }
+
+    [data-theme="dark"] .table {
+        --bs-table-bg: transparent;
+        --bs-table-striped-bg: rgba(255, 255, 255, 0.03);
+        --bs-table-hover-bg: rgba(96, 165, 250, 0.1);
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .table td,
+    [data-theme="dark"] .table th {
+        border-color: #374151;
+    }
+
+    [data-theme="dark"] .table-striped>tbody>tr:nth-of-type(odd)>* {
+        --bs-table-accent-bg: rgba(255, 255, 255, 0.03);
+        color: #f3f4f6;
+    }
+
+    /* Form elements */
+    [data-theme="dark"] .form-label {
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .form-text {
+        color: #9ca3af !important;
+    }
+
+    [data-theme="dark"] .form-check-label {
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .form-control,
+    [data-theme="dark"] .form-select {
+        background-color: #1f2937;
+        border-color: #4b5563;
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .form-control:focus,
+    [data-theme="dark"] .form-select:focus {
+        background-color: #374151;
+        border-color: #60a5fa;
+        color: #ffffff;
+        box-shadow: 0 0 0 0.25rem rgba(96, 165, 250, 0.25);
+    }
+
+    [data-theme="dark"] .form-control::placeholder {
+        color: #9ca3af;
+    }
+
+    [data-theme="dark"] .form-control:disabled,
+    [data-theme="dark"] .form-control[readonly] {
+        background-color: #374151;
+        opacity: 0.7;
+    }
+
+    [data-theme="dark"] .input-group-text {
+        background-color: #374151;
+        border-color: #4b5563;
+        color: #f3f4f6;
+    }
+
+    /* Card fixes */
+    [data-theme="dark"] .card {
+        background-color: #111827;
+        border-color: #374151;
+    }
+
+    [data-theme="dark"] .card-header {
+        background-color: #1f2937;
+        border-color: #374151;
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .card-footer {
+        background-color: #1f2937;
+        border-color: #374151;
+    }
+
+    [data-theme="dark"] .card-body {
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .card-title {
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .card.bg-light {
+        background-color: #1f2937 !important;
+    }
+
+    [data-theme="dark"] .card.bg-light .card-title {
+        color: #f3f4f6 !important;
+    }
+
+    /* Border utilities */
+    [data-theme="dark"] .border {
+        border-color: #374151 !important;
+    }
+
+    [data-theme="dark"] .border-danger {
+        border-color: #ef4444 !important;
+    }
+
+    [data-theme="dark"] .border-success {
+        border-color: #22c55e !important;
+    }
+
+    [data-theme="dark"] .border-warning {
+        border-color: #f59e0b !important;
+    }
+
+    [data-theme="dark"] .border-primary {
+        border-color: #4c7eea !important;
+    }
+
+    /* Text colors */
+    [data-theme="dark"] .text-dark {
+        color: #f3f4f6 !important;
+    }
+
+    [data-theme="dark"] .text-body {
+        color: #f3f4f6 !important;
+    }
+
+    [data-theme="dark"] strong {
+        color: #ffffff;
+    }
+
+    [data-theme="dark"] label {
+        color: #f3f4f6;
+    }
+
+    /* Link colors */
+    [data-theme="dark"] a:not(.btn):not(.nav-link):not(.dropdown-item) {
+        color: #60a5fa;
+    }
+
+    [data-theme="dark"] a:not(.btn):not(.nav-link):not(.dropdown-item):hover {
+        color: #93c5fd;
+    }
+
+    /* Progress bar */
+    [data-theme="dark"] .progress {
+        background-color: #374151;
+    }
+
+    /* Breadcrumb */
+    [data-theme="dark"] .breadcrumb {
+        background-color: #1f2937;
+    }
+
+    [data-theme="dark"] .breadcrumb-item a {
+        color: #60a5fa;
+    }
+
+    [data-theme="dark"] .breadcrumb-item.active {
+        color: #9ca3af;
+    }
+
+    /* Accordion */
+    [data-theme="dark"] .accordion-item {
+        background-color: #111827;
+        border-color: #374151;
+    }
+
+    [data-theme="dark"] .accordion-button {
+        background-color: #1f2937;
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .accordion-button:not(.collapsed) {
+        background-color: rgba(96, 165, 250, 0.15);
+        color: #60a5fa;
+    }
+
+    /* Close button */
+    [data-theme="dark"] .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+
+    /* Specific component fixes */
+    [data-theme="dark"] .ticket-card,
+    [data-theme="dark"] .report-card {
+        background-color: #111827;
+        border-color: #374151;
+    }
+
+    /* Select2 / Custom dropdowns */
+    [data-theme="dark"] select option {
+        background-color: #1f2937;
+        color: #f3f4f6;
+    }
+
+    /* Hr line */
+    [data-theme="dark"] hr {
+        border-color: #374151;
+        opacity: 0.5;
+    }
+
+    /* Blockquote */
+    [data-theme="dark"] blockquote {
+        border-color: #4b5563;
+        color: #d1d5db;
+    }
+
+    /* Stats cards in dashboard */
+    [data-theme="dark"] .stat-card {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Login/Auth pages */
+    [data-theme="dark"] .login-card,
+    [data-theme="dark"] .auth-card {
+        background-color: #111827;
+    }
+
+    /* Empty states */
+    [data-theme="dark"] .text-muted {
+        color: #9ca3af !important;
+    }
+
+    [data-theme="dark"] .small,
+    [data-theme="dark"] small {
+        color: #9ca3af;
+    }
+
+    /* Tooltip */
+    [data-theme="dark"] .tooltip-inner {
+        background-color: #374151;
+        color: #f3f4f6;
+    }
+
+    /* Popover */
+    [data-theme="dark"] .popover {
+        background-color: #1f2937;
+        border-color: #374151;
+    }
+
+    [data-theme="dark"] .popover-header {
+        background-color: #374151;
+        border-color: #4b5563;
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .popover-body {
+        color: #d1d5db;
+    }
+
+    /* Footer */
+    [data-theme="dark"] footer {
+        background-color: rgba(17, 24, 39, 0.8);
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, var(--bg-grad-start) 0%, var(--bg-grad-end) 100%);
+        color: var(--text-color);
+        min-height: 100vh;
+    }
+
+    /* ====== Professional Navbar Styling ====== */
+    .navbar {
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        position: sticky;
+        top: 0;
+        z-index: 1050;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .navbar-brand {
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        background: linear-gradient(135deg, #4c7eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition: all 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+        transform: translateY(-2px);
+    }
+
+    .navbar-brand i {
+        font-size: 1.6rem;
+        background: linear-gradient(135deg, #4c7eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-left: 8px;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px);
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        .navbar {
-            background: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 1050;
-        }
-
-        .dropdown-menu {
-            z-index: 1051 !important;
-        }
-
-        .main-container {
-            padding: 2rem 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
+        50% {
             transform: translateY(-5px);
         }
+    }
 
-        .stat-card {
-            background: linear-gradient(135deg, var(--card-color, #667eea) 0%, var(--card-color-dark, #764ba2) 100%);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 15px;
+    .nav-link {
+        position: relative;
+        font-weight: 500;
+        color: #4b5563 !important;
+        padding: 0.7rem 1rem !important;
+        margin: 0 0.2rem;
+        border-radius: 10px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-link i {
+        margin-left: 6px;
+        transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #4c7eea !important;
+        background: rgba(76, 126, 234, 0.08);
+        transform: translateY(-2px);
+    }
+
+    .nav-link:hover i {
+        transform: scale(1.15) rotate(5deg);
+    }
+
+    .nav-link::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #4c7eea, #764ba2);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .nav-link:hover::before,
+    .nav-link.active::before {
+        width: 80%;
+    }
+
+    .nav-link.active {
+        color: #4c7eea !important;
+        background: rgba(76, 126, 234, 0.1);
+    }
+
+    /* Dropdown Enhancements */
+    .dropdown-menu {
+        z-index: 1051 !important;
+        border: none;
+        border-radius: 15px;
+        padding: 0.5rem;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
         }
 
-        .stat-card h3 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin: 0;
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .dropdown-item {
+        border-radius: 10px;
+        padding: 0.7rem 1rem;
+        transition: all 0.2s ease;
+        font-weight: 500;
+    }
+
+    .dropdown-item:hover {
+        background: linear-gradient(135deg, rgba(76, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        color: #4c7eea;
+        transform: translateX(-5px);
+    }
+
+    .dropdown-item i {
+        margin-left: 8px;
+        transition: transform 0.2s ease;
+    }
+
+    .dropdown-item:hover i {
+        transform: scale(1.2);
+    }
+
+    .dropdown-divider {
+        margin: 0.5rem 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .dropdown-header {
+        font-weight: 600;
+        color: #1f2937;
+        padding: 0.7rem 1rem;
+    }
+
+    /* Notification Badge */
+    .position-relative .badge {
+        animation: pulse-badge 2s infinite;
+    }
+
+    @keyframes pulse-badge {
+
+        0%,
+        100% {
+            transform: translate(-50%, -50%) scale(1);
         }
 
-        .badge-priority-critical {
-            background: #dc2626;
+        50% {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+    }
+
+    /* Theme Toggle Button */
+    #themeToggle {
+        border-radius: 12px;
+        padding: 0.5rem 0.9rem;
+        border: 2px solid rgba(76, 126, 234, 0.2);
+        background: rgba(76, 126, 234, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    #themeToggle:hover {
+        background: rgba(76, 126, 234, 0.15);
+        border-color: rgba(76, 126, 234, 0.4);
+        transform: rotate(180deg);
+    }
+
+    #themeToggle i {
+        font-size: 1.1rem;
+        color: #4c7eea;
+    }
+
+    /* User Dropdown Enhancement */
+    #userDropdown {
+        font-weight: 600;
+        background: rgba(76, 126, 234, 0.08);
+        border-radius: 25px;
+        padding: 0.5rem 1.2rem !important;
+    }
+
+    #userDropdown:hover {
+        background: rgba(76, 126, 234, 0.15);
+    }
+
+    #userDropdown i {
+        font-size: 1.3rem;
+        margin-left: 6px;
+    }
+
+    /* Navbar Scrolled State */
+    .navbar.scrolled {
+        box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.12);
+        background: rgba(255, 255, 255, 0.95) !important;
+    }
+
+    /* Special Links Styling */
+    .nav-link.text-success {
+        color: #22c55e !important;
+        font-weight: 600;
+    }
+
+    .nav-link.text-success:hover {
+        background: rgba(34, 197, 94, 0.1);
+    }
+
+    .nav-link.text-danger {
+        color: #ef4444 !important;
+        font-weight: 600;
+    }
+
+    .nav-link.text-danger:hover {
+        background: rgba(239, 68, 68, 0.1);
+    }
+
+    .nav-link .badge {
+        animation: pulse-badge 2s infinite;
+        margin-right: 5px;
+    }
+
+    /* Navbar Toggle Button (Mobile) */
+    .navbar-toggler {
+        border: none;
+        padding: 0.5rem;
+        border-radius: 10px;
+        background: rgba(76, 126, 234, 0.1);
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 3px rgba(76, 126, 234, 0.25);
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(76, 126, 234, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    .dropdown-menu {
+        z-index: 1051 !important;
+    }
+
+    .main-container {
+        padding: 2rem 0;
+        position: relative;
+        z-index: 1;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        background-color: var(--card-bg);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, var(--card-color, #667eea) 0%, var(--card-color-dark, #764ba2) 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+    }
+
+    .stat-card h3 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .badge-priority-critical {
+        background: #dc2626;
+    }
+
+    .badge-priority-urgent {
+        background: #f59e0b;
+    }
+
+    .badge-priority-normal {
+        background: #10b981;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(102, 126, 234, 0.1);
+    }
+
+    .btn-primary {
+        background: var(--primary-color);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: #1d4ed8;
+    }
+
+    .urgent-alert {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: 1;
         }
 
-        .badge-priority-urgent {
-            background: #f59e0b;
+        50% {
+            opacity: 0.7;
+        }
+    }
+
+    /* ====== Toast Notifications ====== */
+    .toast-container {
+        position: fixed;
+        top: 80px;
+        left: 20px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 400px;
+    }
+
+    .notification-toast {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98));
+        backdrop-filter: blur(20px);
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        padding: 16px 20px;
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        animation: slideInLeft 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-right: 4px solid var(--toast-color, #4c7eea);
+        max-width: 100%;
+    }
+
+    .notification-toast:hover {
+        transform: translateX(5px) scale(1.02);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+    }
+
+    .notification-toast.toast-success {
+        --toast-color: #22c55e;
+    }
+
+    .notification-toast.toast-danger {
+        --toast-color: #ef4444;
+    }
+
+    .notification-toast.toast-warning {
+        --toast-color: #f59e0b;
+    }
+
+    .notification-toast.toast-info {
+        --toast-color: #3b82f6;
+    }
+
+    .notification-toast.toast-primary {
+        --toast-color: #8b5cf6;
+    }
+
+    .toast-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+        background: var(--toast-color, #4c7eea);
+        color: white;
+    }
+
+    .toast-body {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .toast-title {
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: #1f2937;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .toast-message {
+        font-size: 0.85rem;
+        color: #6b7280;
+        line-height: 1.4;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .toast-time {
+        font-size: 0.75rem;
+        color: #9ca3af;
+        margin-top: 6px;
+    }
+
+    .toast-close {
+        background: none;
+        border: none;
+        color: #9ca3af;
+        cursor: pointer;
+        padding: 4px;
+        font-size: 1.1rem;
+        transition: all 0.2s ease;
+        border-radius: 8px;
+    }
+
+    .toast-close:hover {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+    }
+
+    .toast-progress {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 3px;
+        background: var(--toast-color, #4c7eea);
+        border-radius: 0 0 16px 0;
+        animation: shrink 5s linear forwards;
+    }
+
+    @keyframes slideInLeft {
+        from {
+            transform: translateX(-120%);
+            opacity: 0;
         }
 
-        .badge-priority-normal {
-            background: #10b981;
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOutLeft {
+        from {
+            transform: translateX(0);
+            opacity: 1;
         }
 
-        .table-hover tbody tr:hover {
-            background-color: rgba(102, 126, 234, 0.1);
+        to {
+            transform: translateX(-120%);
+            opacity: 0;
+        }
+    }
+
+    @keyframes shrink {
+        from {
+            width: 100%;
         }
 
-        .btn-primary {
-            background: var(--primary-color);
-            border: none;
+        to {
+            width: 0%;
+        }
+    }
+
+    @keyframes bellShake {
+
+        0%,
+        100% {
+            transform: rotate(0);
         }
 
-        .btn-primary:hover {
-            background: #1d4ed8;
+        10%,
+        30%,
+        50%,
+        70%,
+        90% {
+            transform: rotate(-10deg);
         }
 
-        .urgent-alert {
-            animation: pulse 2s infinite;
+        20%,
+        40%,
+        60%,
+        80% {
+            transform: rotate(10deg);
         }
+    }
 
-        @keyframes pulse {
+    .bell-shake {
+        animation: bellShake 0.6s ease-in-out;
+    }
 
-            0%,
-            100% {
-                opacity: 1;
-            }
+    /* Enhanced Notification Dropdown */
+    .notification-dropdown {
+        width: 400px !important;
+        max-height: 500px;
+        overflow: hidden;
+        padding: 0 !important;
+        border-radius: 20px !important;
+    }
 
-            50% {
-                opacity: 0.7;
-            }
-        }
-    </style>
-    {% block extra_css %}{% endblock %}
+    .notification-header {
+        padding: 16px 20px;
+        background: linear-gradient(135deg, #4c7eea 0%, #764ba2 100%);
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .notification-header h6 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    .notification-list {
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 8px;
+    }
+
+    .notification-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px;
+        border-radius: 12px;
+        margin-bottom: 4px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        position: relative;
+        background: transparent;
+    }
+
+    .notification-item:hover {
+        background: rgba(76, 126, 234, 0.08);
+    }
+
+    .notification-item::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 70%;
+        border-radius: 4px;
+        background: var(--item-color, #4c7eea);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    .notification-item:hover::before {
+        opacity: 1;
+    }
+
+    .notification-item.type-success {
+        --item-color: #22c55e;
+    }
+
+    .notification-item.type-danger {
+        --item-color: #ef4444;
+    }
+
+    .notification-item.type-warning {
+        --item-color: #f59e0b;
+    }
+
+    .notification-item.type-info {
+        --item-color: #3b82f6;
+    }
+
+    .notification-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+        color: white;
+        background: var(--item-color, #4c7eea);
+    }
+
+    .notification-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .notification-title {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #1f2937;
+        margin-bottom: 4px;
+    }
+
+    .notification-message {
+        font-size: 0.8rem;
+        color: #6b7280;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .notification-time {
+        font-size: 0.75rem;
+        color: #9ca3af;
+        margin-top: 4px;
+    }
+
+    .notification-empty {
+        text-align: center;
+        padding: 40px 20px;
+        color: #9ca3af;
+    }
+
+    .notification-empty i {
+        font-size: 3rem;
+        margin-bottom: 16px;
+        opacity: 0.5;
+    }
+
+    /* Dark Mode Toast & Notifications */
+    [data-theme="dark"] .notification-toast {
+        background: linear-gradient(135deg, rgba(31, 41, 55, 0.98), rgba(17, 24, 39, 0.98));
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="dark"] .toast-title {
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .toast-message {
+        color: #9ca3af;
+    }
+
+    [data-theme="dark"] .notification-item:hover {
+        background: rgba(96, 165, 250, 0.1);
+    }
+
+    [data-theme="dark"] .notification-title {
+        color: #f3f4f6;
+    }
+
+    [data-theme="dark"] .notification-message {
+        color: #9ca3af;
+    }
+
+    [data-theme="dark"] .notification-list {
+        background: #111827;
+    }
+</style>
+{% block extra_css %}{% endblock %}
 </head>
 
 <body>
-    <!-- Navbar -->
+    <!-- Navbar المحسن والمنظم -->
     <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
+        <div class="container-fluid">
+            <!-- Logo/Brand -->
             <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">
-                <i class="bi bi-mortarboard-fill text-primary"></i> نظام ادارة الاقسام -جامعة الكنوز
+                <i class="bi bi-mortarboard-fill"></i> نظام إدارة جامعة الكنوز
             </a>
+
+            <!-- Mobile Toggle Button -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Navbar Content -->
             <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Right Side Navigation (سيظهر على اليسار في RTL) -->
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}"><i
-                                class="bi bi-house-door"></i> الرئيسية</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'ticket_list' %}"><i
-                                class="bi bi-list-task"></i> الطلبات</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'create_ticket' %}"><i
-                                class="bi bi-plus-circle"></i> طلب جديد</a></li>
-                    {% load permissions %}
-                    {% if user|can_view_reports %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'reports_dashboard' %}"><i
-                                class="bi bi-graph-up"></i> التقارير</a></li>
-                    {% endif %}
-                    {% if user.is_superuser %}
-                    <li class="nav-item"><a class="nav-link" href="/admin/"><i class="bi bi-gear"></i> الإدارة</a></li>
-                    {% endif %}
-                </ul>
-                <ul class="navbar-nav">
-                    {% if user|can_export %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'export_report' %}" title="تصدير التقرير"><i
-                                class="bi bi-download"></i></a></li>
-                    {% endif %}
-                    <!-- Notifications Dropdown -->
+                    <!-- الصفحة الرئيسية -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard' %}">
+                            <i class="bi bi-house-door-fill"></i> الرئيسية
+                        </a>
+                    </li>
+
+                    <!-- الطلبات (Dropdown) -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link position-relative dropdown-toggle" href="#" id="notificationsDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-bell-fill"></i>
+                        <a class="nav-link dropdown-toggle" href="#" id="ticketsDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-ticket-perforated"></i> الطلبات
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="ticketsDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'ticket_list' %}">
+                                    <i class="bi bi-list-ul"></i> جميع الطلبات
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'create_ticket' %}">
+                                    <i class="bi bi-plus-circle-fill"></i> طلب جديد
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-success" href="{% url 'completed_tickets' %}">
+                                    <i class="bi bi-check2-all"></i> الطلبات المكتملة
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- التقارير (للمخولين فقط) -->
+                    {% if user|can_view_reports %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-graph-up"></i> التقارير
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="reportsDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'reports_dashboard' %}">
+                                    <i class="bi bi-grid-fill"></i> لوحة التقارير
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'performance_report' %}">
+                                    <i class="bi bi-speedometer2"></i> تقرير الأداء
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="{% url 'violations_report' %}">
+                                    <i class="bi bi-fire"></i> سجل المخالفات
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'penalty_points_report' %}">
+                                    <i class="bi bi-exclamation-triangle"></i> النقاط الجزائية
+                                </a>
+                            </li>
+
+                            {% if user.is_upper_management %}
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-info" href="{% url 'monitoring_dashboard' %}">
+                                    <i class="bi bi-activity"></i> المراقبة الحية
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'export_performance_excel' %}">
+                                    <i class="bi bi-file-earmark-excel"></i> تصدير Excel
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% endif %}
+
+                    <!-- عن النظام -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about_system' %}">
+                            <i class="bi bi-info-circle"></i> عن النظام
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Left Side Items (سيظهر على اليمين في RTL) -->
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <!-- Theme Toggle -->
+                    <li class="nav-item me-2">
+                        <button id="themeToggle" class="btn btn-sm btn-outline-secondary" type="button"
+                            title="تبديل الوضع الليلي/الفاتح">
+                            <i class="bi bi-brightness-high"></i>
+                        </button>
+                    </li>
+
+                    <!-- Notifications -->
+                    <li class="nav-item dropdown me-2">
+                        <a class="nav-link position-relative" href="#" id="notificationsDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false" title="الإشعارات">
+                            <i class="bi bi-bell-fill" id="bellIcon"></i>
                             <span
                                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                                 id="notificationCount" style="display:none;">0</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end"
-                            style="width:350px; max-height:500px; overflow-y:auto;">
-                            <li class="dropdown-header d-flex justify-content-between align-items-center">
-                                <span><i class="bi bi-bell"></i> الإشعارات</span>
-                                <a href="{% url 'notifications_list' %}" class="btn btn-sm btn-link">عرض الكل</a>
+                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown">
+                            <li class="notification-header">
+                                <h6><i class="bi bi-bell-fill me-2"></i>الإشعارات</h6>
+                                <a href="{% url 'notifications_list' %}" class="btn btn-sm btn-light">عرض الكل</a>
                             </li>
-                            <li id="notificationsContainer"></li>
+                            <li class="notification-list" id="notificationsContainer"></li>
                             <li id="notificationsLoading" class="text-center p-3" style="display:none;">
-                                <div class="spinner-border spinner-border-sm" role="status"><span
-                                        class="visually-hidden">جاري التحميل...</span></div>
+                                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                    <span class="visually-hidden">جاري التحميل...</span>
+                                </div>
                             </li>
                         </ul>
                     </li>
-                    <!-- User Dropdown -->
+
+                    <!-- User Menu -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                            data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> {{ user.get_full_name }}
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i>
+                            <span class="d-none d-md-inline">{{ user.get_full_name|default:user.username }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><span class="dropdown-item-text"><strong>{{ user.department }}</strong></span></li>
-                            <li><span class="dropdown-item-text text-muted">{{ user.get_role_display }}</span></li>
+                            <li>
+                                <span class="dropdown-item-text">
+                                    <strong>{{ user.department|default:"لا يوجد قسم" }}</strong>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="dropdown-item-text text-muted">
+                                    {{ user.get_role_display }}
+                                </span>
+                            </li>
+
+                            {% if user.is_superuser %}
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/admin/">
+                                    <i class="bi bi-gear-fill"></i> لوحة الإدارة
+                                </a>
+                            </li>
+                            {% endif %}
+
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
                                 <form action="{% url 'logout' %}" method="post" class="d-inline w-100">
                                     {% csrf_token %}
-                                    <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i>
-                                        تسجيل الخروج</button>
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="bi bi-box-arrow-right"></i> تسجيل الخروج
+                                    </button>
                                 </form>
                             </li>
                         </ul>
@@ -191,6 +1651,73 @@
         </div>
     </nav>
 
+    <!-- Global Mail Section - للمستخدمين المسجلين فقط -->
+    {% if user.is_authenticated %}
+    <div class="container mt-3">
+        {% if global_mails %}
+        {% for mail in global_mails %}
+        <div class="alert shadow-sm mb-2 d-flex align-items-center"
+            style="background: {% if mail.mail_type == 'alert' %}#ffe5e5{% elif mail.mail_type == 'event' %}#e5f7ff{% elif mail.mail_type == 'info' %}#e5ffe5{% else %}#e5eaff{% endif %}; border-right: 6px solid {% if mail.mail_type == 'alert' %}#d55454{% elif mail.mail_type == 'event' %}#4c7eea{% elif mail.mail_type == 'info' %}#10b981{% else %}#6366f1{% endif %};">
+            <span class="me-3 fs-3">
+                {% if mail.mail_type == 'alert' %}<i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                {% elif mail.mail_type == 'event' %}<i class="bi bi-calendar-event text-primary"></i>
+                {% elif mail.mail_type == 'info' %}<i class="bi bi-info-circle text-success"></i>
+                {% else %}<i class="bi bi-megaphone text-secondary"></i>{% endif %}
+            </span>
+            <div class="flex-grow-1">
+                <strong>{{ mail.title }}</strong>
+                {% if mail.external_link %}
+                <a href="{{ mail.external_link }}" target="_blank" class="ms-2 btn btn-sm btn-outline-info">رابط خارجي
+                    <i class="bi bi-link-45deg"></i></a>
+                {% endif %}<br>
+                <span>{{ mail.message|linebreaks }}</span>
+                {% if mail.attachments.all %}
+                <div class="mt-2 d-flex flex-wrap gap-2">
+                    {% for att in mail.attachments.all %}
+                    {% if ".pdf" in att.file.url|lower %}
+                    <a href="{{ att.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary"><i
+                            class="bi bi-file-earmark-pdf"></i> عرض PDF</a>
+                    {% elif ".mp4" in att.file.url|lower or ".webm" in att.file.url|lower %}
+                    <video src="{{ att.file.url }}" controls
+                        style="max-width:150px; max-height:120px; border-radius:8px;"></video>
+                    {% else %}
+                    <img src="{{ att.file.url }}" alt="مرفق" class="global-mail-image" data-bs-toggle="modal"
+                        data-bs-target="#globalMailImageModal" data-image-url="{{ att.file.url }}"
+                        style="max-width:120px; max-height:120px; border-radius:8px; box-shadow:0 2px 8px #ccc; cursor:pointer; transition: transform 0.2s;"
+                        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" />
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <span class="text-muted float-end" style="font-size:0.9em">{{ mail.created_at|date:"Y-m-d H:i" }}</span>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Modal لعرض صور البريد العام -->
+    <div class="modal fade" id="globalMailImageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="bi bi-image"></i> عرض المرفق</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center p-4" style="background: #f8f9fa;">
+                    <img id="globalMailModalImage" src="" alt="مرفق"
+                        style="max-width: 100%; max-height: 75vh; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);" />
+                </div>
+                <div class="modal-footer">
+                    <a id="globalMailDownloadLink" href="" download class="btn btn-success"><i
+                            class="bi bi-download"></i> تحميل</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i
+                            class="bi bi-x-circle"></i> إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Main Content -->
     <div class="container main-container">
         {% if messages %}
@@ -207,50 +1734,198 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        (function () {
+            const key = 'kunuz-theme';
+            const current = localStorage.getItem(key) || 'light';
+            const btn = document.getElementById('themeToggle');
+
+            // Set initial theme and icon
+            if (current === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                if (btn) btn.innerHTML = '<i class="bi bi-moon-stars-fill"></i>';
+            } else {
+                if (btn) btn.innerHTML = '<i class="bi bi-brightness-high-fill"></i>';
+            }
+
+            if (btn) {
+                btn.addEventListener('click', function () {
+                    const isDark = document.body.getAttribute('data-theme') === 'dark';
+                    if (isDark) {
+                        document.body.removeAttribute('data-theme');
+                        localStorage.setItem(key, 'light');
+                        this.innerHTML = '<i class="bi bi-brightness-high-fill"></i>';
+                    } else {
+                        document.body.setAttribute('data-theme', 'dark');
+                        localStorage.setItem(key, 'dark');
+                        this.innerHTML = '<i class="bi bi-moon-stars-fill"></i>';
+                    }
+                });
+            }
+        })();
         function renderNotificationsList(notifications) {
             const container = document.getElementById('notificationsContainer');
             container.innerHTML = '';
             if (notifications.length === 0) {
-                container.innerHTML = '<li class="dropdown-item text-muted">لا توجد إشعارات</li>';
+                container.innerHTML = `
+                    <div class="notification-empty">
+                        <i class="bi bi-bell-slash"></i>
+                        <p>لا توجد إشعارات جديدة</p>
+                    </div>`;
                 return;
             }
             notifications.forEach(n => {
-                const li = document.createElement('li');
-                li.className = 'dropdown-item d-flex justify-content-between align-items-start';
-                li.innerHTML = `
-                    <div>
-                        <strong>${n.title}</strong><br>
-                        <small class="text-muted">${n.message}</small>
+                const colorClass = n.color || 'primary';
+                const div = document.createElement('div');
+                div.className = `notification-item type-${colorClass}`;
+                div.onclick = () => { if (n.ticket_id) window.location.href = `/tickets/${n.ticket_id}/`; };
+                div.innerHTML = `
+                    <div class="notification-icon">
+                        <i class="bi ${n.icon || 'bi-bell'}"></i>
                     </div>
-                    <div class="text-end">
-                        <small class="text-muted">${n.created_at}</small>
-                        ${n.ticket_id ? `<a href="/tickets/${n.ticket_id}/" class="btn btn-sm btn-outline-primary mt-1"><i class="bi bi-eye"></i></a>` : ''}
+                    <div class="notification-content">
+                        <div class="notification-title">${n.title}</div>
+                        <div class="notification-message">${n.message}</div>
+                        <div class="notification-time"><i class="bi bi-clock me-1"></i>${n.created_at}</div>
                     </div>`;
-                container.appendChild(li);
+                container.appendChild(div);
             });
         }
+
+        // Toast notification system
+        let lastNotificationIds = [];
+        let toastContainer = null;
+
+        function initToastContainer() {
+            if (!toastContainer) {
+                toastContainer = document.createElement('div');
+                toastContainer.className = 'toast-container';
+                document.body.appendChild(toastContainer);
+            }
+        }
+
+        function showNotificationToast(notification) {
+            initToastContainer();
+            const colorClass = notification.color || 'primary';
+            const toast = document.createElement('div');
+            toast.className = `notification-toast toast-${colorClass}`;
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="bi ${notification.icon || 'bi-bell'}"></i>
+                </div>
+                <div class="toast-body">
+                    <div class="toast-title">
+                        ${notification.title}
+                        <span class="badge bg-${colorClass}">جديد</span>
+                    </div>
+                    <div class="toast-message">${notification.message}</div>
+                    <div class="toast-time"><i class="bi bi-clock me-1"></i>الآن</div>
+                </div>
+                <button class="toast-close" onclick="this.parentElement.remove()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+                <div class="toast-progress"></div>`;
+
+            toast.onclick = (e) => {
+                if (e.target.closest('.toast-close')) return;
+                if (notification.ticket_id) {
+                    window.location.href = `/tickets/${notification.ticket_id}/`;
+                }
+            };
+
+            toastContainer.appendChild(toast);
+
+            // Shake bell icon
+            const bellIcon = document.getElementById('bellIcon');
+            if (bellIcon) {
+                bellIcon.classList.add('bell-shake');
+                setTimeout(() => bellIcon.classList.remove('bell-shake'), 600);
+            }
+
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                toast.style.animation = 'slideOutLeft 0.4s ease forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 5000);
+        }
+
         function updateNotifications() {
             const badge = document.getElementById('notificationCount');
             const loading = document.getElementById('notificationsLoading');
-            loading.style.display = 'block';
+            if (loading) loading.style.display = 'block';
+
             fetch('/notifications/api/')
                 .then(response => response.json())
                 .then(data => {
-                    if (data.count > 0) { badge.textContent = data.count; badge.style.display = 'inline'; }
-                    else { badge.style.display = 'none'; }
+                    // Update badge
+                    if (data.count > 0) {
+                        badge.textContent = data.count > 99 ? '99+' : data.count;
+                        badge.style.display = 'inline';
+                    } else {
+                        badge.style.display = 'none';
+                    }
+
+                    // Check for new notifications and show toast
+                    const currentIds = data.notifications.map(n => n.id);
+                    if (lastNotificationIds.length > 0) {
+                        const newNotifications = data.notifications.filter(n => !lastNotificationIds.includes(n.id));
+                        newNotifications.forEach(n => showNotificationToast(n));
+                    }
+                    lastNotificationIds = currentIds;
+
                     renderNotificationsList(data.notifications);
                 })
                 .catch(err => console.log('Notification error:', err))
-                .finally(() => { loading.style.display = 'none'; });
+                .finally(() => { if (loading) loading.style.display = 'none'; });
         }
+
         if (document.getElementById('notificationsDropdown')) {
             updateNotifications();
-            setInterval(updateNotifications, 30000);
+            setInterval(updateNotifications, 15000); // Poll every 15 seconds
         }
+
+        // Handle Global Mail Image Modal
+        document.querySelectorAll('.global-mail-image').forEach(img => {
+            img.addEventListener('click', function () {
+                const imageUrl = this.getAttribute('data-image-url');
+                const modalImg = document.getElementById('globalMailModalImage');
+                const downloadLink = document.getElementById('globalMailDownloadLink');
+
+                if (modalImg) modalImg.src = imageUrl;
+                if (downloadLink) downloadLink.href = imageUrl;
+            });
+        });
+
+        // Enhanced Navbar Scroll Effect
+        const navbar = document.querySelector('.navbar');
+        let lastScrollTop = 0;
+
+        window.addEventListener('scroll', function () {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            lastScrollTop = scrollTop;
+        });
+
+        // Active Link Highlight
+        const currentLocation = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentLocation) {
+                link.classList.add('active');
+            }
+        });
     </script>
     {% block extra_js %}{% endblock %}
-    <footer class="text-center text-muted py-3">
-        © 2025 المطور MUNTADHER HAZIM. جميع الحقوق محفوظة.
+    <footer class="text-center text-white py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">© 2025 المطور MUNTADHER HAZIM. جميع الحقوق محفوظة.</p>
+        </div>
     </footer>
 </body>
 

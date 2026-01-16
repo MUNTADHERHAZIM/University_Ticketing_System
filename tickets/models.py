@@ -6,7 +6,7 @@ from datetime import timedelta
 
 class Ticket(models.Model):
     """
-    نموذج الطلب/التذكرة
+    نموذج الطلب/التذكرة - محسّن للأداء
     """
     STATUS_CHOICES = [
         ('new', 'جديد'),
@@ -14,6 +14,7 @@ class Ticket(models.Model):
         ('in_progress', 'قيد المعالجة'),
         ('resolved', 'تم الحل'),
         ('closed', 'مغلق'),
+        ('returned', 'معاد/مرفوض'),
         ('violated', 'مخالف (تجاوز المهلة)'),
     ]
     
@@ -87,6 +88,11 @@ class Ticket(models.Model):
     resolved_at = models.DateTimeField(null=True, blank=True, verbose_name="تاريخ الحل")
     closed_at = models.DateTimeField(null=True, blank=True, verbose_name="تاريخ الإغلاق")
     sla_deadline = models.DateTimeField(verbose_name="الموعد النهائي (SLA)")
+    target_date = models.DateTimeField(
+        null=True, 
+        blank=True, 
+        verbose_name="التاريخ المستهدف (اختياري)"
+    )
     
     # المرفقات (جديد)
     attachment = models.FileField(
@@ -109,13 +115,19 @@ class Ticket(models.Model):
         verbose_name = "طلب"
         verbose_name_plural = "الطلبات"
         ordering = ['-created_at']
+        # Indexes for performance optimization
         indexes = [
-            models.Index(fields=['status', 'sla_deadline']),
-            models.Index(fields=['department', 'status']),
-            models.Index(fields=['assigned_to', 'status']),  # New: للبحث السريع عن طلبات الموظف
-            models.Index(fields=['created_at', 'department']),  # New: للتقارير
-            models.Index(fields=['priority', 'escalation_level']),  # New: للطلبات الحرجة
-            models.Index(fields=['created_by', 'created_at']),  # New: لطلبات المستخدم
+            models.Index(fields=['status'], name='ticket_status_idx'),
+            models.Index(fields=['priority'], name='ticket_priority_idx'),
+            models.Index(fields=['created_at'], name='ticket_created_idx'),
+            models.Index(fields=['sla_deadline'], name='ticket_sla_idx'),
+            models.Index(fields=['status', 'priority'], name='ticket_status_priority_idx'),
+            models.Index(fields=['status', 'sla_deadline'], name='ticket_status_sla_idx'),
+            models.Index(fields=['department', 'status'], name='ticket_dept_status_idx'),
+            models.Index(fields=['assigned_to', 'status'], name='ticket_assign_status_idx'),
+            models.Index(fields=['created_at', 'department'], name='ticket_created_dept_idx'),
+            models.Index(fields=['priority', 'escalation_level'], name='ticket_priority_esc_idx'),
+            models.Index(fields=['created_by', 'created_at'], name='ticket_creator_time_idx'),
         ]
     
     def __str__(self):
@@ -133,12 +145,12 @@ class Ticket(models.Model):
         """هل تجاوز الطلب المهلة؟"""
         if not self.sla_deadline:
             return False
-        return timezone.now() > self.sla_deadline and self.status not in ['resolved', 'closed']
+        return timezone.now() > self.sla_deadline and self.status not in ['resolved', 'closed', 'returned']
     
     @property
     def time_until_deadline(self):
         """الوقت المتبقي حتى المهلة"""
-        if self.status in ['resolved', 'closed']:
+        if self.status in ['resolved', 'closed', 'returned']:
             return None
         delta = self.sla_deadline - timezone.now()
         return delta if delta.total_seconds() > 0 else timedelta(0)
@@ -164,7 +176,9 @@ class TicketAction(models.Model):
         ('reassigned', 'تم إعادة التعيين'),
         ('resolved', 'تم الحل'),
         ('closed', 'تم الإغلاق'),
+        ('returned', 'تم إرجاع/رفض الطلب'),
         ('commented', 'تم التعليق'),
+        ('violation', 'تم تسجيل مخالفة'),
     ]
     
     ticket = models.ForeignKey(
@@ -196,3 +210,37 @@ class TicketAction(models.Model):
     
     def __str__(self):
         return f"{self.ticket.title} - {self.get_action_type_display()}"
+
+
+class TicketAcknowledgment(models.Model):
+    """
+    إقرار استلام الطلب - سجل رسمي لتأكيد استلام الموظف للطلب
+    """
+    ticket = models.ForeignKey(
+        Ticket,
+        on_delete=models.CASCADE,
+        related_name='acknowledgments',
+        verbose_name="الطلب"
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name="المستخدم"
+    )
+    acknowledged_at = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإقرار")
+    notes = models.TextField(blank=True, verbose_name="ملاحظات")
+    ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="عنوان IP")
+    
+    class Meta:
+        verbose_name = "إقرار استلام"
+        verbose_name_plural = "إقرارات الاستلام"
+        ordering = ['-acknowledged_at']
+        unique_together = ['ticket', 'user']  # كل مستخدم يقر مرة واحدة فقط لكل طلب
+        indexes = [
+            models.Index(fields=['ticket', 'user']),
+            models.Index(fields=['user', '-acknowledged_at']),
+        ]
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.ticket.title}"
+

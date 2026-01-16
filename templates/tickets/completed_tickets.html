@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+
+{% block title %}الطلبات المكتملة{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2 class="text-white fw-bold">
+            <i class="bi bi-check2-all"></i>
+            الطلبات المكتملة
+        </h2>
+    </div>
+    <div class="col-auto">
+        <a href="{% url 'ticket_list' %}" class="btn btn-outline-light">
+            <i class="bi bi-arrow-right"></i>
+            جميع الطلبات
+        </a>
+    </div>
+</div>
+
+<!-- إحصائيات سريعة -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h3 class="mb-0">{{ total_completed }}</h3>
+                <small>إجمالي المكتملة</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h3 class="mb-0">{{ completed_on_time }}</h3>
+                <small>في الوقت المحدد</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark">
+            <div class="card-body text-center">
+                <h3 class="mb-0">{{ completed_late }}</h3>
+                <small>متأخرة</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3 class="mb-0">{{ on_time_rate }}%</h3>
+                <small>نسبة الإنجاز بالوقت</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- متوسط وقت الإنجاز -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h6 class="text-muted mb-1">متوسط وقت الإنجاز</h6>
+                        <h4 class="mb-0">{{ avg_completion_time }} ساعة</h4>
+                    </div>
+                    <div class="bg-light rounded-circle p-3">
+                        <i class="bi bi-clock-history fs-3 text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <!-- فلاتر البحث -->
+        <form method="get" class="row g-3 mb-4">
+            <div class="col-md-3">
+                <label class="form-label">القسم</label>
+                <select name="department" class="form-select">
+                    <option value="">كل الأقسام</option>
+                    {% for dept in departments %}
+                    <option value="{{ dept.id }}">{{ dept.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">من تاريخ</label>
+                <input type="date" name="date_from" class="form-control" value="{{ date_from }}">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">إلى تاريخ</label>
+                <input type="date" name="date_to" class="form-control" value="{{ date_to }}">
+            </div>
+            <div class="col-md-3 d-flex align-items-end gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-filter"></i> تصفية
+                </button>
+                <a href="{% url 'completed_tickets' %}" class="btn btn-light border">مسح</a>
+            </div>
+        </form>
+
+        <!-- إحصائيات الأقسام للإدارة العليا -->
+        {% if dept_stats %}
+        <div class="mb-4">
+            <h6 class="text-muted mb-3">إحصائيات حسب القسم</h6>
+            <div class="row">
+                {% for dept in dept_stats %}
+                <div class="col-md-4 mb-2">
+                    <div class="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+                        <span>{{ dept.name }}</span>
+                        <span class="badge bg-success">{{ dept.completed_count }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- جدول الطلبات -->
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle">
+                <thead class="table-success">
+                    <tr>
+                        <th>العنوان</th>
+                        <th>القسم</th>
+                        <th>المعين له</th>
+                        <th>الأولوية</th>
+                        <th>تاريخ الإنشاء</th>
+                        <th>تاريخ الإغلاق</th>
+                        <th>الحالة</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in page_obj %}
+                    <tr>
+                        <td><a href="{% url 'ticket_detail' ticket.pk %}" class="text-decoration-none fw-semibold">{{ ticket.title }}</a></td>
+                        <td>
+                            {% if ticket.departments.count > 1 %}
+                            <span class="badge bg-secondary">{{ ticket.departments.count }} أقسام</span>
+                            {% elif ticket.department %}
+                            {{ ticket.department.name }}
+                            {% else %}
+                            -
+                            {% endif %}
+                            
+                        </td>
+                        <td>
+                            {% if ticket.assigned_to_users.count > 1 %}
+                            <span class="badge bg-info">{{ ticket.assigned_to_users.count }} مستخدم</span>
+                            {% elif ticket.assigned_to %}
+                            {{ ticket.assigned_to.get_full_name|default:ticket.assigned_to.username }}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if ticket.priority == 'critical' %}
+                            <span class="badge bg-danger">{{ ticket.get_priority_display }}</span>
+                            {% elif ticket.priority == 'urgent' %}
+                            <span class="badge bg-warning text-dark">{{ ticket.get_priority_display }}</span>
+                            {% else %}
+                            <span class="badge bg-secondary">{{ ticket.get_priority_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ ticket.created_at|date:"Y-m-d" }}</td>
+                        <td>{{ ticket.closed_at|date:"Y-m-d"|default:"-" }}</td>
+                        <td>
+                            {% if ticket.status == 'resolved' %}
+                            <span class="badge bg-success">تم الحل</span>
+                            {% else %}
+                            <span class="badge bg-secondary">مغلق</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'ticket_detail' ticket.pk %}" class="btn btn-sm btn-primary">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{% url 'export_ticket_pdf' ticket.pk %}" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-file-pdf"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            لا توجد طلبات مكتملة
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+                {% endif %}
+
+                {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+                {% elif i > page_obj.number|add:"-3" and i < page_obj.number|add:"3" %} <li class="page-item">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

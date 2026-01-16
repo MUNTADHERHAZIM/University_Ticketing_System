@@ -9,56 +9,127 @@
             <h2 class="mb-0"><i class="bi bi-bell"></i> الإشعارات</h2>
             <div>
                 {% if user.is_staff %}
-                <a href="{% url 'create_notification' %}" class="btn btn-success me-2"><i class="bi bi-plus-circle"></i>
-                    إضافة إشعار</a>
+                    <a href="{% url 'create_notification' %}" class="btn btn-success me-2">
+                        <i class="bi bi-plus-circle"></i> إضافة إشعار
+                    </a>
                 {% endif %}
+
                 {% if unread_count > 0 %}
-                <button class="btn btn-outline-primary" id="markAllRead"><i class="bi bi-check2-all"></i> تحديد الكل
-                    كمقروء</button>
+                    <button class="btn btn-outline-primary" id="markAllRead">
+                        <i class="bi bi-check2-all"></i> تحديد الكل كمقروء
+                    </button>
                 {% endif %}
             </div>
         </div>
 
         {% if notifications %}
-        <div class="list-group">
-            {% for notification in notifications %}
-            <div class="list-group-item {% if not notification.is_read %}list-group-item-light border-start border-primary border-3{% endif %}"
-                data-notification-id="{{ notification.id }}">
-                <div class="d-flex w-100 justify-content-between align-items-start">
-                    <div class="flex-grow-1">
-                        <div class="d-flex align-items-center mb-2">
-                            <span class="badge bg-{{ notification.notification_type|default:'secondary' }} me-2">
-                                <i class="bi bi-bell-fill"></i>
-                            </span>
-                            <h5 class="mb-0">{{ notification.title }}</h5>
+            <div class="list-group">
+                {% for notification in notifications %}
+                    <div class="list-group-item {% if not notification.is_read %}list-group-item-light border-start border-primary border-3{% endif %}"
+                         data-notification-id="{{ notification.id }}">
+                        <div class="d-flex w-100 justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="badge me-2"
+                                          style="background:{% if notification.notification_type == 'ticket_closed' %}#dc2626{% elif notification.notification_type == 'ticket_assigned' %}#6366f1{% elif notification.notification_type == 'ticket_acknowledged' %}#10b981{% elif notification.notification_type == 'deadline_approaching' %}#f59e0b{% else %}#6c757d{% endif %};">
+                                        {% if notification.notification_type == 'ticket_closed' %}
+                                            <i class="bi bi-x-circle"></i>
+                                        {% elif notification.notification_type == 'ticket_assigned' %}
+                                            <i class="bi bi-person-check"></i>
+                                        {% elif notification.notification_type == 'ticket_acknowledged' %}
+                                            <i class="bi bi-check2-circle"></i>
+                                        {% elif notification.notification_type == 'deadline_approaching' %}
+                                            <i class="bi bi-hourglass-split"></i>
+                                        {% else %}
+                                            <i class="bi bi-bell-fill"></i>
+                                        {% endif %}
+                                    </span>
+                                    <h5 class="mb-0">{{ notification.title }}</h5>
+                                </div>
+
+                                <p class="mb-1">{{ notification.message }}</p>
+
+                                {% if notification.attachment %}
+                                    {% with att_url=notification.attachment.url|lower %}
+                                        <div class="mt-2">
+                                            {% if att_url|slice:"-4:" == ".pdf" %}
+                                                <a href="{{ notification.attachment.url }}" target="_blank"
+                                                   class="btn btn-sm btn-outline-primary">
+                                                    <i class="bi bi-file-earmark-pdf"></i> عرض PDF
+                                                </a>
+                                            {% else %}
+                                                <img src="{{ notification.attachment.url }}" alt="مرفق"
+                                                     style="max-width:120px; max-height:120px; border-radius:8px; box-shadow:0 2px 8px #ccc; cursor:pointer; transition: transform 0.2s;"
+                                                     class="notification-image"
+                                                     data-bs-toggle="modal"
+                                                     data-bs-target="#imageModal"
+                                                     data-image-url="{{ notification.attachment.url }}"
+                                                     onmouseover="this.style.transform='scale(1.05)'"
+                                                     onmouseout="this.style.transform='scale(1)'" />
+                                            {% endif %}
+                                        </div>
+                                    {% endwith %}
+                                {% endif %}
+
+                                <small class="text-muted">
+                                    <i class="bi bi-clock"></i> {{ notification.created_at|date:"Y-m-d H:i" }}
+                                </small>
+                            </div>
+
+                            <div class="d-flex flex-column align-items-end">
+                                {% if notification.ticket %}
+                                    <a href="{% url 'ticket_detail' notification.ticket.id %}"
+                                       class="btn btn-sm btn-outline-primary mb-2">
+                                        <i class="bi bi-eye"></i> عرض الطلب
+                                    </a>
+                                {% endif %}
+
+                                {% if user.is_staff %}
+                                    <a href="{% url 'edit_notification' notification.id %}"
+                                       class="btn btn-sm btn-outline-warning mb-2">
+                                        <i class="bi bi-pencil"></i> تعديل
+                                    </a>
+                                {% endif %}
+
+                                {% if not notification.is_read %}
+                                    <button class="btn btn-sm btn-success mark-read-btn" data-id="{{ notification.id }}">
+                                        <i class="bi bi-check2"></i> تمييز كمقروء
+                                    </button>
+                                {% else %}
+                                    <span class="badge bg-success"><i class="bi bi-check2"></i> مقروء</span>
+                                {% endif %}
+                            </div>
                         </div>
-                        <p class="mb-1">{{ notification.message }}</p>
-                        <small class="text-muted"><i class="bi bi-clock"></i> {{ notification.created_at|date:"Y-m-d
-                            H:i" }}</small>
                     </div>
-                    <div class="d-flex flex-column align-items-end">
-                        {% if notification.ticket %}
-                        <a href="{% url 'ticket_detail' notification.ticket.id %}"
-                            class="btn btn-sm btn-outline-primary mb-2"><i class="bi bi-eye"></i> عرض الطلب</a>
-                        {% endif %}
-                        {% if user.is_staff %}
-                        <a href="{% url 'edit_notification' notification.id %}"
-                            class="btn btn-sm btn-outline-warning mb-2"><i class="bi bi-pencil"></i> تعديل</a>
-                        {% endif %}
-                        {% if not notification.is_read %}
-                        <button class="btn btn-sm btn-outline-success mark-read-btn" data-id="{{ notification.id }}"><i
-                                class="bi bi-check"></i> تحديد كمقروء</button>
-                        {% else %}
-                        <span class="badge bg-success"><i class="bi bi-check2"></i> مقروء</span>
-                        {% endif %}
-                    </div>
-                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
         {% else %}
-        <div class="alert alert-info"><i class="bi bi-info-circle"></i> لا توجد إشعارات حالياً</div>
+            <div class="alert alert-info"><i class="bi bi-info-circle"></i> لا توجد إشعارات حالياً</div>
         {% endif %}
+    </div>
+</div>
+
+<!-- Modal لعرض الصورة بحجم كامل -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="imageModalLabel"><i class="bi bi-image"></i> عرض المرفق</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-4" style="background: #f8f9fa;">
+                <img id="modalImage" src="" alt="مرفق"
+                     style="max-width: 100%; max-height: 80vh; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);" />
+            </div>
+            <div class="modal-footer">
+                <a id="downloadLink" href="" download class="btn btn-success">
+                    <i class="bi bi-download"></i> تحميل
+                </a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> إغلاق
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -72,12 +143,13 @@
             const formData = new FormData();
             formData.append('notification_ids[]', notificationId);
             formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
             fetch('{% url "mark_notifications_read" %}', {
                 method: 'POST',
                 body: formData
             })
-                .then(r => r.json())
-                .then(data => { if (data.success) location.reload(); });
+            .then(r => r.json())
+            .then(data => { if (data.success) location.reload(); });
         });
     });
 
@@ -85,12 +157,22 @@
     document.getElementById('markAllRead')?.addEventListener('click', function () {
         const formData = new FormData();
         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
         fetch('{% url "mark_all_notifications_read" %}', {
             method: 'POST',
             body: formData
         })
-            .then(r => r.json())
-            .then(data => { if (data.success) location.reload(); });
+        .then(r => r.json())
+        .then(data => { if (data.success) location.reload(); });
+    });
+
+    // Handle image modal
+    document.querySelectorAll('.notification-image').forEach(img => {
+        img.addEventListener('click', function () {
+            const imageUrl = this.getAttribute('data-image-url');
+            document.getElementById('modalImage').src = imageUrl;
+            document.getElementById('downloadLink').href = imageUrl;
+        });
     });
 </script>
 {% endblock %}

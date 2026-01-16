@@ -1,222 +1,209 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}التقارير والإحصائيات{% endblock %}
+{% block title %}لوحة التقارير المركزية{% endblock %}
+
+{% block extra_css %}
+<style>
+    .report-card {
+        border: NONE;
+        border-radius: 15px;
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        overflow: hidden;
+        height: 100%;
+        background: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .report-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-icon-bg {
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-icon-bg i {
+        font-size: 4rem;
+        color: white;
+        z-index: 2;
+        position: relative;
+    }
+
+    .card-icon-bg::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.1);
+        z-index: 1;
+    }
+
+    .report-card-body {
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .report-title {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+
+    .report-desc {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        height: 40px;
+    }
+
+    .btn-report {
+        border-radius: 50px;
+        padding: 0.5rem 1.5rem;
+        font-weight: 600;
+        width: 100%;
+    }
+
+    /* ألوان البطاقات */
+    .bg-gradient-performance {
+        background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    .bg-gradient-violations {
+        background: linear-gradient(45deg, #ff0844 0%, #ffb199 100%);
+    }
+
+    .bg-gradient-penalties {
+        background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .bg-gradient-monitoring {
+        background: linear-gradient(45deg, #43e97b 0%, #38f9d7 100%);
+    }
+
+    .header-section {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="row mb-4">
-    <div class="col">
-        <h2 class="text-white fw-bold">
-            <i class="bi bi-bar-chart-fill"></i>
-            لوحة التقارير والإحصائيات
-        </h2>
-        <p class="text-white-50">تحليل الأداء والكشف عن الأقسام والموظفين الأقل استجابة</p>
-    </div>
-</div>
+<div class="container py-4">
 
-<!-- Overall Statistics -->
-<div class="row g-4 mb-4">
-    <div class="col-md-3">
-        <div class="stat-card" style="--card-color: #10b981; --card-color-dark: #059669;">
-            <h5><i class="bi bi-files"></i> إجمالي الطلبات</h5>
-            <h3>{{ total_tickets }}</h3>
+    <!-- رأس الصفحة -->
+    <div class="header-section">
+        <div>
+            <h2 class="fw-bold text-primary mb-1">
+                <i class="bi bi-grid-1x2-fill"></i> لوحة التقارير المركزية
+            </h2>
+            <p class="text-muted mb-0">نظرة شاملة على أداء النظام والموظفين والمخالفات</p>
+        </div>
+        <div>
+            <span class="badge bg-light text-dark border p-2">
+                <i class="bi bi-clock"></i> {{ now|date:"Y-m-d" }}
+            </span>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="stat-card" style="--card-color: #f59e0b; --card-color-dark: #d97706;">
-            <h5><i class="bi bi-hourglass-split"></i> معلقة</h5>
-            <h3>{{ pending }}</h3>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="stat-card" style="--card-color: #dc2626; --card-color-dark: #b91c1c;">
-            <h5><i class="bi bi-x-circle"></i> مخالفة</h5>
-            <h3 class="urgent-alert">{{ violated }}</h3>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="stat-card" style="--card-color: #6366f1; --card-color-dark: #4f46e5;">
-            <h5><i class="bi bi-check-all"></i> محلولة</h5>
-            <h3>{{ resolved }}</h3>
-        </div>
-    </div>
-</div>
 
-<!-- Violation Rate -->
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="card 
-            {% if violation_rate > 20 %} border-danger
-            {% elif violation_rate > 10 %} border-warning
-            {% else %} border-success
-            {% endif %}
-        ">
-            <div class="card-body text-center">
-                <h5>معدل الانتهاكات</h5>
-                <h2 class="
-                    {% if violation_rate > 20 %} text-danger
-                    {% elif violation_rate > 10 %} text-warning
-                    {% else %} text-success
-                    {% endif %}
-                ">
-                    {{ violation_rate|floatformat:1 }}%
-                </h2>
+    <div class="row g-4">
 
-                <div class="progress" style="height: 30px;">
-                    <div class="progress-bar 
-                        {% if violation_rate > 20 %} bg-danger
-                        {% elif violation_rate > 10 %} bg-warning
-                        {% else %} bg-success
-                        {% endif %}
-                    "
-                    role="progressbar"
-                    style="width: {{ violation_rate }}%;"
-                    aria-valuenow="{{ violation_rate }}"
-                    aria-valuemin="0"
-                    aria-valuemax="100">
-                        {{ violation_rate|floatformat:1 }}%
-                    </div>
+        <!-- تقرير الأداء -->
+        <div class="col-md-6 col-lg-3">
+            <div class="report-card">
+                <div class="card-icon-bg bg-gradient-performance">
+                    <i class="bi bi-speedometer2"></i>
                 </div>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Shame Dashboard - Worst Departments -->
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="card border-danger">
-            <div class="card-header bg-danger text-white">
-                <h4 class="mb-0">
-                    <i class="bi bi-emoji-frown-fill"></i>
-                    لوحة الفضح: الأقسام الأكثر تأخيراً
-                </h4>
-            </div>
-            <div class="card-body">
-
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>#</th>
-                                <th>اسم القسم</th>
-                                <th>إجمالي الطلبات</th>
-                                <th>طلبات معلقة</th>
-                                <th>طلبات مخالفة</th>
-                                <th>نسبة الانتهاك</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for dept in departments_stats %}
-                            <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td><strong>{{ dept.name }}</strong></td>
-                                <td>{{ dept.total_tickets }}</td>
-                                <td><span class="badge bg-warning">{{ dept.pending_tickets }}</span></td>
-                                <td><span class="badge bg-danger urgent-alert">{{ dept.violated_tickets }}</span></td>
-
-                                <td>
-                                    {% widthratio dept.violated_tickets dept.total_tickets 100 as violation_pct %}
-                                    <div class="progress" style="height: 25px;">
-                                        <div class="progress-bar 
-                                            {% if violation_pct > 20 %} bg-danger
-                                            {% elif violation_pct > 10 %} bg-warning
-                                            {% else %} bg-info
-                                            {% endif %}
-                                        "
-                                        role="progressbar"
-                                        style="width: {{ violation_pct }}%;"
-                                        aria-valuenow="{{ violation_pct }}"
-                                        aria-valuemin="0"
-                                        aria-valuemax="100">
-                                            {{ violation_pct }}%
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            {% empty %}
-                            <tr>
-                                <td colspan="6" class="text-center text-success">
-                                    <i class="bi bi-emoji-smile-fill"></i>
-                                    ممتاز! لا توجد انتهاكات
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                <div class="report-card-body">
+                    <h5 class="report-title">تقرير الأداء</h5>
+                    <p class="report-desc">إحصائيات تفصيلية عن سرعة الإنجاز والأداء العام للأقسام.</p>
+                    <a href="{% url 'performance_report' %}" class="btn btn-outline-primary btn-report">
+                        استعراض التقرير <i class="bi bi-arrow-left"></i>
+                    </a>
                 </div>
-
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Worst Employees -->
-<div class="row">
-    <div class="col-12">
-        <div class="card border-warning">
-            <div class="card-header bg-warning text-dark">
-                <h4 class="mb-0">
-                    <i class="bi bi-person-x-fill"></i>
-                    الموظفون الأقل استجابة
-                </h4>
-            </div>
-            <div class="card-body">
-
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>#</th>
-                                <th>الاسم</th>
-                                <th>القسم</th>
-                                <th>الطلبات المعينة</th>
-                                <th>الطلبات المخالفة</th>
-                                <th>معدل الانتهاك</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {% for emp in employees_stats %}
-                            <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td><strong>{{ emp.get_full_name }}</strong></td>
-                                <td>{{ emp.department }}</td>
-                                <td>{{ emp.total_assigned }}</td>
-                                <td><span class="badge bg-danger urgent-alert">{{ emp.violated_count }}</span></td>
-
-                                <td>
-                                    {% widthratio emp.violated_count emp.total_assigned 100 as emp_violation_pct %}
-                                    <div class="progress" style="height: 25px;">
-                                        <div class="progress-bar bg-danger"
-                                            role="progressbar"
-                                            style="width: {{ emp_violation_pct }}%;"
-                                            aria-valuenow="{{ emp_violation_pct }}"
-                                            aria-valuemin="0"
-                                            aria-valuemax="100">
-                                            {{ emp_violation_pct }}%
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            {% empty %}
-                            <tr>
-                                <td colspan="6" class="text-center text-success">
-                                    <i class="bi bi-emoji-smile-fill"></i>
-                                    عمل رائع! جميع الموظفين ملتزمون
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-
-                    </table>
+        <!-- تقرير المخالفات -->
+        <div class="col-md-6 col-lg-3">
+            <div class="report-card">
+                <div class="card-icon-bg bg-gradient-violations">
+                    <i class="bi bi-fire"></i>
                 </div>
+                <div class="report-card-body">
+                    <h5 class="report-title">لوحة المخالفات</h5>
+                    <p class="report-desc">سجل المخالفات والتأخيرات  للمتابعة الدقيقة.</p>
+                    <a href="{% url 'violations_report' %}" class="btn btn-outline-danger btn-report">
+                        استعراض المخالفات <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
 
+        <!-- تقرير النقاط الجزائية -->
+        <div class="col-md-6 col-lg-3">
+            <div class="report-card">
+                <div class="card-icon-bg bg-gradient-penalties">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
+                <div class="report-card-body">
+                    <h5 class="report-title">النقاط الجزائية</h5>
+                    <p class="report-desc">تتبع النقاط الجزائية المسجلة على الموظفين والأقسام.</p>
+                    <a href="{% url 'penalty_points_report' %}" class="btn btn-outline-dark btn-report">
+                        سجل النقاط <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- المراقبة المباشرة -->
+        {% if user.is_upper_management %}
+        <div class="col-md-6 col-lg-3">
+            <div class="report-card">
+                <div class="card-icon-bg bg-gradient-monitoring">
+                    <i class="bi bi-activity"></i>
+                </div>
+                <div class="report-card-body">
+                    <h5 class="report-title">المراقبة المباشرة</h5>
+                    <p class="report-desc">شاشة مراقبة حية للتذاكر والعمليات الجارية في النظام.</p>
+                    <a href="{% url 'monitoring_dashboard' %}" class="btn btn-outline-success btn-report">
+                        شاشة المراقبة <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- إجراءات سريعة -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h5 class="mb-3 fw-bold">إجراءات سريعة</h5>
+            <div class="d-flex gap-3 flex-wrap">
+                <a href="{% url 'export_violations_csv' %}" class="btn btn-light border shadow-sm">
+                    <i class="bi bi-file-earmark-spreadsheet text-success"></i> تصدير المخالفات (CSV)
+                </a>
+                <a href="{% url 'export_performance_excel' %}" class="btn btn-light border shadow-sm">
+                    <i class="bi bi-file-earmark-excel text-success"></i> تصدير الأداء (Excel)
+                </a>
             </div>
         </div>
     </div>
-</div>
 
+</div>
 {% endblock %}

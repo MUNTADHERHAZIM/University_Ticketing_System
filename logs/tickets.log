@@ -1,168 +1,369 @@
-[INFO] 2025-11-22 16:50:38,249 views 14188 8500 - Dashboard cache miss for user 6
-[INFO] 2025-11-22 16:50:38,263 views 14188 8500 - Dashboard cached for user 6
-[INFO] 2025-11-22 16:53:56,436 views 14188 8500 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 16:53:56,444 views 14188 8500 - Dashboard cached for user 16
-[INFO] 2025-11-22 17:06:22,314 views 10332 17108 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 17:06:22,319 views 10332 17108 - Dashboard cached for user 16
-[INFO] 2025-11-22 17:08:11,408 signals 10332 23844 - Notification sent to رئيس3 الحاسبة الإلكترونية (رئيس قسم) for new ticket #6
-[INFO] 2025-11-22 17:13:31,980 views 8816 8236 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 17:13:32,038 views 8816 8236 - Dashboard cached for user 1
-[INFO] 2025-11-22 17:14:11,921 signals 8816 3808 - Notification sent to موظف30 الموارد البشرية (موظف) for new ticket #7
-[INFO] 2025-11-22 17:14:22,114 views 8816 3808 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 17:14:22,165 views 8816 3808 - Dashboard cached for user 1
-[INFO] 2025-11-22 17:17:10,336 views 8816 3808 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 17:17:10,384 views 8816 3808 - Dashboard cached for user 1
-[INFO] 2025-11-22 17:22:00,494 views 8816 8152 - Dashboard cache miss for user 3
-[INFO] 2025-11-22 17:22:00,501 views 8816 8152 - Dashboard cached for user 3
-[INFO] 2025-11-22 17:22:37,930 views 8816 22592 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 17:22:37,944 views 8816 22592 - Dashboard cached for user 16
-[INFO] 2025-11-22 17:23:06,275 views 8816 22592 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 17:23:06,283 views 8816 22592 - Dashboard cached for user 16
-[INFO] 2025-11-22 17:24:59,918 views 8816 22592 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 17:24:59,956 views 8816 22592 - Dashboard cached for user 1
-[INFO] 2025-11-22 17:25:30,344 views 8816 22592 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 17:25:30,380 views 8816 22592 - Dashboard cached for user 1
-[INFO] 2025-11-22 17:31:59,021 views 16260 4028 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 17:31:59,057 views 16260 4028 - Dashboard cached for user 1
-[INFO] 2025-11-22 17:32:54,715 views 2288 9500 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 17:32:54,751 views 2288 9500 - Dashboard cached for user 1
-[INFO] 2025-11-22 17:37:52,358 views 21204 20540 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 17:37:52,410 views 21204 20540 - Dashboard cached for user 1
-[INFO] 2025-11-22 17:40:02,785 views 4456 10496 - Dashboard cache miss for user 3
-[INFO] 2025-11-22 17:40:02,793 views 4456 10496 - Dashboard cached for user 3
-[INFO] 2025-11-22 17:40:23,739 views 4456 10496 - Dashboard cache miss for user 3
-[INFO] 2025-11-22 17:40:23,749 views 4456 10496 - Dashboard cached for user 3
-[INFO] 2025-11-22 17:42:22,102 views 8236 16772 - Dashboard cache miss for user 3
-[INFO] 2025-11-22 17:42:22,122 views 8236 16772 - Dashboard cached for user 3
-[INFO] 2025-11-22 17:42:25,793 views 8236 16772 - Dashboard cache miss for user 3
-[INFO] 2025-11-22 17:42:25,798 views 8236 16772 - Dashboard cached for user 3
-[INFO] 2025-11-22 17:45:12,837 views 19064 8932 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 17:45:12,844 views 19064 8932 - Dashboard cached for user 16
-[INFO] 2025-11-22 17:45:32,157 views 19064 8932 - Dashboard cache miss for user 3
-[INFO] 2025-11-22 17:45:32,165 views 19064 8932 - Dashboard cached for user 3
-[INFO] 2025-11-22 17:49:17,251 views 19064 8932 - Dashboard cache miss for user 3
-[INFO] 2025-11-22 17:49:17,258 views 19064 8932 - Dashboard cached for user 3
-[INFO] 2025-11-22 17:55:53,240 views 19064 8932 - User 3 marked all notifications as read
-[INFO] 2025-11-22 17:58:29,983 views 19064 13728 - User 16 marked all notifications as read
-[INFO] 2025-11-22 18:10:09,266 views 8476 15692 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 18:10:09,305 views 8476 15692 - Dashboard cached for user 1
-[INFO] 2025-11-22 18:10:15,266 views 8476 15692 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 18:10:15,463 views 8476 15692 - Dashboard cached for user 1
-[INFO] 2025-11-22 18:10:28,495 views 8476 15692 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 18:10:28,525 views 8476 15692 - Dashboard cached for user 1
-[INFO] 2025-11-22 18:12:52,344 views 8476 6424 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 18:12:52,385 views 8476 6424 - Dashboard cached for user 1
-[INFO] 2025-11-22 18:13:01,896 views 8476 6424 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 18:13:01,910 views 8476 6424 - Dashboard cached for user 16
-[INFO] 2025-11-22 18:21:17,252 views 4268 12244 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 18:21:17,436 views 4268 12244 - Dashboard cached for user 16
-[INFO] 2025-11-22 18:21:19,419 views 4268 12244 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 18:21:19,430 views 4268 12244 - Dashboard cached for user 16
-[INFO] 2025-11-22 18:21:20,644 views 4268 12244 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 18:21:20,658 views 4268 12244 - Dashboard cached for user 16
-[INFO] 2025-11-22 18:21:39,392 views 4268 12244 - Dashboard cache miss for user 3
-[INFO] 2025-11-22 18:21:39,413 views 4268 12244 - Dashboard cached for user 3
-[INFO] 2025-11-22 18:21:45,030 views 4268 12244 - Dashboard cache miss for user 3
-[INFO] 2025-11-22 18:21:45,066 views 4268 12244 - Dashboard cached for user 3
-[INFO] 2025-11-22 18:25:28,743 views 4268 12244 - Dashboard cache miss for user 3
-[INFO] 2025-11-22 18:25:28,755 views 4268 12244 - Dashboard cached for user 3
-[INFO] 2025-11-22 18:32:11,668 views 17080 4268 - Dashboard cache miss for user 2
-[INFO] 2025-11-22 18:32:11,680 views 17080 4268 - Dashboard cached for user 2
-[INFO] 2025-11-22 18:40:06,925 views 1976 9060 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 18:40:06,944 views 1976 9060 - Dashboard cached for user 16
-[INFO] 2025-11-22 18:40:08,551 views 1976 9060 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 18:40:08,564 views 1976 9060 - Dashboard cached for user 16
-[INFO] 2025-11-22 18:41:00,700 views 1976 8300 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 18:41:00,709 views 1976 8300 - Dashboard cached for user 16
-[INFO] 2025-11-22 19:17:44,329 views 1976 12716 - Dashboard cache miss for user 16
-[INFO] 2025-11-22 19:17:44,351 views 1976 12716 - Dashboard cached for user 16
-[INFO] 2025-11-22 19:20:57,606 views 14600 18652 - Dashboard cache miss for user 5
-[INFO] 2025-11-22 19:20:57,654 views 14600 18652 - Dashboard cached for user 5
-[INFO] 2025-11-22 19:21:00,023 views 14600 18652 - Dashboard cache miss for user 5
-[INFO] 2025-11-22 19:21:00,038 views 14600 18652 - Dashboard cached for user 5
-[INFO] 2025-11-22 19:21:59,936 views 14600 18652 - Dashboard cache miss for user 5
-[INFO] 2025-11-22 19:21:59,950 views 14600 18652 - Dashboard cached for user 5
-[INFO] 2025-11-22 19:24:33,732 views 14600 18652 - Dashboard cache miss for user 5
-[INFO] 2025-11-22 19:24:33,732 views 14600 18652 - Dashboard cached for user 5
-[INFO] 2025-11-22 19:34:18,778 views 14600 22296 - Dashboard cache miss for user 5
-[INFO] 2025-11-22 19:34:18,788 views 14600 22296 - Dashboard cached for user 5
-[INFO] 2025-11-22 19:40:55,617 views 14600 22296 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 19:40:55,657 views 14600 22296 - Dashboard cached for user 1
-[INFO] 2025-11-22 19:41:01,446 views 14600 22296 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 19:41:01,495 views 14600 22296 - Dashboard cached for user 1
-[INFO] 2025-11-22 19:41:11,362 views 14600 22296 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 19:41:11,389 views 14600 22296 - Dashboard cached for user 1
-[INFO] 2025-11-22 19:41:46,324 views 14600 22296 - Dashboard cache miss for user 1
-[INFO] 2025-11-22 19:41:46,360 views 14600 22296 - Dashboard cached for user 1
-[INFO] 2025-11-23 09:06:43,096 views 22728 21556 - Dashboard cache miss for user 3
-[INFO] 2025-11-23 09:06:43,123 views 22728 21556 - Dashboard cached for user 3
-[INFO] 2025-11-23 09:07:09,646 views 22728 21556 - Dashboard cache miss for user 3
-[INFO] 2025-11-23 09:07:09,684 views 22728 21556 - Dashboard cached for user 3
-[INFO] 2025-11-23 09:07:34,339 views 22728 21556 - Dashboard cache miss for user 3
-[INFO] 2025-11-23 09:07:34,363 views 22728 21556 - Dashboard cached for user 3
-[INFO] 2025-11-23 09:07:46,312 views 22728 21556 - Dashboard cache miss for user 3
-[INFO] 2025-11-23 09:07:46,375 views 22728 21556 - Dashboard cached for user 3
-[INFO] 2025-11-23 09:07:53,163 views 22728 21556 - Dashboard cache miss for user 3
-[INFO] 2025-11-23 09:07:53,181 views 22728 21556 - Dashboard cached for user 3
-[INFO] 2025-11-23 09:07:55,771 views 22728 21556 - Dashboard cache miss for user 3
-[INFO] 2025-11-23 09:07:55,790 views 22728 21556 - Dashboard cached for user 3
-[INFO] 2025-11-23 09:09:27,198 signals 22728 21556 - Notification sent to موظف20 الحاسبة الإلكترونية (موظف) for new ticket #8
-[INFO] 2025-11-23 09:10:17,497 views 22728 17056 - Dashboard cache miss for user 1
-[INFO] 2025-11-23 09:10:17,571 views 22728 17056 - Dashboard cached for user 1
-[INFO] 2025-11-23 09:13:01,405 views 22728 11960 - Dashboard cache miss for user 16
-[INFO] 2025-11-23 09:13:01,420 views 22728 11960 - Dashboard cached for user 16
-[INFO] 2025-11-23 09:13:54,184 views 22728 2952 - Dashboard cache miss for user 12
-[INFO] 2025-11-23 09:13:54,260 views 22728 2952 - Dashboard cached for user 12
-[INFO] 2025-11-23 09:14:00,344 views 22728 2952 - Dashboard cache miss for user 12
-[INFO] 2025-11-23 09:14:00,367 views 22728 2952 - Dashboard cached for user 12
-[INFO] 2025-11-23 09:14:07,196 views 22728 2952 - Dashboard cache miss for user 12
-[INFO] 2025-11-23 09:14:07,218 views 22728 2952 - Dashboard cached for user 12
-[INFO] 2025-11-23 09:34:29,801 views 14540 5060 - Dashboard cache miss for user 1
-[INFO] 2025-11-23 09:34:29,826 views 14540 5060 - Dashboard cached for user 1
-[INFO] 2025-11-23 09:45:06,931 views 18508 24032 - Dashboard cache miss for user 1
-[INFO] 2025-11-23 09:45:06,958 views 18508 24032 - Dashboard cached for user 1
-[INFO] 2025-11-23 09:47:21,306 views 18508 25160 - Dashboard cache miss for user 1
-[INFO] 2025-11-23 09:47:21,405 views 18508 25160 - Dashboard cached for user 1
-[INFO] 2025-11-23 09:47:44,690 views 18508 25160 - Dashboard cache miss for user 1
-[INFO] 2025-11-23 09:47:44,735 views 18508 25160 - Dashboard cached for user 1
-[INFO] 2025-11-23 09:48:29,940 views 18508 24032 - Dashboard cache miss for user 1
-[INFO] 2025-11-23 09:48:29,972 views 18508 24032 - Dashboard cached for user 1
-[INFO] 2025-11-23 09:48:40,151 views 18508 24032 - Dashboard cache miss for user 1
-[INFO] 2025-11-23 09:48:40,198 views 18508 24032 - Dashboard cached for user 1
-[INFO] 2025-11-23 09:57:08,856 views 18508 24032 - Dashboard cache miss for user 1
-[INFO] 2025-11-23 09:57:08,886 views 18508 24032 - Dashboard cached for user 1
-[INFO] 2025-11-25 18:12:26,552 utils 19364 24368 - Email sent for ticket 9 - action: created
-[INFO] 2025-11-25 18:12:26,554 signals 19364 24368 - New ticket created: 9
-[INFO] 2025-11-25 18:12:26,649 utils 19364 24368 - Email sent for ticket 9 - action: created
-[INFO] 2025-11-25 18:12:26,652 signals 19364 24368 - Ticket action created: created for ticket 9
-[INFO] 2025-11-25 18:13:40,331 views 19364 24368 - Dashboard cache miss for user 12
-[INFO] 2025-11-25 18:13:40,341 views 19364 24368 - Dashboard cached for user 12
-[INFO] 2025-11-25 18:15:15,177 views 19364 24368 - Dashboard cache miss for user 5
-[INFO] 2025-11-25 18:15:15,188 views 19364 24368 - Dashboard cached for user 5
-[INFO] 2025-11-25 18:16:13,618 utils 19364 24368 - Email sent for ticket 10 - action: created
-[INFO] 2025-11-25 18:16:13,620 signals 19364 24368 - New ticket created: 10
-[INFO] 2025-11-25 18:16:13,708 utils 19364 24368 - Email sent for ticket 10 - action: created
-[INFO] 2025-11-25 18:16:13,709 signals 19364 24368 - Ticket action created: created for ticket 10
-[INFO] 2025-11-25 18:16:51,232 views 19364 24368 - Dashboard cache miss for user 6
-[INFO] 2025-11-25 18:16:51,245 views 19364 24368 - Dashboard cached for user 6
-[INFO] 2025-11-25 18:17:49,992 utils 19364 24368 - Email sent for ticket 8 - action: acknowledged
-[INFO] 2025-11-25 18:17:49,999 signals 19364 24368 - Ticket action created: acknowledged for ticket 8
-[INFO] 2025-11-25 18:17:50,041 views 19364 24368 - Dashboard cache miss for user 10
-[INFO] 2025-11-25 18:17:50,091 views 19364 24368 - Dashboard cached for user 10
-[INFO] 2025-11-25 18:22:38,129 views 336 14940 - Dashboard cache miss for user 10
-[INFO] 2025-11-25 18:22:38,149 views 336 14940 - Dashboard cached for user 10
-[INFO] 2025-11-25 18:22:53,733 views 336 14940 - PDF exported for ticket 8 by user 10
-[INFO] 2025-11-25 19:56:32,026 views 11352 5740 - Dashboard cache miss for user 6
-[INFO] 2025-11-25 19:56:32,035 views 11352 5740 - Dashboard cached for user 6
-[INFO] 2025-11-25 19:56:37,807 views 11352 5740 - PDF exported for ticket 3 by user 6
-[INFO] 2025-11-25 20:00:29,727 views 3640 6980 - Dashboard cache miss for user 1
-[INFO] 2025-11-25 20:00:29,819 views 3640 6980 - Dashboard cached for user 1
-[INFO] 2025-11-25 20:00:36,273 views 3640 6980 - PDF exported for ticket 7 by user 1
-[INFO] 2025-11-25 20:03:54,437 views 9068 4352 - Dashboard cache miss for user 1
-[INFO] 2025-11-25 20:03:54,501 views 9068 4352 - Dashboard cached for user 1
-[INFO] 2025-11-25 20:04:03,272 views 9068 4352 - PDF exported for ticket 10 by user 1
-[INFO] 2025-11-25 20:08:23,095 views 3692 27432 - PDF exported successfully for ticket 3
-[INFO] 2025-11-25 20:11:19,561 views 14224 5316 - PDF exported successfully for ticket 4
-[INFO] 2025-11-25 20:14:07,082 views 21124 7472 - Dashboard cache miss for user 5
-[INFO] 2025-11-25 20:14:07,120 views 21124 7472 - Dashboard cached for user 5
-[INFO] 2025-11-25 20:14:12,339 views 21124 7472 - PDF exported successfully for ticket 8
+[INFO] 2025-12-16 21:00:12,167 views 19280 20544 - Dashboard cache miss for user 32
+[INFO] 2025-12-16 21:00:12,229 views 19280 20544 - Dashboard cached for user 32
+[INFO] 2025-12-16 21:02:23,392 utils 19280 20544 - Email sent for ticket 61 - action: created
+[INFO] 2025-12-16 21:02:23,392 signals 19280 20544 - New ticket created: 61
+[INFO] 2025-12-16 21:02:23,412 signals 19280 20544 - Notification sent to عبدالعالي حميد عبدالعالي (رئيس قسم) for new ticket #61
+[INFO] 2025-12-16 21:02:23,477 utils 19280 20544 - Email sent for ticket 61 - action: created
+[INFO] 2025-12-16 21:02:23,477 signals 19280 20544 - Ticket action created: created for ticket 61
+[INFO] 2025-12-16 21:04:00,192 signals 19280 10616 - Acknowledgment recorded: هبة حسن الروضان (موظف) for ticket #61 (1/2)
+[INFO] 2025-12-16 21:04:00,247 utils 19280 10616 - Email sent for ticket 61 - action: acknowledged
+[INFO] 2025-12-16 21:04:00,247 signals 19280 10616 - Ticket action created: acknowledged for ticket 61
+[INFO] 2025-12-16 21:04:00,281 views 19280 10616 - Dashboard cache miss for user 33
+[INFO] 2025-12-16 21:04:00,300 views 19280 10616 - Dashboard cached for user 33
+[INFO] 2025-12-16 21:09:09,397 views 19280 20544 - Dashboard cache miss for user 33
+[INFO] 2025-12-16 21:09:09,462 views 19280 20544 - Dashboard cached for user 33
+[INFO] 2025-12-16 21:26:49,931 utils 6900 22720 - Email sent for ticket 1 - action: created
+[INFO] 2025-12-16 21:26:49,931 signals 6900 22720 - New ticket created: 1
+[INFO] 2025-12-16 21:30:06,416 utils 17928 18200 - Email sent for ticket 2 - action: created
+[INFO] 2025-12-16 21:30:06,417 signals 17928 18200 - New ticket created: 2
+[INFO] 2025-12-16 21:30:06,437 signals 17928 18200 - Notification sent to سجاد عبدالحسين داود (رئيس قسم) for new ticket #2
+[INFO] 2025-12-16 21:30:06,491 utils 17928 18200 - Email sent for ticket 2 - action: created
+[INFO] 2025-12-16 21:30:06,491 signals 17928 18200 - Ticket action created: created for ticket 2
+[INFO] 2025-12-16 21:30:06,513 utils 17928 18200 - Email sent for ticket 2 - action: acknowledged
+[INFO] 2025-12-16 21:30:06,513 signals 17928 18200 - Ticket action created: acknowledged for ticket 2
+[INFO] 2025-12-16 21:30:06,537 utils 17928 18200 - Email sent for ticket 3 - action: created
+[INFO] 2025-12-16 21:30:06,537 signals 17928 18200 - New ticket created: 3
+[INFO] 2025-12-16 21:30:06,555 signals 17928 18200 - Notification sent to عبدالعالي حميد عبدالعالي (رئيس قسم) for new ticket #3
+[INFO] 2025-12-16 21:30:06,607 utils 17928 18200 - Email sent for ticket 3 - action: created
+[INFO] 2025-12-16 21:30:06,607 signals 17928 18200 - Ticket action created: created for ticket 3
+[INFO] 2025-12-16 21:30:06,625 utils 17928 18200 - Email sent for ticket 3 - action: acknowledged
+[INFO] 2025-12-16 21:30:06,625 signals 17928 18200 - Ticket action created: acknowledged for ticket 3
+[INFO] 2025-12-16 21:30:06,649 utils 17928 18200 - Email sent for ticket 4 - action: created
+[INFO] 2025-12-16 21:30:06,650 signals 17928 18200 - New ticket created: 4
+[INFO] 2025-12-16 21:30:06,673 signals 17928 18200 - Notification sent to عبدالكريم عبود عودة (عميد) for new ticket #4
+[INFO] 2025-12-16 21:30:06,777 utils 17928 18200 - Email sent for ticket 4 - action: created
+[INFO] 2025-12-16 21:30:06,777 signals 17928 18200 - Ticket action created: created for ticket 4
+[INFO] 2025-12-16 21:30:06,800 utils 17928 18200 - Email sent for ticket 4 - action: acknowledged
+[INFO] 2025-12-16 21:30:06,801 signals 17928 18200 - Ticket action created: acknowledged for ticket 4
+[INFO] 2025-12-16 21:30:06,825 utils 17928 18200 - Email sent for ticket 5 - action: created
+[INFO] 2025-12-16 21:30:06,825 signals 17928 18200 - New ticket created: 5
+[INFO] 2025-12-16 21:30:06,845 signals 17928 18200 - Notification sent to علي محمد هادي (رئيس قسم) for new ticket #5
+[INFO] 2025-12-16 21:30:06,903 utils 17928 18200 - Email sent for ticket 5 - action: created
+[INFO] 2025-12-16 21:30:06,904 signals 17928 18200 - Ticket action created: created for ticket 5
+[INFO] 2025-12-16 21:30:06,930 utils 17928 18200 - Email sent for ticket 5 - action: acknowledged
+[INFO] 2025-12-16 21:30:06,930 signals 17928 18200 - Ticket action created: acknowledged for ticket 5
+[INFO] 2025-12-16 21:30:06,955 utils 17928 18200 - Email sent for ticket 6 - action: created
+[INFO] 2025-12-16 21:30:06,955 signals 17928 18200 - New ticket created: 6
+[INFO] 2025-12-16 21:30:06,975 signals 17928 18200 - Notification sent to هبة حسن الروضان (موظف) for new ticket #6
+[INFO] 2025-12-16 21:30:07,026 utils 17928 18200 - Email sent for ticket 6 - action: created
+[INFO] 2025-12-16 21:30:07,026 signals 17928 18200 - Ticket action created: created for ticket 6
+[INFO] 2025-12-16 21:30:07,053 utils 17928 18200 - Email sent for ticket 6 - action: acknowledged
+[INFO] 2025-12-16 21:30:07,054 signals 17928 18200 - Ticket action created: acknowledged for ticket 6
+[INFO] 2025-12-16 21:30:07,081 utils 17928 18200 - Email sent for ticket 7 - action: created
+[INFO] 2025-12-16 21:30:07,081 signals 17928 18200 - New ticket created: 7
+[INFO] 2025-12-16 21:30:07,102 signals 17928 18200 - Notification sent to كوثر هواز مهدي (عميد) for new ticket #7
+[INFO] 2025-12-16 21:30:07,156 utils 17928 18200 - Email sent for ticket 7 - action: created
+[INFO] 2025-12-16 21:30:07,157 signals 17928 18200 - Ticket action created: created for ticket 7
+[INFO] 2025-12-16 21:30:07,181 utils 17928 18200 - Email sent for ticket 7 - action: acknowledged
+[INFO] 2025-12-16 21:30:07,181 signals 17928 18200 - Ticket action created: acknowledged for ticket 7
+[INFO] 2025-12-16 21:30:07,205 utils 17928 18200 - Email sent for ticket 8 - action: created
+[INFO] 2025-12-16 21:30:07,205 signals 17928 18200 - New ticket created: 8
+[INFO] 2025-12-16 21:30:07,225 signals 17928 18200 - Notification sent to عبدالعالي حميد عبدالعالي (رئيس قسم) for new ticket #8
+[INFO] 2025-12-16 21:30:07,280 utils 17928 18200 - Email sent for ticket 8 - action: created
+[INFO] 2025-12-16 21:30:07,281 signals 17928 18200 - Ticket action created: created for ticket 8
+[INFO] 2025-12-16 21:30:07,308 utils 17928 18200 - Email sent for ticket 8 - action: acknowledged
+[INFO] 2025-12-16 21:30:07,309 signals 17928 18200 - Ticket action created: acknowledged for ticket 8
+[INFO] 2025-12-16 21:30:07,331 utils 17928 18200 - Email sent for ticket 9 - action: created
+[INFO] 2025-12-16 21:30:07,331 signals 17928 18200 - New ticket created: 9
+[INFO] 2025-12-16 21:30:07,352 signals 17928 18200 - Notification sent to محمد عبدالإله حسن (موظف) for new ticket #9
+[INFO] 2025-12-16 21:30:07,408 utils 17928 18200 - Email sent for ticket 9 - action: created
+[INFO] 2025-12-16 21:30:07,408 signals 17928 18200 - Ticket action created: created for ticket 9
+[INFO] 2025-12-16 21:30:07,429 utils 17928 18200 - Email sent for ticket 9 - action: acknowledged
+[INFO] 2025-12-16 21:30:07,431 signals 17928 18200 - Ticket action created: acknowledged for ticket 9
+[INFO] 2025-12-16 21:31:17,914 views 15568 4224 - Dashboard cache miss for user 18
+[INFO] 2025-12-16 21:31:17,948 views 15568 4224 - Dashboard cached for user 18
+[INFO] 2025-12-16 21:32:23,086 admin_views 15568 4224 - Manual penalty added by admin to قسم الحاسبة الالكترونية
+[INFO] 2025-12-17 20:24:15,176 views 6080 13824 - Dashboard cache miss for user 18
+[INFO] 2025-12-17 20:24:15,219 views 6080 13824 - Dashboard cached for user 18
+[INFO] 2025-12-17 20:26:47,898 views 6080 2028 - PDF exported successfully for ticket 7
+[INFO] 2025-12-17 20:29:28,499 utils 6080 2028 - Email sent for ticket 7 - action: closed
+[INFO] 2025-12-17 20:29:28,500 signals 6080 2028 - Ticket action created: closed for ticket 7
+[INFO] 2025-12-17 20:30:07,982 views 6080 2028 - Dashboard cache miss for user 16
+[INFO] 2025-12-17 20:30:07,997 views 6080 2028 - Dashboard cached for user 16
+[INFO] 2025-12-17 20:30:21,364 views 6080 8476 - Dashboard cache miss for user 18
+[INFO] 2025-12-17 20:30:21,446 views 6080 8476 - Dashboard cached for user 18
+[INFO] 2025-12-17 20:31:38,724 utils 6080 8476 - Email sent for ticket 10 - action: created
+[INFO] 2025-12-17 20:31:38,724 signals 6080 8476 - New ticket created: 10
+[INFO] 2025-12-17 20:31:38,743 signals 6080 8476 - Notification sent to منتظر حازم ثامر (رئيس قسم) for new ticket #10
+[INFO] 2025-12-17 20:31:38,815 utils 6080 8476 - Email sent for ticket 10 - action: created
+[INFO] 2025-12-17 20:31:38,817 signals 6080 8476 - Ticket action created: created for ticket 10
+[INFO] 2025-12-17 20:32:20,175 signals 6080 8476 - Acknowledgment recorded: منتظر حازم ثامر (رئيس قسم) for ticket #10 (1/1)
+[INFO] 2025-12-17 20:32:20,251 utils 6080 8476 - Email sent for ticket 10 - action: acknowledged
+[INFO] 2025-12-17 20:32:20,252 signals 6080 8476 - Ticket action created: acknowledged for ticket 10
+[INFO] 2025-12-17 20:32:55,843 utils 6080 8476 - Email sent for ticket 10 - action: closed
+[INFO] 2025-12-17 20:32:55,844 signals 6080 8476 - Ticket action created: closed for ticket 10
+[INFO] 2025-12-17 20:38:01,669 views 18004 16068 - Dashboard cache miss for user 16
+[INFO] 2025-12-17 20:38:01,689 views 18004 16068 - Dashboard cached for user 16
+[INFO] 2025-12-17 20:38:16,568 views 18004 16068 - User 16 marked notifications as read
+[INFO] 2025-12-17 20:42:55,425 views 18004 16068 - Dashboard cache miss for user 18
+[INFO] 2025-12-17 20:42:55,515 views 18004 16068 - Dashboard cached for user 18
+[INFO] 2025-12-17 20:51:26,398 utils 15964 16700 - Email sent for ticket 11 - action: created
+[INFO] 2025-12-17 20:51:26,399 signals 15964 16700 - New ticket created: 11
+[INFO] 2025-12-17 20:51:26,416 signals 15964 16700 - Notification sent to منتظر حازم ثامر (رئيس قسم) for new ticket #11
+[INFO] 2025-12-17 20:51:26,500 utils 15964 16700 - Email sent for ticket 11 - action: created
+[INFO] 2025-12-17 20:51:26,501 signals 15964 16700 - Ticket action created: created for ticket 11
+[INFO] 2025-12-17 20:51:26,522 utils 15964 16700 - Email sent for ticket 11 - action: acknowledged
+[INFO] 2025-12-17 20:51:26,523 signals 15964 16700 - Ticket action created: acknowledged for ticket 11
+[INFO] 2025-12-17 20:51:26,557 utils 15964 16700 - Email sent for ticket 12 - action: created
+[INFO] 2025-12-17 20:51:26,557 signals 15964 16700 - New ticket created: 12
+[INFO] 2025-12-17 20:51:26,574 signals 15964 16700 - Notification sent to عمر وليد عاشور (موظف) for new ticket #12
+[INFO] 2025-12-17 20:51:26,623 utils 15964 16700 - Email sent for ticket 12 - action: created
+[INFO] 2025-12-17 20:51:26,623 signals 15964 16700 - Ticket action created: created for ticket 12
+[INFO] 2025-12-17 20:51:26,643 utils 15964 16700 - Email sent for ticket 12 - action: acknowledged
+[INFO] 2025-12-17 20:51:26,643 signals 15964 16700 - Ticket action created: acknowledged for ticket 12
+[INFO] 2025-12-17 20:51:26,689 utils 15964 16700 - Email sent for ticket 13 - action: created
+[INFO] 2025-12-17 20:51:26,689 signals 15964 16700 - New ticket created: 13
+[INFO] 2025-12-17 20:51:26,840 utils 15964 16700 - Email sent for ticket 13 - action: created
+[INFO] 2025-12-17 20:51:26,840 signals 15964 16700 - Ticket action created: created for ticket 13
+[INFO] 2025-12-17 20:51:26,863 utils 15964 16700 - Email sent for ticket 13 - action: acknowledged
+[INFO] 2025-12-17 20:51:26,863 signals 15964 16700 - Ticket action created: acknowledged for ticket 13
+[INFO] 2025-12-17 20:51:26,889 utils 15964 16700 - Email sent for ticket 14 - action: created
+[INFO] 2025-12-17 20:51:26,890 signals 15964 16700 - New ticket created: 14
+[INFO] 2025-12-17 20:51:26,908 signals 15964 16700 - Notification sent to د. ازهار علي عبدالله (عميد) for new ticket #14
+[INFO] 2025-12-17 20:51:26,966 utils 15964 16700 - Email sent for ticket 14 - action: created
+[INFO] 2025-12-17 20:51:26,966 signals 15964 16700 - Ticket action created: created for ticket 14
+[INFO] 2025-12-17 20:51:26,992 utils 15964 16700 - Email sent for ticket 15 - action: created
+[INFO] 2025-12-17 20:51:26,992 signals 15964 16700 - New ticket created: 15
+[INFO] 2025-12-17 20:51:27,010 signals 15964 16700 - Notification sent to حسن (موظف) for new ticket #15
+[INFO] 2025-12-17 20:51:27,071 utils 15964 16700 - Email sent for ticket 15 - action: created
+[INFO] 2025-12-17 20:51:27,071 signals 15964 16700 - Ticket action created: created for ticket 15
+[INFO] 2025-12-17 20:51:27,094 utils 15964 16700 - Email sent for ticket 16 - action: created
+[INFO] 2025-12-17 20:51:27,094 signals 15964 16700 - New ticket created: 16
+[INFO] 2025-12-17 20:51:27,113 signals 15964 16700 - Notification sent to د. عبدالكريم عبود عودة (عميد) for new ticket #16
+[INFO] 2025-12-17 20:51:27,168 utils 15964 16700 - Email sent for ticket 16 - action: created
+[INFO] 2025-12-17 20:51:27,169 signals 15964 16700 - Ticket action created: created for ticket 16
+[INFO] 2025-12-17 20:51:27,190 utils 15964 16700 - Email sent for ticket 17 - action: created
+[INFO] 2025-12-17 20:51:27,190 signals 15964 16700 - New ticket created: 17
+[INFO] 2025-12-17 20:51:27,213 signals 15964 16700 - Notification sent to د. ازهار علي عبدالله (عميد) for new ticket #17
+[INFO] 2025-12-17 20:51:27,269 utils 15964 16700 - Email sent for ticket 17 - action: created
+[INFO] 2025-12-17 20:51:27,269 signals 15964 16700 - Ticket action created: created for ticket 17
+[INFO] 2025-12-17 20:51:27,290 utils 15964 16700 - Email sent for ticket 17 - action: acknowledged
+[INFO] 2025-12-17 20:51:27,292 signals 15964 16700 - Ticket action created: acknowledged for ticket 17
+[INFO] 2025-12-17 20:51:27,324 utils 15964 16700 - Email sent for ticket 18 - action: created
+[INFO] 2025-12-17 20:51:27,324 signals 15964 16700 - New ticket created: 18
+[INFO] 2025-12-17 20:51:27,342 signals 15964 16700 - Notification sent to د. عبدالكريم عبود عودة (عميد) for new ticket #18
+[INFO] 2025-12-17 20:51:27,399 utils 15964 16700 - Email sent for ticket 18 - action: created
+[INFO] 2025-12-17 20:51:27,399 signals 15964 16700 - Ticket action created: created for ticket 18
+[INFO] 2025-12-17 20:57:15,354 views 16944 2432 - Dashboard cache miss for user 18
+[INFO] 2025-12-17 20:57:15,401 views 16944 2432 - Dashboard cached for user 18
+[INFO] 2025-12-17 21:13:00,161 utils 21152 6820 - Email sent for ticket 19 - action: created
+[INFO] 2025-12-17 21:13:00,162 signals 21152 6820 - New ticket created: 19
+[INFO] 2025-12-17 21:13:00,184 signals 21152 6820 - Notification sent to د. فوزي صدام محسن (مساعد إداري) for new ticket #19
+[INFO] 2025-12-17 21:13:00,237 utils 21152 6820 - Email sent for ticket 19 - action: created
+[INFO] 2025-12-17 21:13:00,237 signals 21152 6820 - Ticket action created: created for ticket 19
+[INFO] 2025-12-17 21:13:00,261 utils 21152 6820 - Email sent for ticket 19 - action: acknowledged
+[INFO] 2025-12-17 21:13:00,262 signals 21152 6820 - Ticket action created: acknowledged for ticket 19
+[INFO] 2025-12-17 21:13:00,287 utils 21152 6820 - Email sent for ticket 20 - action: created
+[INFO] 2025-12-17 21:13:00,287 signals 21152 6820 - New ticket created: 20
+[INFO] 2025-12-17 21:13:00,310 signals 21152 6820 - Notification sent to د. مقداد عذاب موسى (مساعد علمي) for new ticket #20
+[INFO] 2025-12-17 21:13:00,375 utils 21152 6820 - Email sent for ticket 20 - action: created
+[INFO] 2025-12-17 21:13:00,375 signals 21152 6820 - Ticket action created: created for ticket 20
+[INFO] 2025-12-17 21:13:00,400 utils 21152 6820 - Email sent for ticket 20 - action: acknowledged
+[INFO] 2025-12-17 21:13:00,401 signals 21152 6820 - Ticket action created: acknowledged for ticket 20
+[INFO] 2025-12-17 21:13:00,425 utils 21152 6820 - Email sent for ticket 21 - action: created
+[INFO] 2025-12-17 21:13:00,426 signals 21152 6820 - New ticket created: 21
+[INFO] 2025-12-17 21:13:00,445 signals 21152 6820 - Notification sent to د. فوزي صدام محسن (مساعد إداري) for new ticket #21
+[INFO] 2025-12-17 21:13:00,500 utils 21152 6820 - Email sent for ticket 21 - action: created
+[INFO] 2025-12-17 21:13:00,501 signals 21152 6820 - Ticket action created: created for ticket 21
+[INFO] 2025-12-17 21:13:00,523 utils 21152 6820 - Email sent for ticket 22 - action: created
+[INFO] 2025-12-17 21:13:00,523 signals 21152 6820 - New ticket created: 22
+[INFO] 2025-12-17 21:13:00,545 signals 21152 6820 - Notification sent to د. يوسف علي عبد مشاوي (رئيس جامعة) for new ticket #22
+[INFO] 2025-12-17 21:13:00,604 utils 21152 6820 - Email sent for ticket 22 - action: created
+[INFO] 2025-12-17 21:13:00,604 signals 21152 6820 - Ticket action created: created for ticket 22
+[INFO] 2025-12-17 21:13:00,634 utils 21152 6820 - Email sent for ticket 22 - action: acknowledged
+[INFO] 2025-12-17 21:13:00,634 signals 21152 6820 - Ticket action created: acknowledged for ticket 22
+[INFO] 2025-12-17 21:13:00,664 utils 21152 6820 - Email sent for ticket 23 - action: created
+[INFO] 2025-12-17 21:13:00,664 signals 21152 6820 - New ticket created: 23
+[INFO] 2025-12-17 21:13:00,683 signals 21152 6820 - Notification sent to د. مقداد عذاب موسى (مساعد علمي) for new ticket #23
+[INFO] 2025-12-17 21:13:00,739 utils 21152 6820 - Email sent for ticket 23 - action: created
+[INFO] 2025-12-17 21:13:00,739 signals 21152 6820 - Ticket action created: created for ticket 23
+[INFO] 2025-12-17 21:13:00,769 utils 21152 6820 - Email sent for ticket 24 - action: created
+[INFO] 2025-12-17 21:13:00,769 signals 21152 6820 - New ticket created: 24
+[INFO] 2025-12-17 21:13:00,787 signals 21152 6820 - Notification sent to عمر وليد عاشور (موظف) for new ticket #24
+[INFO] 2025-12-17 21:13:00,838 utils 21152 6820 - Email sent for ticket 24 - action: created
+[INFO] 2025-12-17 21:13:00,838 signals 21152 6820 - Ticket action created: created for ticket 24
+[INFO] 2025-12-17 21:13:00,861 utils 21152 6820 - Email sent for ticket 24 - action: acknowledged
+[INFO] 2025-12-17 21:13:00,861 signals 21152 6820 - Ticket action created: acknowledged for ticket 24
+[INFO] 2025-12-17 21:13:00,886 utils 21152 6820 - Email sent for ticket 25 - action: created
+[INFO] 2025-12-17 21:13:00,886 signals 21152 6820 - New ticket created: 25
+[INFO] 2025-12-17 21:13:00,905 signals 21152 6820 - Notification sent to د. فوزي صدام محسن (مساعد إداري) for new ticket #25
+[INFO] 2025-12-17 21:13:00,966 utils 21152 6820 - Email sent for ticket 25 - action: created
+[INFO] 2025-12-17 21:13:00,966 signals 21152 6820 - Ticket action created: created for ticket 25
+[INFO] 2025-12-17 21:13:00,993 utils 21152 6820 - Email sent for ticket 25 - action: acknowledged
+[INFO] 2025-12-17 21:13:00,993 signals 21152 6820 - Ticket action created: acknowledged for ticket 25
+[INFO] 2025-12-17 21:13:01,019 utils 21152 6820 - Email sent for ticket 26 - action: created
+[INFO] 2025-12-17 21:13:01,019 signals 21152 6820 - New ticket created: 26
+[INFO] 2025-12-17 21:13:01,037 signals 21152 6820 - Notification sent to د. فوزي صدام محسن (مساعد إداري) for new ticket #26
+[INFO] 2025-12-17 21:13:01,101 utils 21152 6820 - Email sent for ticket 26 - action: created
+[INFO] 2025-12-17 21:13:01,101 signals 21152 6820 - Ticket action created: created for ticket 26
+[INFO] 2025-12-17 21:13:01,124 utils 21152 6820 - Email sent for ticket 26 - action: acknowledged
+[INFO] 2025-12-17 21:13:01,125 signals 21152 6820 - Ticket action created: acknowledged for ticket 26
+[INFO] 2025-12-17 21:13:01,150 utils 21152 6820 - Email sent for ticket 27 - action: created
+[INFO] 2025-12-17 21:13:01,150 signals 21152 6820 - New ticket created: 27
+[INFO] 2025-12-17 21:13:01,169 signals 21152 6820 - Notification sent to د. فوزي صدام محسن (مساعد إداري) for new ticket #27
+[INFO] 2025-12-17 21:13:01,230 utils 21152 6820 - Email sent for ticket 27 - action: created
+[INFO] 2025-12-17 21:13:01,233 signals 21152 6820 - Ticket action created: created for ticket 27
+[INFO] 2025-12-17 21:13:01,257 utils 21152 6820 - Email sent for ticket 28 - action: created
+[INFO] 2025-12-17 21:13:01,259 signals 21152 6820 - New ticket created: 28
+[INFO] 2025-12-17 21:13:01,279 signals 21152 6820 - Notification sent to د. يوسف علي عبد مشاوي (رئيس جامعة) for new ticket #28
+[INFO] 2025-12-17 21:13:01,337 utils 21152 6820 - Email sent for ticket 28 - action: created
+[INFO] 2025-12-17 21:13:01,339 signals 21152 6820 - Ticket action created: created for ticket 28
+[INFO] 2025-12-17 21:13:01,360 utils 21152 6820 - Email sent for ticket 28 - action: acknowledged
+[INFO] 2025-12-17 21:13:01,360 signals 21152 6820 - Ticket action created: acknowledged for ticket 28
+[INFO] 2025-12-17 21:13:01,386 utils 21152 6820 - Email sent for ticket 29 - action: created
+[INFO] 2025-12-17 21:13:01,386 signals 21152 6820 - New ticket created: 29
+[INFO] 2025-12-17 21:13:01,405 signals 21152 6820 - Notification sent to د. مقداد عذاب موسى (مساعد علمي) for new ticket #29
+[INFO] 2025-12-17 21:13:01,462 utils 21152 6820 - Email sent for ticket 29 - action: created
+[INFO] 2025-12-17 21:13:01,462 signals 21152 6820 - Ticket action created: created for ticket 29
+[INFO] 2025-12-17 21:13:01,487 utils 21152 6820 - Email sent for ticket 29 - action: acknowledged
+[INFO] 2025-12-17 21:13:01,487 signals 21152 6820 - Ticket action created: acknowledged for ticket 29
+[INFO] 2025-12-17 21:13:01,516 utils 21152 6820 - Email sent for ticket 30 - action: created
+[INFO] 2025-12-17 21:13:01,516 signals 21152 6820 - New ticket created: 30
+[INFO] 2025-12-17 21:13:01,534 signals 21152 6820 - Notification sent to مدير النظام (مدير نظام) for new ticket #30
+[INFO] 2025-12-17 21:13:01,628 utils 21152 6820 - Email sent for ticket 30 - action: created
+[INFO] 2025-12-17 21:13:01,628 signals 21152 6820 - Ticket action created: created for ticket 30
+[INFO] 2025-12-17 21:13:01,669 utils 21152 6820 - Email sent for ticket 30 - action: acknowledged
+[INFO] 2025-12-17 21:13:01,669 signals 21152 6820 - Ticket action created: acknowledged for ticket 30
+[INFO] 2025-12-17 21:13:01,696 utils 21152 6820 - Email sent for ticket 31 - action: created
+[INFO] 2025-12-17 21:13:01,696 signals 21152 6820 - New ticket created: 31
+[INFO] 2025-12-17 21:13:01,714 signals 21152 6820 - Notification sent to د. مقداد عذاب موسى (مساعد علمي) for new ticket #31
+[INFO] 2025-12-17 21:13:01,769 utils 21152 6820 - Email sent for ticket 31 - action: created
+[INFO] 2025-12-17 21:13:01,769 signals 21152 6820 - Ticket action created: created for ticket 31
+[INFO] 2025-12-17 21:13:01,793 utils 21152 6820 - Email sent for ticket 31 - action: acknowledged
+[INFO] 2025-12-17 21:13:01,793 signals 21152 6820 - Ticket action created: acknowledged for ticket 31
+[INFO] 2025-12-17 21:13:01,816 utils 21152 6820 - Email sent for ticket 32 - action: created
+[INFO] 2025-12-17 21:13:01,816 signals 21152 6820 - New ticket created: 32
+[INFO] 2025-12-17 21:13:01,835 signals 21152 6820 - Notification sent to مدير النظام (مدير نظام) for new ticket #32
+[INFO] 2025-12-17 21:13:01,890 utils 21152 6820 - Email sent for ticket 32 - action: created
+[INFO] 2025-12-17 21:13:01,890 signals 21152 6820 - Ticket action created: created for ticket 32
+[INFO] 2025-12-17 21:13:01,919 utils 21152 6820 - Email sent for ticket 32 - action: acknowledged
+[INFO] 2025-12-17 21:13:01,919 signals 21152 6820 - Ticket action created: acknowledged for ticket 32
+[INFO] 2025-12-17 21:13:01,945 utils 21152 6820 - Email sent for ticket 33 - action: created
+[INFO] 2025-12-17 21:13:01,945 signals 21152 6820 - New ticket created: 33
+[INFO] 2025-12-17 21:13:01,965 signals 21152 6820 - Notification sent to د. فوزي صدام محسن (مساعد إداري) for new ticket #33
+[INFO] 2025-12-17 21:13:02,019 utils 21152 6820 - Email sent for ticket 33 - action: created
+[INFO] 2025-12-17 21:13:02,019 signals 21152 6820 - Ticket action created: created for ticket 33
+[INFO] 2025-12-17 21:13:02,043 utils 21152 6820 - Email sent for ticket 34 - action: created
+[INFO] 2025-12-17 21:13:02,043 signals 21152 6820 - New ticket created: 34
+[INFO] 2025-12-17 21:13:02,065 signals 21152 6820 - Notification sent to د. يوسف علي عبد مشاوي (رئيس جامعة) for new ticket #34
+[INFO] 2025-12-17 21:13:02,118 utils 21152 6820 - Email sent for ticket 34 - action: created
+[INFO] 2025-12-17 21:13:02,118 signals 21152 6820 - Ticket action created: created for ticket 34
+[INFO] 2025-12-17 21:13:02,139 utils 21152 6820 - Email sent for ticket 34 - action: acknowledged
+[INFO] 2025-12-17 21:13:02,139 signals 21152 6820 - Ticket action created: acknowledged for ticket 34
+[INFO] 2025-12-17 21:13:02,166 utils 21152 6820 - Email sent for ticket 35 - action: created
+[INFO] 2025-12-17 21:13:02,166 signals 21152 6820 - New ticket created: 35
+[INFO] 2025-12-17 21:13:02,185 signals 21152 6820 - Notification sent to د. يوسف علي عبد مشاوي (رئيس جامعة) for new ticket #35
+[INFO] 2025-12-17 21:13:02,237 utils 21152 6820 - Email sent for ticket 35 - action: created
+[INFO] 2025-12-17 21:13:02,237 signals 21152 6820 - Ticket action created: created for ticket 35
+[INFO] 2025-12-17 21:13:02,267 utils 21152 6820 - Email sent for ticket 35 - action: acknowledged
+[INFO] 2025-12-17 21:13:02,268 signals 21152 6820 - Ticket action created: acknowledged for ticket 35
+[INFO] 2025-12-17 21:13:02,295 utils 21152 6820 - Email sent for ticket 36 - action: created
+[INFO] 2025-12-17 21:13:02,295 signals 21152 6820 - New ticket created: 36
+[INFO] 2025-12-17 21:13:02,313 signals 21152 6820 - Notification sent to د. يوسف علي عبد مشاوي (رئيس جامعة) for new ticket #36
+[INFO] 2025-12-17 21:13:02,366 utils 21152 6820 - Email sent for ticket 36 - action: created
+[INFO] 2025-12-17 21:13:02,366 signals 21152 6820 - Ticket action created: created for ticket 36
+[INFO] 2025-12-17 21:13:02,387 utils 21152 6820 - Email sent for ticket 36 - action: acknowledged
+[INFO] 2025-12-17 21:13:02,387 signals 21152 6820 - Ticket action created: acknowledged for ticket 36
+[INFO] 2025-12-17 21:13:02,417 utils 21152 6820 - Email sent for ticket 37 - action: created
+[INFO] 2025-12-17 21:13:02,418 signals 21152 6820 - New ticket created: 37
+[INFO] 2025-12-17 21:13:02,436 signals 21152 6820 - Notification sent to د. مقداد عذاب موسى (مساعد علمي) for new ticket #37
+[INFO] 2025-12-17 21:13:02,494 utils 21152 6820 - Email sent for ticket 37 - action: created
+[INFO] 2025-12-17 21:13:02,494 signals 21152 6820 - Ticket action created: created for ticket 37
+[INFO] 2025-12-17 21:13:02,519 utils 21152 6820 - Email sent for ticket 37 - action: acknowledged
+[INFO] 2025-12-17 21:13:02,519 signals 21152 6820 - Ticket action created: acknowledged for ticket 37
+[INFO] 2025-12-17 21:13:02,543 utils 21152 6820 - Email sent for ticket 38 - action: created
+[INFO] 2025-12-17 21:13:02,543 signals 21152 6820 - New ticket created: 38
+[INFO] 2025-12-17 21:13:02,562 signals 21152 6820 - Notification sent to د. فوزي صدام محسن (مساعد إداري) for new ticket #38
+[INFO] 2025-12-17 21:13:02,623 utils 21152 6820 - Email sent for ticket 38 - action: created
+[INFO] 2025-12-17 21:13:02,623 signals 21152 6820 - Ticket action created: created for ticket 38
+[INFO] 2025-12-17 21:13:02,652 utils 21152 6820 - Email sent for ticket 38 - action: acknowledged
+[INFO] 2025-12-17 21:13:02,652 signals 21152 6820 - Ticket action created: acknowledged for ticket 38
+[INFO] 2025-12-17 21:13:02,676 utils 21152 6820 - Email sent for ticket 39 - action: created
+[INFO] 2025-12-17 21:13:02,676 signals 21152 6820 - New ticket created: 39
+[INFO] 2025-12-17 21:13:02,695 signals 21152 6820 - Notification sent to مدير النظام (مدير نظام) for new ticket #39
+[INFO] 2025-12-17 21:13:02,751 utils 21152 6820 - Email sent for ticket 39 - action: created
+[INFO] 2025-12-17 21:13:02,752 signals 21152 6820 - Ticket action created: created for ticket 39
+[INFO] 2025-12-17 21:13:02,777 utils 21152 6820 - Email sent for ticket 39 - action: acknowledged
+[INFO] 2025-12-17 21:13:02,777 signals 21152 6820 - Ticket action created: acknowledged for ticket 39
+[INFO] 2025-12-17 21:13:02,803 utils 21152 6820 - Email sent for ticket 40 - action: created
+[INFO] 2025-12-17 21:13:02,803 signals 21152 6820 - New ticket created: 40
+[INFO] 2025-12-17 21:13:02,820 signals 21152 6820 - Notification sent to مدير النظام (مدير نظام) for new ticket #40
+[INFO] 2025-12-17 21:13:02,884 utils 21152 6820 - Email sent for ticket 40 - action: created
+[INFO] 2025-12-17 21:13:02,884 signals 21152 6820 - Ticket action created: created for ticket 40
+[INFO] 2025-12-17 21:13:02,907 utils 21152 6820 - Email sent for ticket 40 - action: acknowledged
+[INFO] 2025-12-17 21:13:02,907 signals 21152 6820 - Ticket action created: acknowledged for ticket 40
+[INFO] 2025-12-17 21:13:02,937 utils 21152 6820 - Email sent for ticket 41 - action: created
+[INFO] 2025-12-17 21:13:02,938 signals 21152 6820 - New ticket created: 41
+[INFO] 2025-12-17 21:13:02,954 signals 21152 6820 - Notification sent to د. مقداد عذاب موسى (مساعد علمي) for new ticket #41
+[INFO] 2025-12-17 21:13:03,005 utils 21152 6820 - Email sent for ticket 41 - action: created
+[INFO] 2025-12-17 21:13:03,008 signals 21152 6820 - Ticket action created: created for ticket 41
+[INFO] 2025-12-17 21:13:03,038 utils 21152 6820 - Email sent for ticket 41 - action: acknowledged
+[INFO] 2025-12-17 21:13:03,038 signals 21152 6820 - Ticket action created: acknowledged for ticket 41
+[INFO] 2025-12-17 21:13:03,066 utils 21152 6820 - Email sent for ticket 42 - action: created
+[INFO] 2025-12-17 21:13:03,066 signals 21152 6820 - New ticket created: 42
+[INFO] 2025-12-17 21:13:03,083 signals 21152 6820 - Notification sent to د. يوسف علي عبد مشاوي (رئيس جامعة) for new ticket #42
+[INFO] 2025-12-17 21:13:03,134 utils 21152 6820 - Email sent for ticket 42 - action: created
+[INFO] 2025-12-17 21:13:03,134 signals 21152 6820 - Ticket action created: created for ticket 42
+[INFO] 2025-12-17 21:13:03,157 utils 21152 6820 - Email sent for ticket 43 - action: created
+[INFO] 2025-12-17 21:13:03,157 signals 21152 6820 - New ticket created: 43
+[INFO] 2025-12-17 21:13:03,177 signals 21152 6820 - Notification sent to مدير النظام (مدير نظام) for new ticket #43
+[INFO] 2025-12-17 21:13:03,234 utils 21152 6820 - Email sent for ticket 43 - action: created
+[INFO] 2025-12-17 21:13:03,234 signals 21152 6820 - Ticket action created: created for ticket 43
+[INFO] 2025-12-17 21:13:40,587 views 10148 12448 - Dashboard cache miss for user 16
+[INFO] 2025-12-17 21:13:40,603 views 10148 12448 - Dashboard cached for user 16
+[INFO] 2025-12-17 21:14:23,969 signals 10148 12448 - Acknowledgment recorded: مدير النظام (مدير نظام) for ticket #40 (1/2)
+[INFO] 2025-12-17 21:14:24,057 utils 10148 12448 - Email sent for ticket 40 - action: acknowledged
+[INFO] 2025-12-17 21:14:24,058 signals 10148 12448 - Ticket action created: acknowledged for ticket 40
+[INFO] 2025-12-17 21:14:24,075 signals 10148 12448 - Acknowledgment recorded: مدير النظام (مدير نظام) for ticket #30 (1/2)
+[INFO] 2025-12-17 21:14:24,155 utils 10148 12448 - Email sent for ticket 30 - action: acknowledged
+[INFO] 2025-12-17 21:14:24,157 signals 10148 12448 - Ticket action created: acknowledged for ticket 30
+[INFO] 2025-12-17 21:14:24,196 views 10148 12448 - Dashboard cache miss for user 18
+[INFO] 2025-12-17 21:14:24,250 views 10148 12448 - Dashboard cached for user 18
+[INFO] 2025-12-17 21:17:25,293 utils 10148 12448 - Email sent for ticket 44 - action: created
+[INFO] 2025-12-17 21:17:25,293 signals 10148 12448 - New ticket created: 44
+[INFO] 2025-12-17 21:17:25,315 signals 10148 12448 - Notification sent to محمد عبدالإله حسن (موظف) for new ticket #44
+[INFO] 2025-12-17 21:17:25,393 utils 10148 12448 - Email sent for ticket 44 - action: created
+[INFO] 2025-12-17 21:17:25,393 signals 10148 12448 - Ticket action created: created for ticket 44
+[INFO] 2025-12-18 17:04:56,664 views 14844 13264 - Dashboard cache miss for user 18
+[INFO] 2025-12-18 17:04:56,734 views 14844 13264 - Dashboard cached for user 18
+[INFO] 2025-12-18 17:13:45,738 views 14844 14684 - Dashboard cache miss for user 18
+[INFO] 2025-12-18 17:13:45,821 views 14844 14684 - Dashboard cached for user 18
+[INFO] 2025-12-18 17:17:25,446 utils 14844 14684 - Email sent for ticket 45 - action: created
+[INFO] 2025-12-18 17:17:25,446 signals 14844 14684 - New ticket created: 45
+[INFO] 2025-12-18 17:17:25,481 signals 14844 14684 - Notification sent to محمد عبدالإله حسن (رئيس قسم) for new ticket #45
+[INFO] 2025-12-18 17:17:25,679 utils 14844 14684 - Email sent for ticket 45 - action: created
+[INFO] 2025-12-18 17:17:25,682 signals 14844 14684 - Ticket action created: created for ticket 45
+[INFO] 2025-12-18 17:19:53,639 signals 14844 14684 - Acknowledgment recorded: محمد عبدالإله حسن (رئيس قسم) for ticket #45 (1/2)
+[INFO] 2025-12-18 17:19:53,704 utils 14844 14684 - Email sent for ticket 45 - action: acknowledged
+[INFO] 2025-12-18 17:19:53,704 signals 14844 14684 - Ticket action created: acknowledged for ticket 45
+[INFO] 2025-12-18 17:19:53,748 signals 14844 14684 - Acknowledgment recorded: محمد عبدالإله حسن (رئيس قسم) for ticket #44 (1/2)
+[INFO] 2025-12-18 17:19:53,818 utils 14844 14684 - Email sent for ticket 44 - action: acknowledged
+[INFO] 2025-12-18 17:19:53,818 signals 14844 14684 - Ticket action created: acknowledged for ticket 44
+[INFO] 2025-12-18 17:19:53,876 views 14844 14684 - Dashboard cache miss for user 9
+[INFO] 2025-12-18 17:19:53,937 views 14844 14684 - Dashboard cached for user 9
+[INFO] 2025-12-18 17:20:55,136 views 14844 14684 - User 9 marked notifications as read
+[INFO] 2025-12-18 17:20:58,887 views 14844 14684 - User 9 marked all notifications as read
+[INFO] 2025-12-18 17:22:26,857 utils 14844 14684 - Email sent for ticket 45 - action: closed
+[INFO] 2025-12-18 17:22:26,857 signals 14844 14684 - Ticket action created: closed for ticket 45
+[INFO] 2025-12-18 17:24:45,122 views 14844 12656 - Dashboard cache miss for user 18
+[INFO] 2025-12-18 17:24:45,215 views 14844 12656 - Dashboard cached for user 18
+[INFO] 2025-12-18 17:27:53,922 signals 14844 12656 - Acknowledgment recorded: منتظر حازم ثامر (رئيس قسم) for ticket #44 (2/2)
+[INFO] 2025-12-18 17:27:54,145 utils 14844 12656 - Email sent for ticket 44 - action: acknowledged
+[INFO] 2025-12-18 17:27:54,145 signals 14844 12656 - Ticket action created: acknowledged for ticket 44
+[INFO] 2025-12-18 17:27:54,209 views 14844 12656 - Dashboard cache miss for user 16
+[INFO] 2025-12-18 17:27:54,248 views 14844 12656 - Dashboard cached for user 16
+[INFO] 2025-12-20 09:38:58,267 views 22676 1104 - Dashboard cache miss for user 18
+[INFO] 2025-12-20 09:38:58,353 views 22676 1104 - Dashboard cached for user 18
+[INFO] 2025-12-20 13:13:14,953 utils 11640 12280 - Email sent for ticket 46 - action: created
+[INFO] 2025-12-20 13:13:14,974 signals 11640 12280 - New ticket created: 46
+[INFO] 2025-12-20 13:13:15,069 signals 11640 12280 - Notification sent to د. عبدالكريم عبود عودة (عميد) for new ticket #46
+[INFO] 2025-12-20 13:13:15,257 utils 11640 12280 - Email sent for ticket 46 - action: created
+[INFO] 2025-12-20 13:13:15,264 signals 11640 12280 - Ticket action created: created for ticket 46
+[INFO] 2025-12-20 13:14:37,482 signals 11640 12280 - Acknowledgment recorded: منتظر حازم ثامر (رئيس قسم) for ticket #46 (1/15)
+[INFO] 2025-12-20 13:14:37,569 utils 11640 12280 - Email sent for ticket 46 - action: acknowledged
+[INFO] 2025-12-20 13:14:37,569 signals 11640 12280 - Ticket action created: acknowledged for ticket 46
+[INFO] 2025-12-20 13:14:37,631 views 11640 12280 - Dashboard cache miss for user 16
+[INFO] 2025-12-20 13:14:37,673 views 11640 12280 - Dashboard cached for user 16
+[INFO] 2025-12-20 13:15:45,885 utils 11640 432 - Email sent for ticket 46 - action: closed
+[INFO] 2025-12-20 13:15:45,889 signals 11640 432 - Ticket action created: closed for ticket 46
+[INFO] 2025-12-20 13:16:24,110 views 11640 432 - PDF exported successfully for ticket 44

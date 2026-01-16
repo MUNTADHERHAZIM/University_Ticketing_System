@@ -1,0 +1,154 @@
+/* ===== تصميم محسن للإشعارات ===== */
+
+/* قائمة الإشعارات المنسدلة */
+#notificationsDropdown + .dropdown-menu {
+    width: 400px !important;
+    max-height: 600px;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    border: none;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Header الإشعارات */
+.dropdown-menu .dropdown-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px;
+    font-weight: 600;
+    border-bottom: none;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.dropdown-header a.btn-link {
+    color: white !important;
+    text-decoration: none;
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.dropdown-header a.btn-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* عنصر الإشعار */
+.notification-item {
+    list-style: none;
+    animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.notification-item:hover {
+    transform: translateX(-3px) !important;
+}
+
+/* أيقونة الإشعار */
+.notification-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Badge الإشعار */
+.notification-item .badge {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* حالة فارغة */
+.dropdown-item.text-center {
+    padding: 40px 20px;
+}
+
+/* Loading spinner */
+#notificationsLoading {
+    padding: 20px;
+}
+
+/* Scrollbar للإشعارات */
+.dropdown-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Badge counter animation */
+@keyframes pulse-badge {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+}
+
+/* Dark Mode Support */
+[data-theme="dark"] #notificationsDropdown + .dropdown-menu {
+    background: #1f2937;
+}
+
+[data-theme="dark"] .dropdown-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+[data-theme="dark"] .notification-item {
+    border-right-color: var(--border-color, #3b82f6) !important;
+}
+
+[data-theme="dark"] .notification-item strong {
+    color: #f9fafb !important;
+}
+
+[data-theme="dark"] .notification-item p {
+    color: #d1d5db !important;
+}
+
+[data-theme="dark"] .notification-item small {
+    color: #9ca3af !important;
+}
+
+/* تأثير الضغط */
+.notification-item:active {
+    transform: scale(0.98) !important;
+}
+
+/* رابط عرض التذكرة */
+.notification-item a.btn {
+    transition: all 0.2s ease;
+}
+
+.notification-item a.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}

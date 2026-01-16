@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}تقرير النقاط الجزائية{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold"><i class="bi bi-exclamation-triangle-fill text-danger"></i> تقرير النقاط الجزائية</h2>
+    <form method="get" class="d-flex gap-2">
+        <select name="period" class="form-select" onchange="this.form.submit()">
+            <option value="30" {% if period_days == 30 %} selected{% endif %}>آخر 30 يوم</option>
+            <option value="90" {% if period_days == 90 %} selected{% endif %}>آخر 3 شهر</option>
+            <option value="365" {% if period_days == 365 %} selected{% endif %}>هذه السنة</option>
+        </select>
+    </form>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="alert alert-info d-flex align-items-center">
+            <i class="bi bi-info-circle-fill fs-4 me-3"></i>
+            <div>
+                <strong>نظام النقاط:</strong>
+                تأخير 1-4 ساعات (1 نقطة) | 4-8 ساعات (3 نقاط) | 8-24 ساعة (5 نقاط) | +24 ساعة (10 نقاط)
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Employee Penalties -->
+    <div class="col-lg-8 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">نقاط الموظفين</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>الموظف</th>
+                                <th>القسم</th>
+                                <th>عدد المخالفات</th>
+                                <th>مجموع النقاط</th>
+                                <th>التقييم</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for emp in employee_penalties %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-circle bg-light text-primary me-2 rounded-circle d-flex align-items-center justify-content-center"
+                                            style="width: 40px; height: 40px;">
+                                            {{ emp.first_name|first }}{{ emp.last_name|first }}
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold">{{ emp.get_full_name }}</div>
+                                            <small class="text-muted">{{ emp.email }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ emp.department.name }}</td>
+                                <td>{{ emp.penalty_count }}</td>
+                                <td class="fw-bold text-danger">{{ emp.total_points }}</td>
+                                <td>
+                                    {% if emp.total_points <= 5 %} <span class="badge bg-success">ممتاز</span>
+                                        {% elif emp.total_points <= 15 %} <span class="badge bg-info">جيد</span>
+                                            {% elif emp.total_points <= 30 %} <span class="badge bg-warning text-dark">
+                                                مقبول</span>
+                                                {% else %}
+                                                <span class="badge bg-danger">ضعيف</span>
+                                                {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">لا توجد نقاط جزائية مسجلة في هذه
+                                    الفترة</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Classification Summary -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">ملخص التصنيف</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="classificationChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const ctx = document.getElementById('classificationChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['ممتاز', 'جيد', 'مقبول', 'ضعيف', 'سيء جداً'],
+            datasets: [{
+                data: [
+                    {{ excellent.count }},
+            {{ good.count }},
+                    {{ acceptable.count }},
+        {{ poor.count }},
+        {{ very_poor.count }}
+                ],
+        backgroundColor: ['#00C851', '#33b5e5', '#ffbb33', '#ff4444', '#CC0000']
+            }]
+        },
+        options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' }
+        }
+    }
+    });
+</script>
+{% endblock %}
